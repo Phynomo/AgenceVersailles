@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>a5c1d06c-24f5-4a07-ba5e-9379cd9c4656</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Agence.DataAccess\Agence.DataAccess.csproj" />
+    <ProjectReference Include="..\Agence.BusinessLogic\Agence.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

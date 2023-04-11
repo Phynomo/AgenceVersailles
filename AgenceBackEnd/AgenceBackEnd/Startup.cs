@@ -1,4 +1,5 @@
 using Agence.API.Extensions;
+using Agence.BusinessLogic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,18 +37,18 @@ namespace AgenceBackEnd
 
             services.AddControllersWithViews();
         }
-
+        
         private void AddSwagger(IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
             {
                 var groupName = "v1";
-
+                
                 options.SwaggerDoc(groupName, new OpenApiInfo
                 {
                     Title = $"Foo {groupName}",
                     Version = groupName,
-                    Description = "Consult API",
+                    Description = "Agence API",
                     Contact = new OpenApiContact
                     {
                         Name = "Agence Versailles",

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Agence.API.Models;
+using Agence.Entities.Entities;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace Agence.API.Extensions
     {
         public MappingProfileExtensions()
         {
-            //CreateMap<DepartamentoViewModel, tbDepartamentos>().ReverseMap();
+            CreateMap<UsuarioViewModel, tbUsuarios>().ReverseMap();
         }
     }
 }

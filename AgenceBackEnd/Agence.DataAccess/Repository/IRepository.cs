@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Agence.DataAccess.Repository
 {
-    public interface IRepository<T>
+    interface IRepository<T, U>
     {
-        public IEnumerable<T> List();
+        public IEnumerable<U> List();
         public RequestStatus Insert(T item);
-        public RequestStatus Update(T item, int id);
-        public T find(int? id);
-        public RequestStatus Delete(T id);
+        public RequestStatus Update(T item);
+        public U find(int? id); //<3 uwu <3
+        public RequestStatus Delete(T item);
     }
+
 }
+

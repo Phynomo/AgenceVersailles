@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Agence.BusinessLogic.Services;
+using Agence.DataAccess;
+using Agence.DataAccess.Repository;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +14,12 @@ namespace Agence.BusinessLogic
     {
         public static void DataAccess(this IServiceCollection service, string connectionString)
         {
-            //service.AddScoped<UsuarioRepository>();
-            //ConsultorioContext.BuildConnectionString(connectionString);
+            service.AddScoped<UsuarioRepository>();
+            AgenceContext.BuildConnectionString(connectionString);
         }
         public static void BusinessLogic(this IServiceCollection service)
         {
-            //service.AddScoped<GralService>();
+            service.AddScoped<AcceService>();
         }
     }
 }

@@ -1,6 +1,6 @@
-CREATE DATABASE tbAgenceVersailles
+ÔªøCREATE DATABASE dbAgenceVersailles
 GO
-use tbAgenceVersailles
+use dbAgenceVersailles
 GO
 --Creacion de Esquemas
 CREATE SCHEMA gral
@@ -16,9 +16,42 @@ CREATE TABLE acce.tbUsuarios(
 	usua_NombreUsuario		NVARCHAR(100) NOT NULL,
 	usua_Correo				NVARCHAR(200) NOT NULL,
 	usua_Contrasena			NVARCHAR(MAX) NOT NULL,
-	usua_EsAdmin			BIT,    
-	CONSTRAINT PK_acce_tbUsuarios_user_Id  PRIMARY KEY(usua_Id)
+	pers_Id					INT NOT NULL,
+	usua_EsAdmin			BIT NOT NULL,    
+	usua_UsuCreacion		INT NOT NULL,
+	usua_FechaCreacion		DATETIME NOT NULL CONSTRAINT DF_usua_FechaCreacion DEFAULT(GETDATE()),
+	usua_UsuModificacion	INT,
+	usua_FechaModificacion	DATETIME,
+	usua_Estado				BIT NOT NULL CONSTRAINT DF_usua_Estado DEFAULT(1)
+	CONSTRAINT PK_acce_tbUsuarios_usua_Id  PRIMARY KEY(usua_Id)
 );
+
+--********* PROCEDIMIENTO INSERTAR USUARIOS ADMIN**************--
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_InsertUsuario
+	@usua_NombreUsuario		NVARCHAR(100),
+	@usua_Correo			NVARCHAR(200),	
+	@usua_Contrasena		NVARCHAR(200),
+	@pers_Id				INT,
+	@usua_EsAdmin			BIT							
+AS
+BEGIN
+	DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @usua_Contrasena));
+	INSERT acce.tbUsuarios(usua_NombreUsuario, usua_Correo, usua_Contrasena, pers_Id, usua_EsAdmin, usua_UsuCreacion)
+	VALUES(@usua_NombreUsuario, @usua_Correo, @password, @pers_Id, @usua_EsAdmin, 1);
+END;
+GO
+
+GO
+EXEC acce.UDP_InsertUsuario 'admin', 'defaultperson@gmail.com', '123', 1, 1;
+
+--********* ALTERAR TABLA USUARIOS **************--
+--********* AGREGAR AUDITORIA**************--
+GO
+ALTER TABLE [acce].[tbUsuarios]
+ADD CONSTRAINT FK_acce_tbUsuarios_acce_tbUsuarios_user_UsuCreacion_usua_Id  FOREIGN KEY(usua_UsuCreacion) REFERENCES acce.tbUsuarios([usua_Id]),
+	CONSTRAINT FK_acce_tbUsuarios_acce_tbUsuarios_user_UsuModificacion_usua_Id  FOREIGN KEY(usua_UsuModificacion) REFERENCES acce.tbUsuarios([usua_Id])
+
 GO 
 --Creacion de la tabla de continentes
 CREATE TABLE gral.tbContinentes(
@@ -119,7 +152,7 @@ GO
 CREATE TABLE agen.tbClasesVuelos(
 	clasvuel_Id 				INT IDENTITY(1,1),
 	clasvuel_Nombre				NVARCHAR(100) NOT NULL
-	CONSTRAINT PK_agen_tbAgenciasVuelos_agenvuel_Id  PRIMARY KEY(clasvuel_Id)
+	CONSTRAINT PK_agen_tbClasesVuelos_clasvuel_Id  PRIMARY KEY(clasvuel_Id)
 );
 GO
 --Creacion de la tabla de Billetes
@@ -154,6 +187,13 @@ CREATE TABLE gral.tbEstadosCiviles(
 	estc_Nombre				NVARCHAR(100) NOT NULL
 	CONSTRAINT PK_gral_tbEstadosCiviles_estc_Id  PRIMARY KEY(estc_Id)
 );
+
+INSERT INTO gral.tbEstadosCiviles
+VALUES('Soltero(a)'),
+	  ('Casado(a)'),
+	  ('Divorciado(a)'),
+	  ('Viudo(a)')
+
 GO
 --Creacion de la tabla de Personas
 CREATE TABLE agen.tbPersonas(
@@ -167,8 +207,18 @@ CREATE TABLE agen.tbPersonas(
 	pers_Celular			NVARCHAR(20),
 	pers_EsEmpleado			BIT
 	CONSTRAINT PK_agen_tbPersonas_pers_Id  PRIMARY KEY(pers_Id),
-	CONSTRAINT FK_agen_tbPersonas_agen_tbEstadosCiviles_estc_Id FOREIGN KEY(estc_Id) REFERENCES agen.tbEstadosCiviles(estc_Id)
+	CONSTRAINT FK_agen_tbPersonas_agen_tbEstadosCiviles_estc_Id FOREIGN KEY(estc_Id) REFERENCES gral.tbEstadosCiviles(estc_Id)
 );
+
+INSERT INTO agen.tbPersonas
+VALUES('Hern√°n', 'Estrada', '0501200345698', 1, '2003-01-25', 'F', '87896578', 1)
+
+--********* ALTERAR TABLA USUARIOS **************--
+--********* AGREGAR FK PERSONAS**************--
+GO
+ALTER TABLE [acce].[tbUsuarios]
+ADD CONSTRAINT FK_acce_tbUsuarios_agen_tbPersonas_pers_Id  FOREIGN KEY(pers_Id) REFERENCES agen.tbPersonas(pers_Id)
+
 GO
 --Creacion de la tabla de Reservaciones
 CREATE TABLE agen.tbReservaciones(
@@ -186,33 +236,33 @@ GO
 
 --**************INSERTS**************--
 --Continentes
-INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('¡frica');
-INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('AmÈrica');
+INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('√Åfrica');
+INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('Am√©rica');
 INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('Asia');
 INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('Europa');
-INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('OceanÌa');
+INSERT INTO gral.tbContinentes (cont_Nombre) VALUES ('Ocean√≠a');
 
 
 --Paises
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Estados Unidos', 2);
-INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Canad·', 2);
-INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('MÈxico', 2);
+INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Canad√°', 2);
+INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('M√©xico', 2);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Brasil', 2);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Argentina', 2);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Chile', 2);
-INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Per˙', 2);
-INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('EspaÒa', 4);
+INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Per√∫', 2);
+INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Espa√±a', 4);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Alemania', 4);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Francia', 4);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Italia', 4);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Reino Unido', 4);
-INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('JapÛn', 3);
+INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Jap√≥n', 3);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('China', 3);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('India', 3);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Rusia', 3);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Australia', 5);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Nueva Zelanda', 5);
-INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Pap˙a Nueva Guinea', 5);
+INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Pap√∫a Nueva Guinea', 5);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Fiyi', 5);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Tonga', 5);
 INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Colombia', 2);
@@ -236,29 +286,29 @@ INSERT INTO gral.tbPaises (pais_Nombre, cont_Id) VALUES ('Suiza', 4);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Alabama', 1);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Ontario', 2);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Jalisco', 3);
-INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('S„o Paulo', 4);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('S√£o Paulo', 4);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Buenos Aires', 5);
-INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('RegiÛn Metropolitana', 6);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Regi√≥n Metropolitana', 6);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Madrid', 7);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Baviera', 8);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Provenza-Alpes-Costa Azul', 9);
-INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('LombardÌa', 10);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Lombard√≠a', 10);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Londres', 11);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Kanto', 12);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Shanghai', 13);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Mumbai', 14);
-INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Mosc˙', 15);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Mosc√∫', 15);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Victoria', 16);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Auckland', 17);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Puerto Moresby', 18);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Suva', 19);
-INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Nuku?alofa', 20);
-INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Atl·ntico', 21);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Nuku ªalofa', 20);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Atl√°ntico', 21);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Zulia', 22);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('La Habana', 23);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Nueva Escocia', 24);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Java Occidental', 25);
-INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Se˙l', 26);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Se√∫l', 26);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Manila', 27);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Singapur Central', 28);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Bangkok', 29);
@@ -267,50 +317,50 @@ INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Bangkok', 29);
 --Ciudades
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Washington D.C.', 1);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Ottawa', 2);
-INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Ciudad de MÈxico', 3);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Ciudad de M√©xico', 3);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Brasilia', 4);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Buenos Aires', 5);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Santiago de Chile', 6);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Lima', 7);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Madrid', 8);
-INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('BerlÌn', 9);
-INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('ParÌs', 10);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Berl√≠n', 9);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Par√≠s', 10);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Roma', 11);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Londres', 12);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Tokio', 13);
-INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('PekÌn', 14);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Pek√≠n', 14);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Nueva Delhi', 15);
-INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Mosc˙', 16);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Mosc√∫', 16);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Canberra', 17);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Wellington', 18);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Port Moresby', 19);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Suva', 20);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Nuku''alofa', 21);
-INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Bogot·', 22);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Bogot√°', 22);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Caracas', 23);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('La Habana', 24);
-INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('SÌdney', 25);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('S√≠dney', 25);
 
 --Aeropuertos
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de la Ciudad de MÈxico', 1, 'Av Capit·n Carlos LeÛn S/N, PeÒÛn de los BaÒos, Venustiano Carranza, 15620 Ciudad de MÈxico, CDMX, MÈxico');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de la Ciudad de M√©xico', 1, 'Av Capit√°n Carlos Le√≥n S/N, Pe√±√≥n de los Ba√±os, Venustiano Carranza, 15620 Ciudad de M√©xico, CDMX, M√©xico');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Los Angeles', 2, '1 World Way, Los Angeles, CA 90045, Estados Unidos');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Toronto', 3, '6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canad·');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Brasilia', 4, 'Lago Sul - Zona Industrial, BrasÌlia - DF, Brasil');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Toronto', 3, '6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canad√°');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Brasilia', 4, 'Lago Sul - Zona Industrial, Bras√≠lia - DF, Brasil');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Ministro Pistarini', 5, 'Au. Teniente General Pablo Riccheri Km 33,5, B1802 Ezeiza, Provincia de Buenos Aires, Argentina');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Comodoro Arturo Merino BenÌtez', 6, 'Comodoro Arturo Merino BenÌtez, Pudahuel, RegiÛn Metropolitana, Chile');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Jorge Ch·vez', 7, 'Av. Elmer Faucett s/n, Callao 07031, Per˙');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Adolfo Su·rez Madrid-Barajas', 8, 'Av de la Hispanidad, s/n, 28042 Madrid, EspaÒa');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Fr·ncfort del Meno', 9, '60547 Frankfurt, Alemania');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de ParÌs-Charles de Gaulle', 10, '95700 Roissy-en-France, Francia');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Comodoro Arturo Merino Ben√≠tez', 6, 'Comodoro Arturo Merino Ben√≠tez, Pudahuel, Regi√≥n Metropolitana, Chile');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Jorge Ch√°vez', 7, 'Av. Elmer Faucett s/n, Callao 07031, Per√∫');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Adolfo Su√°rez Madrid-Barajas', 8, 'Av de la Hispanidad, s/n, 28042 Madrid, Espa√±a');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Fr√°ncfort del Meno', 9, '60547 Frankfurt, Alemania');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Par√≠s-Charles de Gaulle', 10, '95700 Roissy-en-France, Francia');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Roma-Fiumicino', 11, 'Via dell Aeroporto di Fiumicino, 00054 Fiumicino RM, Italia');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de D¸sseldorf', 11, 'Flughafenstraﬂe 120, 40474 D¸sseldorf, Alemania');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de D√ºsseldorf', 11, 'Flughafenstra√üe 120, 40474 D√ºsseldorf, Alemania');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Frankfurt', 12, '60547 Frankfurt, Alemania');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto de Heathrow', 13, 'Longford TW6, Reino Unido');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Narita', 14, '1-1 Furugome, Narita, Chiba 282-0004, JapÛn');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de PekÌn', 15, 'Shunyi, PekÌn, China');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Narita', 14, '1-1 Furugome, Narita, Chiba 282-0004, Jap√≥n');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Pek√≠n', 15, 'Shunyi, Pek√≠n, China');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Nueva Delhi', 16, 'Indira Gandhi International Airport, New Delhi, Delhi 110037, India');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional SheremÈtievo', 17, 'Khimki, Moskovskaya oblast, Rusia');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto de SÌdney', 18, 'Sydney NSW 2020, Australia');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional Sherem√©tievo', 17, 'Khimki, Moskovskaya oblast, Rusia');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto de S√≠dney', 18, 'Sydney NSW 2020, Australia');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Auckland', 19, 'Auckland Airport (AKL), Auckland 2022, Nueva Zelanda');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Denpasar', 20, 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362, Indonesia');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Incheon', 21, '272 Gonghang-ro, Unseo-dong, Jung-gu, Incheon, Corea del Sur');
@@ -319,6 +369,190 @@ INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALU
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Dunedin', 24, 'Dunedin Airport (DUD), 25 Miller Rd, Momona, Dunedin 9073, Nueva Zelanda');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Wellington', 25, 'Stewart Duff Dr, Rongotai, Wellington 6022, Nueva Zelanda');
 
+--*******PROCEDIMIENTOS ALMACENADOS*******--
+
+--Vista tbUsuarios
+GO
+CREATE OR ALTER VIEW acce.VW_tbUsuarios
+AS
+	SELECT T1.usua_Id, 
+		   T1.usua_NombreUsuario, 
+		   T1.usua_Correo, 
+		   T1.usua_Contrasena, 
+		   T1.pers_Id, 
+		   (T2.pers_Nombres + ' ' + T2.pers_Apellidos) AS usua_PersonaNombreCompleto,
+		   T1.usua_EsAdmin, 
+		   T1.usua_UsuCreacion, 
+		   T3.usua_NombreUsuario AS usua_NombreUsuarioCreacion,
+		   T1.usua_FechaCreacion, 
+		   T1.usua_UsuModificacion, 
+		   T4.usua_NombreUsuario AS usua_NombreUsuarioModificacion,
+		   T1.usua_FechaModificacion
+	FROM [acce].[tbUsuarios] T1 INNER JOIN [agen].[tbPersonas] T2
+	ON T1.pers_Id = T2.pers_Id INNER JOIN [acce].[tbUsuarios] T3
+	ON T1.usua_UsuCreacion = T3.usua_Id LEFT JOIN [acce].[tbUsuarios] T4
+	ON T1.usua_UsuModificacion = t4.usua_Id
+	WHERE T1.usua_Estado = 1
+
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_VW_tbUsuarios_List
+AS
+BEGIN
+	SELECT * FROM acce.VW_tbUsuarios
+END
+
+--Procedimiento insertar usuarios
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Insert
+	@usua_NombreUsuario		NVARCHAR(100),
+	@usua_Correo			NVARCHAR(200),	
+	@usua_Contrasena		NVARCHAR(200),
+	@pers_Id				INT,
+	@usua_UsuCreacion		INT
+AS
+BEGIN
+	BEGIN TRY
+		DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
+
+		DECLARE @usua_EsAdmin BIT 
+
+		IF (SELECT [pers_EsEmpleado] FROM [agen].[tbPersonas]) = 1
+			SET @usua_EsAdmin = 1
+		ELSE
+			SET @usua_EsAdmin = 0
 
 
+		IF NOT EXISTS (SELECT usua_NombreUsuario 
+					   FROM acce.tbUsuarios 
+					   WHERE usua_NombreUsuario = @usua_NombreUsuario)
+			BEGIN			
+				INSERT INTO [acce].[tbUsuarios](usua_NombreUsuario, 
+												usua_Correo, 
+												usua_Contrasena, 
+												pers_Id, 
+												usua_EsAdmin, 
+												usua_UsuCreacion)
+				VALUES (@usua_NombreUsuario, @usua_Correo, @contraEncript, @pers_Id, @usua_EsAdmin, @usua_UsuCreacion)
 
+				SELECT 'El registro se ha insertado con √©xito'
+			END
+		ELSE IF EXISTS (SELECT usua_NombreUsuario 
+					    FROM acce.tbUsuarios  
+					    WHERE usua_NombreUsuario = @usua_NombreUsuario
+						AND usua_Estado = 1)
+			BEGIN
+				UPDATE acce.tbUsuarios
+				SET usua_Estado = 1,
+					usua_Correo = @usua_Correo,
+					usua_Contrasena = @contraEncript,
+					usua_EsAdmin = @usua_EsAdmin,
+					pers_Id = @pers_Id,
+					usua_UsuCreacion = @usua_UsuCreacion
+				WHERE usua_NombreUsuario = @usua_NombreUsuario
+
+				SELECT 'El registro se ha insertado con √©xito'
+			END
+		ELSE
+			SELECT 'Ya existe un usuario con este nombre'
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+	END CATCH
+END
+
+--Procedimiento editar usuarios
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Edit
+	@usua_Id					INT,
+	@usua_NombreUsuario			NVARCHAR(100),
+	@usua_Correo				NVARCHAR(200),	
+	@usua_Contrasena			NVARCHAR(200),
+	@pers_Id					INT,
+	@usua_UsuModificacion		INT
+AS
+BEGIN 
+	BEGIN TRY
+	
+		DECLARE @usua_EsAdmin BIT 
+
+		IF (SELECT [pers_EsEmpleado] FROM [agen].[tbPersonas]) = 1
+			SET @usua_EsAdmin = 1
+		ELSE
+			SET @usua_EsAdmin = 0
+
+		IF NOT EXISTS (SELECT usua_Id FROM [acce].[tbUsuarios] WHERE usua_Id = @usua_Id)
+			BEGIN 
+				SELECT 'El registro que intenta editar no existe'
+			END
+		ELSE
+			BEGIN
+				IF NOT EXISTS (SELECT usua_NombreUsuario 
+					   FROM [acce].[tbUsuarios] 
+					   WHERE usua_NombreUsuario = @usua_NombreUsuario
+					   AND usua_Id != @usua_Id)
+					BEGIN
+						UPDATE [acce].[tbUsuarios] 
+						SET usua_NombreUsuario = @usua_NombreUsuario,
+							usua_Correo = @usua_Correo,
+							pers_Id = @pers_Id,
+							usua_EsAdmin = @usua_EsAdmin,
+							usua_UsuModificacion = @usua_UsuModificacion,
+							usua_FechaModificacion = GETDATE()
+						WHERE usua_Id = @usua_Id
+
+						SELECT 'El registro ha sido editado con √©xito'
+					END
+				ELSE IF EXISTS (SELECT usua_NombreUsuario 
+								FROM [acce].[tbUsuarios] 
+								WHERE usua_Estado = 0
+								AND usua_NombreUsuario = @usua_NombreUsuario)
+					BEGIN
+						UPDATE [acce].[tbUsuarios] 
+						SET usua_Estado = 1,
+							usua_Correo = @usua_Correo,
+							pers_Id = @pers_Id,
+							usua_EsAdmin = @usua_EsAdmin
+						WHERE usua_NombreUsuario = @usua_NombreUsuario
+
+						SELECT 'El registro ha sido editado con √©xito'
+					END
+				ELSE
+					SELECT 'Ya existe un usuario con este nombre'
+			END
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+	END CATCH
+END
+
+--Procedimiento eliminar usuarios
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Delete
+	@usua_Id	INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT usua_Id FROM [acce].[tbUsuarios] WHERE usua_Id = @usua_Id)
+			BEGIN
+				SELECT 'El registro que intenta eliminar no existe'
+			END
+		ELSE
+			UPDATE [acce].[tbUsuarios]
+			SET usua_Estado = 0
+			WHERE usua_Id = @usua_Id
+
+			SELECT 'El registro ha sido eliminado con √©xito'
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+	END CATCH
+END
+
+--Procedimiento encontrar usuarios
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Find
+	@usua_Id	INT
+AS
+BEGIN
+	SELECT * FROM acce.VW_tbUsuarios WHERE usua_Id = @usua_Id
+END

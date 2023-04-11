@@ -1,0 +1,105 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "dbAgenceVersaillesContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities",
+   "ProjectRootNamespace": "Agence.Entities",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 2,
+   "Tables": [
+      {
+         "Name": "[acce].[tbUsuarios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbAeropuertos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbAgenciasVuelos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbBilletesAvion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbCategoriasHabitacional]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbClasesVuelos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbHabitaciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbHoteles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbPaquetes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbPersonas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbReservaciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[agen].[tbVuelos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbCiudades]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbContinentes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbDepartamentos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbEstadosCiviles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[gral].[tbPaises]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[acce].[VW_tbUsuarios]",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": "DESKTOP-EEOQVVU\\SQLEXPRESS.dbAgenceVersailles",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
