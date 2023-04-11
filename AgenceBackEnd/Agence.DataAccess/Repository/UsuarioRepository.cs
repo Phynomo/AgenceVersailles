@@ -14,7 +14,16 @@ namespace Agence.DataAccess.Repository
     {
         public RequestStatus Delete(tbUsuarios item)
         {
-            throw new NotImplementedException();
+            RequestStatus result = new RequestStatus();
+
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@usua_Id", item.usua_Id, DbType.Int32, ParameterDirection.Input);
+            var resultado = db.QueryFirst<string>(ScriptsDataBase.UDP_Eliminar_Usuarios, parametros, commandType: System.Data.CommandType.StoredProcedure);
+
+            result.MessageStatus = resultado;
+
+            return result;
         }
 
         public VW_tbUsuarios find(int? id)

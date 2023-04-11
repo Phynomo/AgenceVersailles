@@ -54,6 +54,28 @@ namespace Agence.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+        public ServiceResult EliminarUsuarios(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+
+            try
+            {
+                var insert = _usuarioRepository.Delete(item);
+
+                if (insert.MessageStatus == "El registro ha sido eliminado con éxito")
+                    return result.SetMessage(insert.MessageStatus, ServiceResultType.Success);
+                else if (insert.MessageStatus == "El registro que intenta eliminar no existe")
+                    return result.Conflict(insert.MessageStatus);
+                else if (insert.MessageStatus == "Ha ocurrido un error")
+                    return result.Error("Algun dato ha sido enviado de forma incorrecta");
+                else
+                    return result.SetMessage("Conexión perdida", ServiceResultType.Error);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
         #endregion
 
 
