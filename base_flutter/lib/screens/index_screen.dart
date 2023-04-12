@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-String url = "https://localhost:44313/api/Usuario/Listado";
+String url = "http://www.agenciaversalles.somee.com/api/Usuario/Listado";
 
 Future<dynamic> _getListado() async {
   final respuesta = await http.get(Uri.parse(url));

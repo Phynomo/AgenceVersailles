@@ -15,11 +15,13 @@ namespace Agence.BusinessLogic
         public static void DataAccess(this IServiceCollection service, string connectionString)
         {
             service.AddScoped<UsuarioRepository>();
+            service.AddScoped<PaqueteRepository>();
             AgenceContext.BuildConnectionString(connectionString);
         }
         public static void BusinessLogic(this IServiceCollection service)
         {
             service.AddScoped<AcceService>();
+            service.AddScoped<AgenceService>();
         }
     }
 }

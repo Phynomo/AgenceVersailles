@@ -6477,19 +6477,36 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\LAB01\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\LAB01\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+>>>>>>> Phynomo
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\LAB01\\Documents\\GitHub\\AgenceVersailles\\AgenceBackEnd\\Agence.DataAccess\\Agence.DataAccess.csproj",
       "projectName": "Agence.DataAccess",
       "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\AgenceVersailles\\AgenceBackEnd\\Agence.DataAccess\\Agence.DataAccess.csproj",
       "packagesPath": "C:\\Users\\LAB01\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\LAB01\\Documents\\GitHub\\AgenceVersailles\\AgenceBackEnd\\Agence.DataAccess\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\LAB01\\Documents\\AgenceVersailles\\AgenceBackEnd\\Agence.DataAccess\\Agence.DataAccess.csproj",
+      "projectName": "Agence.DataAccess",
+      "projectPath": "C:\\Users\\LAB01\\Documents\\AgenceVersailles\\AgenceBackEnd\\Agence.DataAccess\\Agence.DataAccess.csproj",
+      "packagesPath": "C:\\Users\\LAB01\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LAB01\\Documents\\AgenceVersailles\\AgenceBackEnd\\Agence.DataAccess\\obj\\",
+>>>>>>> Phynomo
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LAB01\\AppData\\Roaming\\NuGet\\NuGet.Config",
+<<<<<<< HEAD
+=======
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+>>>>>>> Phynomo
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6503,8 +6520,13 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+<<<<<<< HEAD
             "C:\\Users\\LAB01\\Documents\\GitHub\\AgenceVersailles\\AgenceBackEnd\\Agence.Entities\\Agence.Entities.csproj": {
               "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\AgenceVersailles\\AgenceBackEnd\\Agence.Entities\\Agence.Entities.csproj"
+=======
+            "C:\\Users\\LAB01\\Documents\\AgenceVersailles\\AgenceBackEnd\\Agence.Entities\\Agence.Entities.csproj": {
+              "projectPath": "C:\\Users\\LAB01\\Documents\\AgenceVersailles\\AgenceBackEnd\\Agence.Entities\\Agence.Entities.csproj"
+>>>>>>> Phynomo
             }
           }
         }

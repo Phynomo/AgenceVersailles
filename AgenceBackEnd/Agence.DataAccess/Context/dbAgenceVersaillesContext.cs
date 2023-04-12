@@ -19,11 +19,97 @@ namespace Agence.DataAccess.Context
         {
         }
 
+        public virtual DbSet<VW_tbPaquetes> VW_tbPaquetes { get; set; }
+        public virtual DbSet<VW_tbPersonas> VW_tbPersonas { get; set; }
         public virtual DbSet<VW_tbUsuarios> VW_tbUsuarios { get; set; }
+        public virtual DbSet<tbAeropuertos> tbAeropuertos { get; set; }
+        public virtual DbSet<tbAgenciasVuelos> tbAgenciasVuelos { get; set; }
+        public virtual DbSet<tbBilletesAvion> tbBilletesAvion { get; set; }
+        public virtual DbSet<tbCategoriasHabitacional> tbCategoriasHabitacional { get; set; }
+        public virtual DbSet<tbCiudades> tbCiudades { get; set; }
+        public virtual DbSet<tbClasesVuelos> tbClasesVuelos { get; set; }
+        public virtual DbSet<tbContinentes> tbContinentes { get; set; }
+        public virtual DbSet<tbDepartamentos> tbDepartamentos { get; set; }
+        public virtual DbSet<tbEstadosCiviles> tbEstadosCiviles { get; set; }
+        public virtual DbSet<tbHabitaciones> tbHabitaciones { get; set; }
+        public virtual DbSet<tbHoteles> tbHoteles { get; set; }
+        public virtual DbSet<tbPaises> tbPaises { get; set; }
+        public virtual DbSet<tbPaquetes> tbPaquetes { get; set; }
+        public virtual DbSet<tbPersonas> tbPersonas { get; set; }
+        public virtual DbSet<tbReservaciones> tbReservaciones { get; set; }
+        public virtual DbSet<tbUsuarios> tbUsuarios { get; set; }
+        public virtual DbSet<tbVuelos> tbVuelos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<VW_tbPaquetes>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbPaquetes", "agen");
+
+                entity.Property(e => e.agenvuel_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.habi_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.habi_Precio).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.hote_DireccionExacta).HasMaxLength(500);
+
+                entity.Property(e => e.hote_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.paqu_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.paqu_Precio).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.vuel_FechaLlegada).HasColumnType("datetime");
+
+                entity.Property(e => e.vuel_FechaSalida).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<VW_tbPersonas>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbPersonas", "agen");
+
+                entity.Property(e => e.pers_Apellidos)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.pers_Celular).HasMaxLength(20);
+
+                entity.Property(e => e.pers_FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.pers_Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.pers_Identidad)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.pers_NombreCompleto)
+                    .IsRequired()
+                    .HasMaxLength(301);
+
+                entity.Property(e => e.pers_Nombres)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.pers_Sexo)
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .IsUnicode(false);
+            });
 
             modelBuilder.Entity<VW_tbUsuarios>(entity =>
             {
@@ -54,6 +140,348 @@ namespace Agence.DataAccess.Context
                 entity.Property(e => e.usua_PersonaNombreCompleto)
                     .IsRequired()
                     .HasMaxLength(301);
+            });
+
+            modelBuilder.Entity<tbAeropuertos>(entity =>
+            {
+                entity.HasKey(e => e.aero_Id)
+                    .HasName("PK_agen_tbAeropurtos_aero_Id");
+
+                entity.ToTable("tbAeropuertos", "agen");
+
+                entity.Property(e => e.aero_DireccionExacta).HasMaxLength(500);
+
+                entity.Property(e => e.aero_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.HasOne(d => d.ciud)
+                    .WithMany(p => p.tbAeropuertos)
+                    .HasForeignKey(d => d.ciud_Id)
+                    .HasConstraintName("FK_agen_tbAeropuertos_gral_tbCiudades_ciud_Id");
+            });
+
+            modelBuilder.Entity<tbAgenciasVuelos>(entity =>
+            {
+                entity.HasKey(e => e.agenvuel_Id)
+                    .HasName("PK_agen_tbAgenciasVuelos_agenvuel_Id");
+
+                entity.ToTable("tbAgenciasVuelos", "agen");
+
+                entity.Property(e => e.agenvuel_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<tbBilletesAvion>(entity =>
+            {
+                entity.HasKey(e => e.bill_Id)
+                    .HasName("PK_agen_tbBilletesAvion_bill_Id");
+
+                entity.ToTable("tbBilletesAvion", "agen");
+
+                entity.Property(e => e.bill_Precio).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.clasvuel)
+                    .WithMany(p => p.tbBilletesAvion)
+                    .HasForeignKey(d => d.clasvuel_Id)
+                    .HasConstraintName("FK_agen_tbBilletesAvion_agen_tbClasesVuelos_clasvuel_Id");
+
+                entity.HasOne(d => d.vuel)
+                    .WithMany(p => p.tbBilletesAvion)
+                    .HasForeignKey(d => d.vuel_Id)
+                    .HasConstraintName("FK_agen_tbBilletesAvion_agen_tbVuelos_vuel_Id");
+            });
+
+            modelBuilder.Entity<tbCategoriasHabitacional>(entity =>
+            {
+                entity.HasKey(e => e.cath_Id)
+                    .HasName("PK_agen_tbCategoriasHabitacional_cont_Id");
+
+                entity.ToTable("tbCategoriasHabitacional", "agen");
+
+                entity.Property(e => e.cath_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<tbCiudades>(entity =>
+            {
+                entity.HasKey(e => e.ciud_Id)
+                    .HasName("PK_gral_tbCuidades_ciud_Id");
+
+                entity.ToTable("tbCiudades", "gral");
+
+                entity.Property(e => e.ciud_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.HasOne(d => d.depa)
+                    .WithMany(p => p.tbCiudades)
+                    .HasForeignKey(d => d.depa_Id)
+                    .HasConstraintName("FK_gral_tbCiudades_gral_tbDepartamentos_depa_Id");
+            });
+
+            modelBuilder.Entity<tbClasesVuelos>(entity =>
+            {
+                entity.HasKey(e => e.clasvuel_Id)
+                    .HasName("PK_agen_tbClasesVuelos_clasvuel_Id");
+
+                entity.ToTable("tbClasesVuelos", "agen");
+
+                entity.Property(e => e.clasvuel_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<tbContinentes>(entity =>
+            {
+                entity.HasKey(e => e.cont_Id)
+                    .HasName("PK_gral_tbContinentes_cont_Id");
+
+                entity.ToTable("tbContinentes", "gral");
+
+                entity.Property(e => e.cont_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<tbDepartamentos>(entity =>
+            {
+                entity.HasKey(e => e.depa_Id)
+                    .HasName("PK_gral_tbDepartamentos_depa_Id");
+
+                entity.ToTable("tbDepartamentos", "gral");
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.HasOne(d => d.pais)
+                    .WithMany(p => p.tbDepartamentos)
+                    .HasForeignKey(d => d.pais_Id)
+                    .HasConstraintName("FK_gral_tbDepartamentos_gral_tbPaises_pais_Id");
+            });
+
+            modelBuilder.Entity<tbEstadosCiviles>(entity =>
+            {
+                entity.HasKey(e => e.estc_Id)
+                    .HasName("PK_gral_tbEstadosCiviles_estc_Id");
+
+                entity.ToTable("tbEstadosCiviles", "gral");
+
+                entity.Property(e => e.estc_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<tbHabitaciones>(entity =>
+            {
+                entity.HasKey(e => e.habi_Id)
+                    .HasName("PK_agen_tbHabitaciones_hote_Id");
+
+                entity.ToTable("tbHabitaciones", "agen");
+
+                entity.Property(e => e.habi_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.habi_Precio).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.cath)
+                    .WithMany(p => p.tbHabitaciones)
+                    .HasForeignKey(d => d.cath_Id)
+                    .HasConstraintName("FK_agen_tbHabitaicones_agen_tbCategorias_cath_Id");
+
+                entity.HasOne(d => d.hote)
+                    .WithMany(p => p.tbHabitaciones)
+                    .HasForeignKey(d => d.hote_Id)
+                    .HasConstraintName("FK_agen_tbHabitaicones_agen_tbHoteles_hote_Id");
+            });
+
+            modelBuilder.Entity<tbHoteles>(entity =>
+            {
+                entity.HasKey(e => e.hote_Id)
+                    .HasName("PK_agen_tbHoteles_hote_Id");
+
+                entity.ToTable("tbHoteles", "agen");
+
+                entity.Property(e => e.hote_DireccionExacta).HasMaxLength(500);
+
+                entity.Property(e => e.hote_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.HasOne(d => d.ciud)
+                    .WithMany(p => p.tbHoteles)
+                    .HasForeignKey(d => d.ciud_Id)
+                    .HasConstraintName("FK_agen_tbHoteles_gral_tbCiudades_ciud_Id");
+            });
+
+            modelBuilder.Entity<tbPaises>(entity =>
+            {
+                entity.HasKey(e => e.pais_Id)
+                    .HasName("PK_gral_tbPaises_pais_Id");
+
+                entity.ToTable("tbPaises", "gral");
+
+                entity.Property(e => e.pais_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.HasOne(d => d.cont)
+                    .WithMany(p => p.tbPaises)
+                    .HasForeignKey(d => d.cont_Id)
+                    .HasConstraintName("FK_gral_tbPaises_gral_tbContientes_cont_Id");
+            });
+
+            modelBuilder.Entity<tbPaquetes>(entity =>
+            {
+                entity.HasKey(e => e.paqu_Id)
+                    .HasName("PK_agen_tbPaquetes_paqu_Id");
+
+                entity.ToTable("tbPaquetes", "agen");
+
+                entity.Property(e => e.paqu_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.paqu_Precio).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.habi)
+                    .WithMany(p => p.tbPaquetes)
+                    .HasForeignKey(d => d.habi_Id)
+                    .HasConstraintName("FK_agen_tbPaquetes_agen_tbHabitaciones_habi_Id");
+
+                entity.HasOne(d => d.vuel)
+                    .WithMany(p => p.tbPaquetes)
+                    .HasForeignKey(d => d.vuel_Id)
+                    .HasConstraintName("FK_agen_tbPaquetes_agen_tbVuelos_vuel_Id");
+            });
+
+            modelBuilder.Entity<tbPersonas>(entity =>
+            {
+                entity.HasKey(e => e.pers_Id)
+                    .HasName("PK_agen_tbPersonas_pers_Id");
+
+                entity.ToTable("tbPersonas", "agen");
+
+                entity.Property(e => e.pers_Apellidos)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.pers_Celular).HasMaxLength(20);
+
+                entity.Property(e => e.pers_FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.pers_Identidad)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.pers_Nombres)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.pers_Sexo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.HasOne(d => d.estc)
+                    .WithMany(p => p.tbPersonas)
+                    .HasForeignKey(d => d.estc_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_agen_tbPersonas_agen_tbEstadosCiviles_estc_Id");
+            });
+
+            modelBuilder.Entity<tbReservaciones>(entity =>
+            {
+                entity.HasKey(e => e.rese_Id)
+                    .HasName("PK_agen_tbReservaciones_rese_Id");
+
+                entity.ToTable("tbReservaciones", "agen");
+
+                entity.HasOne(d => d.paqu)
+                    .WithMany(p => p.tbReservaciones)
+                    .HasForeignKey(d => d.paqu_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_agen_tbReservaciones_agen_tbPaquetes_paqu_Id");
+
+                entity.HasOne(d => d.pers)
+                    .WithMany(p => p.tbReservaciones)
+                    .HasForeignKey(d => d.pers_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_agen_tbReservaciones_agen_tbPersonas_pers_Id");
+            });
+
+            modelBuilder.Entity<tbUsuarios>(entity =>
+            {
+                entity.HasKey(e => e.usua_Id)
+                    .HasName("PK_acce_tbUsuarios_usua_Id");
+
+                entity.ToTable("tbUsuarios", "acce");
+
+                entity.Property(e => e.usua_Contrasena).IsRequired();
+
+                entity.Property(e => e.usua_Correo)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.usua_Estado)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.usua_FechaCreacion)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.usua_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.usua_NombreUsuario)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.HasOne(d => d.pers)
+                    .WithMany(p => p.tbUsuarios)
+                    .HasForeignKey(d => d.pers_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_acce_tbUsuarios_agen_tbPersonas_pers_Id");
+
+                entity.HasOne(d => d.usua_UsuCreacionNavigation)
+                    .WithMany(p => p.Inverseusua_UsuCreacionNavigation)
+                    .HasForeignKey(d => d.usua_UsuCreacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_acce_tbUsuarios_acce_tbUsuarios_user_UsuCreacion_usua_Id");
+
+                entity.HasOne(d => d.usua_UsuModificacionNavigation)
+                    .WithMany(p => p.Inverseusua_UsuModificacionNavigation)
+                    .HasForeignKey(d => d.usua_UsuModificacion)
+                    .HasConstraintName("FK_acce_tbUsuarios_acce_tbUsuarios_user_UsuModificacion_usua_Id");
+            });
+
+            modelBuilder.Entity<tbVuelos>(entity =>
+            {
+                entity.HasKey(e => e.vuel_Id)
+                    .HasName("PK_agen_tbVuelos_vuel_Id");
+
+                entity.ToTable("tbVuelos", "agen");
+
+                entity.Property(e => e.vuel_FechaLlegada).HasColumnType("datetime");
+
+                entity.Property(e => e.vuel_FechaSalida).HasColumnType("datetime");
+
+                entity.HasOne(d => d.vuel_AeropuertoLlegadaNavigation)
+                    .WithMany(p => p.tbVuelosvuel_AeropuertoLlegadaNavigation)
+                    .HasForeignKey(d => d.vuel_AeropuertoLlegada)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_agen_tbVuelos_agen_tbAeropuertos_vuel_AeropuertoLlegada");
+
+                entity.HasOne(d => d.vuel_AeropuertoSalidaNavigation)
+                    .WithMany(p => p.tbVuelosvuel_AeropuertoSalidaNavigation)
+                    .HasForeignKey(d => d.vuel_AeropuertoSalida)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_agen_tbVuelos_agen_tbAeropuertos_vuel_AeropuertoSalida");
             });
 
             OnModelCreatingPartial(modelBuilder);

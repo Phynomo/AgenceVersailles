@@ -171,6 +171,7 @@ GO
 CREATE TABLE agen.tbPaquetes(
 	paqu_Id 				INT IDENTITY(1,1),
 	paqu_Nombre				NVARCHAR(100) NOT NULL,
+	paqu_Imagen				NVARCHAR(MAX),
 	vuel_Id 				INT,
 	habi_Id					INT,
 	paqu_Personas			INT,
@@ -368,6 +369,94 @@ INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALU
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Queenstown', 23, 'Sir Henry Wigley Dr, Queenstown 9300, Nueva Zelanda');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Dunedin', 24, 'Dunedin Airport (DUD), 25 Miller Rd, Momona, Dunedin 9073, Nueva Zelanda');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Wellington', 25, 'Stewart Duff Dr, Rongotai, Wellington 6022, Nueva Zelanda');
+
+
+
+--Hoteles
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel Santa Lucia', 1, 'Calle 10 #20-30', 4);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel La Mansion', 2, 'Avenida Central #25-40', 3);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel el Dorado', 3, 'Carrera 8 #15-20', 2);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel San Francisco', 4, 'Calle 7 #12-30', 3);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel La Quinta', 5, 'Carrera 12 #10-30', 5);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel La Posada', 6, 'Carrera 5 #20-10', 2);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel La Palma', 7, 'Calle 15 #18-25', 4);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel El Parador', 8, 'Avenida 7 #22-15', 3);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel Los Pinos', 9, 'Carrera 10 #16-18', 2);
+
+INSERT INTO agen.tbHoteles (hote_Nombre, ciud_Id, hote_DireccionExacta, hote_Estellas) 
+VALUES ('Hotel Los Alamos', 10, 'Calle 20 #25-30', 5);
+
+
+--Categorias de habitaciones
+INSERT INTO agen.tbCategoriasHabitacional (cath_Nombre)
+VALUES ('delux'), ('estandar'), ('superior'), ('suite'), ('presidencial');
+
+--Habitaciones
+INSERT INTO agen.tbHabitaciones (habi_Nombre, hote_Id, cath_Id, habi_Precio)
+VALUES
+	('Habitación 1', 1, 1, 100.00),
+	('Habitación 2', 1, 2, 200.00),
+	('Habitación 3', 2, 3, 150.00),
+	('Habitación 4', 2, 4, 250.00),
+	('Habitación 5', 3, 5, 120.00),
+	('Habitación 6', 3, 1, 180.00),
+	('Habitación 7', 4, 2, 300.00),
+	('Habitación 8', 4, 3, 190.00),
+	('Habitación 9', 5, 4, 220.00),
+	('Habitación 10', 5, 5, 280.00),
+	('Habitación 11', 6, 1, 120.00),
+	('Habitación 12', 6, 2, 200.00),
+	('Habitación 13', 7, 3, 250.00),
+	('Habitación 14', 7, 4, 350.00),
+	('Habitación 15', 8, 5, 150.00),
+	('Habitación 16', 8, 1, 190.00),
+	('Habitación 17', 9, 2, 220.00),
+	('Habitación 18', 9, 3, 270.00),
+	('Habitación 19', 10, 4, 200.00),
+	('Habitación 20', 10, 5, 320.00);
+
+
+
+--Agencias de vuelo
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('Aeroméxico');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('American Airlines');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('Delta Airlines');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('United Airlines');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('Air Canada');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('Avianca');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('LATAM');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('Interjet');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('Volaris');
+INSERT INTO agen.tbAgenciasVuelos (agenvuel_Nombre) VALUES ('Spirit Airlines');
+
+--Vuelos
+INSERT INTO agen.tbVuelos(vuel_FechaSalida, vuel_FechaLlegada, vuel_AeropuertoSalida, vuel_AeropuertoLlegada, agenvuel_Id)
+VALUES ('2023-04-15 08:00:00', '2023-04-15 10:30:00', 1, 5, 1);
+
+INSERT INTO agen.tbVuelos(vuel_FechaSalida, vuel_FechaLlegada, vuel_AeropuertoSalida, vuel_AeropuertoLlegada, agenvuel_Id)
+VALUES ('2023-04-17 14:30:00', '2023-04-17 19:00:00', 3, 8, 2);
+
+INSERT INTO agen.tbVuelos(vuel_FechaSalida, vuel_FechaLlegada, vuel_AeropuertoSalida, vuel_AeropuertoLlegada, agenvuel_Id)
+VALUES ('2023-04-20 10:15:00', '2023-04-20 12:45:00', 2, 4, 1);
+
+
 
 --*******PROCEDIMIENTOS ALMACENADOS*******--
 
@@ -622,3 +711,42 @@ BEGIN
 END
 
 
+
+
+--******PROCEDIMIENTOS PAQUETES******--
+GO
+CREATE OR ALTER VIEW agen.VW_tbPaquetes
+AS
+SELECT [paqu_Id]
+      ,[paqu_Nombre]
+      ,[paqu_Imagen]
+      ,T1.[vuel_Id]
+	  ,T2.vuel_AeropuertoSalida
+	  ,T2.vuel_AeropuertoLlegada
+	  ,T2.vuel_FechaSalida
+	  ,T2.vuel_FechaLlegada
+	  ,T2.agenvuel_Id
+	  ,T3.agenvuel_Nombre
+      ,T1.[habi_Id]
+	  ,T4.habi_Nombre
+	  ,T4.habi_Precio
+	  ,t4.hote_Id
+	  ,T5.hote_Nombre
+	  ,T5.hote_Estellas
+	  ,T5.hote_DireccionExacta
+      ,[paqu_Personas]
+      ,[paqu_Precio]
+  FROM [agen].[tbPaquetes] T1 INNER JOIN agen.tbVuelos T2
+  ON T1.vuel_Id = T2.vuel_Id INNER JOIN agen.tbAgenciasVuelos T3
+  ON T3.agenvuel_Id = T2.agenvuel_Id INNER JOIN agen.tbHabitaciones T4
+  ON t4.habi_Id = T1.habi_Id INNER JOIN agen.tbHoteles T5
+  ON t5.hote_Id = T4.hote_Id
+GO
+
+--Procedimiento listar paquetes
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_List
+AS
+BEGIN
+	SELECT * FROM agen.VW_tbPaquetes
+END
