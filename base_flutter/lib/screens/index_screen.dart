@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-String url = "https://api.thecatapi.com/v1/categories";
+String url = "https://localhost:44313/api/Usuario/Listado";
 
 Future<dynamic> _getListado() async {
   final respuesta = await http.get(Uri.parse(url));
@@ -35,8 +35,12 @@ class _MyWidgetState extends State<MyWidget> {
             return ListView(
               children: listado(item.data),
             );
-          } else {
-            return const Text("Sin data");
+          } else if(item.hasError)
+          {
+            return Text(item.error.toString());
+          }
+          else {
+            return Text(item.data);
           }
         },
       ),
@@ -47,7 +51,7 @@ class _MyWidgetState extends State<MyWidget> {
 List<Widget> listado(List<dynamic> info) {
   List<Widget> lista = [];
   info.forEach((element) {
-    lista.add(Text(element["name"]));
+    lista.add(Text(element["usua_NombreUsuario"]));
   });
   return lista;
 }
