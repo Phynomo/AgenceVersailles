@@ -8,9 +8,11 @@ Future<dynamic> _getListado() async {
   final respuesta = await http.get(Uri.parse(url));
   if (respuesta.statusCode == 200) {
     final json = respuesta.body;
-    return jsonDecode(json);
+    final jsonMap = jsonDecode(json);
+    return jsonMap["data"];
   } else {
     print("Error en la respuesta");
+    throw Exception('Failed to load listado');
   }
 }
 
@@ -37,7 +39,7 @@ class _MyWidgetState extends State<MyWidget> {
             );
           } else if(item.hasError)
           {
-            return Text(item.error.toString());
+            return Text(item.data.toString());
           }
           else {
             return Text(item.data);
