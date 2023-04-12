@@ -15,6 +15,7 @@ namespace Agence.Entities.Entities
 
         public int paqu_Id { get; set; }
         public string paqu_Nombre { get; set; }
+        public string paqu_Imagen { get; set; }
         public int? vuel_Id { get; set; }
         public int? habi_Id { get; set; }
         public int? paqu_Personas { get; set; }
