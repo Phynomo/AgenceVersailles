@@ -40,6 +40,12 @@ namespace Agence.API.Controllers
             return Ok(response);
         }
 
-
+        [HttpPut("Eliminar")]
+        public IActionResult Delete(UsuarioViewModel usuarios)
+        {
+            var item = _mapper.Map<tbUsuarios>(usuarios);
+            var result = _seguridadServivce.EliminarUsuarios(item);
+            return Ok(result);
+        }
     }
 }

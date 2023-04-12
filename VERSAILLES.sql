@@ -43,7 +43,7 @@ END;
 GO
 
 GO
-EXEC acce.UDP_InsertUsuario 'admin', 'defaultperson@gmail.com', '123', 1, 1;
+EXEC acce.UDP_InsertUsuario 'admin', 'defaultperson@aless.com', '123', 1, 1;
 
 --********* ALTERAR TABLA USUARIOS **************--
 --********* AGREGAR AUDITORIA**************--
