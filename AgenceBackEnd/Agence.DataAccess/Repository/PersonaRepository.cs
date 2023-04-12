@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Agence.DataAccess.Repository
 {
-    public class PersonaRepository <>
+    public class PersonaRepository 
     {
 
     }
