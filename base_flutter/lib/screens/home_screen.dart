@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreenState> {
                             ), 
               accountEmail: Text("alessia88@hotmail.com"),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage("https://static.zerochan.net/Mizuho.%28Sonny.Boy%29.full.3676448.png"),
+                backgroundImage: AssetImage("assets/images/user.png"),
               ),
               decoration: BoxDecoration(color: Colors.teal),
             ),
@@ -140,7 +140,7 @@ void showSimpleDialogVision(BuildContext context, WidgetBuilder builder) => show
             style: TextStyle(
               fontSize: 20.0,
             ),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
           ),
         ),
       ),
@@ -171,7 +171,7 @@ void showSimpleDialogMision(BuildContext context, WidgetBuilder builder) => show
             style: TextStyle(
               fontSize: 20.0,
             ),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
           ),
         ),
       ),
