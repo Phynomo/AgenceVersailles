@@ -556,3 +556,69 @@ AS
 BEGIN
 	SELECT * FROM acce.VW_tbUsuarios WHERE usua_Id = @usua_Id
 END
+
+--******PROCEDIMIENTOS PERSONAS******--
+GO
+CREATE OR ALTER VIEW agen.VW_tbPersonas
+AS
+	SELECT pers_Id, 
+		   pers_Nombres, 
+		   pers_Apellidos, 
+		   (pers_Nombres + ' ' + pers_Apellidos) AS pers_NombreCompleto,
+		   pers_Identidad, 
+		   estc_Id, 
+		   pers_FechaNacimiento, 
+		   CASE WHEN pers_Sexo = 'F' THEN 'Femenino'
+				ELSE 'Masculino'
+			END AS pers_Sexo,
+		   pers_Celular, 
+		   pers_EsEmpleado
+	FROM [agen].[tbPersonas]
+
+--Procedimiento listar personas
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPersonas_List
+AS
+BEGIN
+	SELECT * FROM agen.VW_tbPersonas
+END
+
+--Procedimiento insertar personas
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPersonas_Insert
+	@pers_Nombres			NVARCHAR(200),
+	@pers_Apellidos			NVARCHAR(200), 
+	@pers_Identidad			NVARCHAR(15), 
+	@estc_Id				INT, 
+	@pers_FechaNacimiento	DATE, 
+	@pers_Sexo				CHAR, 
+	@pers_Celular			NVARCHAR(20), 
+	@pers_EsEmpleado		BIT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS (SELECT *
+					   FROM [agen].[tbPersonas]
+					   WHERE [pers_Identidad] = @pers_Identidad)
+			BEGIN
+				INSERT INTO [agen].[tbPersonas](pers_Nombres, pers_Apellidos, pers_Identidad, estc_Id, pers_FechaNacimiento, pers_Sexo, pers_Celular, pers_EsEmpleado)
+				VALUES(@pers_Nombres, 
+					   @pers_Apellidos, 
+					   @pers_Identidad, 
+					   @estc_Id, 
+					   @pers_FechaNacimiento, 
+					   @pers_Sexo, 
+					   @pers_Celular, 
+					   @pers_EsEmpleado)
+				SELECT 'El registro ha sido insertado con éxito'
+
+			END
+		ELSE
+			SELECT 'Ya existe una persona con este número de identidad'
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+	END CATCH
+END
+
+
