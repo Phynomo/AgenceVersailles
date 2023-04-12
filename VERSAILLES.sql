@@ -457,6 +457,38 @@ INSERT INTO agen.tbVuelos(vuel_FechaSalida, vuel_FechaLlegada, vuel_AeropuertoSa
 VALUES ('2023-04-20 10:15:00', '2023-04-20 12:45:00', 2, 4, 1);
 
 
+--Paquetes
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura', 'https://th.bing.com/th/id/R.000a2fd491dafaeb55116eff5774f34a?rik=EAN1d%2b%2fEeEbmeA&pid=ImgRaw&r=0', 1, 1, 2, 3500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Familiar', 'https://th.bing.com/th/id/R.c33eba0ea5b9e760f1cb26959289d160?rik=PX%2bktRpetvQEpg&riu=http%3a%2f%2fwww.vivalaventura.es%2fwp-content%2fuploads%2fvacaciones-familiares-playa-830x553.jpg&ehk=P0RPGDyA%2bdnleFEMALmXGaXQLnJZD7zu1KrtINyFdlA%3d&risl=&pid=ImgRaw&r=0', 2, 2, 4, 5500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Playa', 'https://th.bing.com/th/id/R.30114dd3609ecdc3df495f31a153db58?rik=sXZHXHpEs9s4Wg&pid=ImgRaw&r=0', 3, 5, 2, 4200.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Romántico', 'https://th.bing.com/th/id/R.30114dd3609ecdc3df495f31a153db58?rik=sXZHXHpEs9s4Wg&pid=ImgRaw&r=0', 1, 8, 2, 6000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Extrema', 'https://rivistanatura.com/wp-content/uploads/2019/12/Alpinismo_apertura.jpg', 3, 12, 1, 8500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax', 'https://th.bing.com/th/id/OIP.Anph_sxiL5kLMsZdIlHxOwHaE8?pid=ImgDet&rs=1', 2, 14, 2, 4500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Diversión', 'https://www.lugaresdenieve.com/sites/default/files/tirolina-portada.jpg', 1, 17, 3, 5500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Luna de Miel', 'https://i.pinimg.com/originals/27/36/01/2736017d06955ab95e87603b8f6ca8b8.jpg', 2, 19, 2, 8000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Familiar', 'https://campercrew.de/wp-content/uploads/2020/12/Eine_unvergessliche_Reise-1536x1097.jpg', 3, 4, 4, 7000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax Familiar', 'https://th.bing.com/th/id/R.2b8e14ac42051fe2b12213f1509e3fa6?rik=wHMxvr4e%2fhBr1A&riu=http%3a%2f%2fst.depositphotos.com%2f1075946%2f2791%2fi%2f950%2fdepositphotos_27917631-stock-photo-family-of-four-bathing-in.jpg&ehk=408JfS%2f93OXpB7getFjTmad01JptyTHJTxJsf4vsHZc%3d&risl=&pid=ImgRaw&r=0', 1, 11, 4, 8000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Acapulco', 'https://www.tripsavvy.com/thmb/rm4aHPVTVw8PuDT1vuLsWw_oqLY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/GettyImages-544733254-6e9d0537eea34999815ae58e6de4d53e.jpg', 2, 12, 2, 2500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en la selva', 'https://farandulaymoda.info/wp-content/uploads/2021/08/ronald-rubio-una-breve-guia-para-el-calzado-de-la-selva-tropical-1.jpg', 1, 7, 4, 4500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de lujo en Cancún', 'https://www.worldatlas.com/r/w1300-q80/upload/94/49/83/cancun-mexico-jdross75.jpg', 3, 18, 2, 8000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete cultural en Oaxaca', 'https://media.timeout.com/images/105513984/750/422/image.jpg', 1, 3, 3, 4000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete romántico en San Miguel de Allende', 'https://www.christiesrealestate.com/blog/wp-content/uploads/2018/11/San_Miguel_de_Allende_Mexico_Jardin_Getty.jpg', 2, 8, 2, 5500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ski en Aspen', 'https://res-5.cloudinary.com/holiday-images/image/upload/q_auto:eco,f_auto,dpr_auto,w_1600,h_900,c_lfill,q_auto:eco,f_auto/v1410449023/Aspen-Snowmass-1_qgpsqy.jpg', 3, 15, 4, 12000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de relax en Tulum', 'https://www.laotraruta.org/wp-content/uploads/2019/10/el-castillo-tulum.jpg', 2, 10, 2, 3000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en Baja California', 'https://images.trvl-media.com/hotels/35000000/34190000/34183500/34183472/ad24c89b_y.jpg?impolicy=fcrop&w=900&h=506&q=mediumHigh', 1, 6, 4, 5000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ciudad en Nueva York', 'http://3.bp.blogspot.com/-44cl-GDFK1w/UoMOj_d0QHI/AAAAAAAALfs/XHokGx1wLBo/s1600/New-York-City-hd+Wallpaper.jpg', 3, 20, 2, 10000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Puerto Escondido', 'https://i0.wp.com/theoaxacapost.com/wp-content/uploads/sites/14/2021/07/pe-oaxaca.jpg?resize=696%2C464&ssl=1', 2, 11, 2, 2000.00);
+
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio)
+VALUES ('Vacaciones en la playa', 'https://diarioroatan.com/wp-content/uploads/2018/05/cayos-cochinos-beach-750x430.jpg', 2, 8, 2, 800.00),
+       ('Fin de semana en la montaña', 'http://3.bp.blogspot.com/-ZyLQ7wvu0qM/T6liE0Io25I/AAAAAAAAACM/Vyxy81yfb0I/s1600/yatsukage.JPG', 1, 15, 4, 1200.00),
+       ('Tour por Europa', 'https://interrailero.com/wp-content/uploads/2019/10/ciudades-que-visitar-en-europa.jpg', 3, 19, 2, 5000.00),
+       ('Luna de miel en la ciudad', 'https://cdn.omni-links.com/tourimages/thumb/f747d0690cd8f643e5e0bb8f34f6e7c2_thumb_1680x1280.jpg', 3, 1, 2, 1500.00),
+       ('Excursión en la naturaleza', 'https://www.concienciaeco.com/wp-content/uploads/2014/07/autumn-750px.jpg', 1, 18, 4, 2500.00),
+       ('Viaje de aniversario', 'https://www.lugaris.com/wp-content/uploads/2019/10/luxury_SMALL2.jpg', 2, 5, 2, 1200.00),
+       ('Descanso en la isla', 'https://elviajerofeliz.com/wp-content/uploads/2017/08/Islas-de-la-Bahia.jpg', 3, 14, 3, 3500.00),
+       ('Aventura en el desierto', 'https://www.kokulisworld.com/static/uploads/shutterstock_656919925.jpg', 1, 7, 4, 2800.00);
+
 
 --*******PROCEDIMIENTOS ALMACENADOS*******--
 
