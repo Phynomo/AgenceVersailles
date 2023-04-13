@@ -14,11 +14,11 @@ class _HomeScreenState extends State<HomeScreenState> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Menú'),
-        backgroundColor: Colors.teal,
+        backgroundColor:const Color.fromRGBO(255, 211, 0, 1),
       ),
       body: PageView(
         children: const [
-          CustomScreen(color: Color.fromARGB(255, 186, 230, 187)),
+          CustomScreen(color: Colors.white),
           ],
       ),
       drawer:  Drawer(
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreenState> {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage("assets/images/user.png"),
               ),
-              decoration: BoxDecoration(color: Colors.teal),
+              decoration: BoxDecoration(color: const Color.fromRGBO(255, 211, 0, 1)),
             ),
             ListTile(
               leading: Icon(Icons.person),
