@@ -782,3 +782,21 @@ AS
 BEGIN
 	SELECT * FROM agen.VW_tbPaquetes
 END
+
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListTop5Caros
+AS
+BEGIN
+	SELECT TOP(5) * FROM agen.VW_tbPaquetes T1
+	order by T1.paqu_Precio desc
+END
+
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListTop10baratos
+AS
+BEGIN
+	SELECT TOP(10) * FROM agen.VW_tbPaquetes T1
+	order by T1.paqu_Precio
+END
+
+
