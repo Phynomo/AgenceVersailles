@@ -32,6 +32,19 @@ namespace Agence.DataAccess.Repository
             return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Listar_Paquetes, null, commandType: System.Data.CommandType.StoredProcedure);
         }
 
+        public IEnumerable<VW_tbPaquetes> ListCaros()
+        {
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Listar_PaquetesCaros, null, commandType: System.Data.CommandType.StoredProcedure);
+        }
+
+        public IEnumerable<VW_tbPaquetes> ListBaratos()
+        {
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Listar_PaquetesBaratos, null, commandType: System.Data.CommandType.StoredProcedure);
+        }
+
+
         public RequestStatus Update(tbPaquetes item)
         {
             throw new NotImplementedException();

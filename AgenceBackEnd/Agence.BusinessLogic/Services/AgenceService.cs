@@ -31,6 +31,33 @@ namespace Agence.BusinessLogic.Services
             }
         }
 
+        public ServiceResult ListadoPaquetesCaros()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _paqueteRepository.ListCaros();
+                return result.Ok(list);
+            }
+            catch (Exception e)
+            {
+                return result.Error(e.Message);
+            }
+        }    
+
+         public ServiceResult ListadoPaquetesBaratos()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _paqueteRepository.ListBaratos();
+                return result.Ok(list);
+            }
+            catch (Exception e)
+            {
+                return result.Error(e.Message);
+            }
+        }    
         #endregion
 
     }

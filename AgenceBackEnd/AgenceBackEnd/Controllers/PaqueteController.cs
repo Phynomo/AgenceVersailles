@@ -28,5 +28,21 @@ namespace Agence.API.Controllers
             var list = _agenceService.ListadoPaquetes();
             return Ok(list);
         }
+
+        [HttpGet("Listado5Caros")]
+        public IActionResult caros5()
+        {
+            var list = _agenceService.ListadoPaquetesCaros();
+            return Ok(list);
+        }
+
+         [HttpGet("Listado10Baratos")]
+        public IActionResult baratos10()
+        {
+            var list = _agenceService.ListadoPaquetesBaratos();
+            return Ok(list);
+        }
+
+
     }
 }
