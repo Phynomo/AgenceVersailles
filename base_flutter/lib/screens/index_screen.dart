@@ -80,7 +80,6 @@ class _MyWidgetState extends State<MyWidget> {
 //     ),
 //     child: Text(element["usua_NombreUsuario"]),
 //     )
-
 List<Widget> listado(List<dynamic> info) {
   List<Widget> lista = [];
   info.forEach((element) {
@@ -104,7 +103,6 @@ List<Widget> listado(List<dynamic> info) {
   });
   return lista;
 }
-
 
 
 // body: Container(

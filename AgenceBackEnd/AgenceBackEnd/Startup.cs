@@ -36,6 +36,19 @@ namespace AgenceBackEnd
             services.AddSession();
 
             services.AddControllersWithViews();
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFlutterApp", builder =>
+                {
+                    builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+
+                    //builder.WithOrigins("http://localhost:61025/#/"); // Reemplaza con la URL de tu aplicación Flutter
+                });
+            });
+
         }
         
         private void AddSwagger(IServiceCollection services)
@@ -73,7 +86,9 @@ namespace AgenceBackEnd
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Foo API V1");
             });
 
+
             app.UseRouting();
+            app.UseCors("AllowFlutterApp");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

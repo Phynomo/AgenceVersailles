@@ -1,29 +1,3 @@
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.deps.json
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.dll
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\ref\Agence.Entities.dll
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.pdb
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.csproj.AssemblyReference.cache
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.AssemblyInfoInputs.cache
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.AssemblyInfo.cs
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.csproj.CoreCompileInputs.cache
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.dll
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\ref\Agence.Entities.dll
-C:\Users\PC\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.pdb
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.deps.json
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.dll
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\ref\Agence.Entities.dll
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.pdb
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.AssemblyInfoInputs.cache
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.AssemblyInfo.cs
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.csproj.CoreCompileInputs.cache
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.dll
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\ref\Agence.Entities.dll
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.pdb
-<<<<<<< HEAD
-C:\Users\LAB01\Documents\GitHub\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.csproj.AssemblyReference.cache
-=======
 C:\Users\LAB01\Documents\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.deps.json
 C:\Users\LAB01\Documents\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\Agence.Entities.dll
 C:\Users\LAB01\Documents\AgenceVersailles\AgenceBackEnd\Agence.Entities\bin\Debug\net5.0\ref\Agence.Entities.dll
@@ -36,4 +10,3 @@ C:\Users\LAB01\Documents\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debu
 C:\Users\LAB01\Documents\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.dll
 C:\Users\LAB01\Documents\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\ref\Agence.Entities.dll
 C:\Users\LAB01\Documents\AgenceVersailles\AgenceBackEnd\Agence.Entities\obj\Debug\net5.0\Agence.Entities.pdb
->>>>>>> Phynomo

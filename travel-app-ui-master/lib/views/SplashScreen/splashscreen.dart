@@ -19,16 +19,16 @@ class _SplashScreenState extends State<SplashScreen> {
         Container(
           height: size.height * 0.55,
           decoration: BoxDecoration(
-              color: Colors.grey,
+              color: kAccentColor,
               borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(36),
-                  bottomRight: Radius.circular(36))),
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20))),
           child: ClipRRect(
             borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(36),
                   bottomRight: Radius.circular(36)),
             child: Image(
-              image: AssetImage('assets/image/pic3.jpg'),
+              image: AssetImage('assets/image/LogoFondoMoradoConL.gif'),
               fit: BoxFit.cover,
             ),
           ),
@@ -43,14 +43,15 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Flexible(
                   child: Text(
-                "Winter Vaction Trips!",
+                //"¡Bienvenue à la meilleure agence!",
+                "¡Empieza tu viaje con nosotros!",
                 maxLines: 2,
                 overflow: TextOverflow.clip,
                 style: appTheme.textTheme.headline1,
               )),
               SizedBox(height: 18),
               Text(
-                "Enjoy your winter vacation with warmth and amazing sightseeing on the mountains. Enjoy the best experience with us!",
+                "Realiza tus reservaciones de viaje con nosotros, pero antes inicia sesión o crea una cuenta nueva",
                 maxLines: 4,
                 overflow: TextOverflow.fade,
                 style: appTheme.textTheme.bodyText1,
@@ -71,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           fontWeight: FontWeight.bold)),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Text("Let's Go! "),
+                    child: Text("Iniciar sisión"),
                   ))
             ],
           ),
