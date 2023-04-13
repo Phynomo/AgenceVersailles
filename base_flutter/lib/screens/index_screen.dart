@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-String url = "http://www.agenciaversalles.somee.com/api/Usuario/Listado";
+String url = "http://www.agenciaversalles.somee.com/api/Paquete/Listado";
 String urlTop5Caros =
     "http://www.agenciaversalles.somee.com/api/Usuario/Listado";
 String urlTop10Baratos =
@@ -50,7 +50,7 @@ class _MyWidgetState extends State<MyWidget> {
         backgroundColor: const Color.fromRGBO(255, 211, 0, 1),
       ),
       body: FutureBuilder<dynamic>(
-        future: _getListadoBaratos(),
+        future: _getListado(),
         builder: (context, item) {
           if (item.hasData) {
             return Container(
@@ -90,11 +90,11 @@ List<Widget> listado(List<dynamic> info) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Image(
+              Image(
                   image: NetworkImage(
-                      "https://th.bing.com/th/id/R.6dc770ef16827a632faa1a84d10826f8?rik=8aqKp2OnbcudzQ&pid=ImgRaw&r=0")),
+                      element["paqu_Imagen"])),
               Text(
-                element["usua_NombreUsuario"],
+                element["paqu_Nombre"],
                 style: const TextStyle(fontSize: 17.0),
               ),
             ],
