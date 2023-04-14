@@ -142,17 +142,28 @@ class _ViewDetailsState extends State<ViewDetails> {
                     SizedBox(
                       height: 8,
                     ),
-                    Text(
-                      "Detalles",
-                      style: appTheme.textTheme.headline3
-                          .merge(TextStyle(color: Colors.black)),
-                    ),
+                    // Text(
+                    //   "Detalles",
+                    //   style: appTheme.textTheme.headline3
+                    //       .merge(TextStyle(color: Colors.black)),
+                    // ),
                     SizedBox(height: 12),
-                    Text(
-                      paqueteObject.description,
-                      maxLines: 4,
-                      overflow: TextOverflow.fade,
-                      style: appTheme.textTheme.bodyText1,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Text(
+                          "Disfruta de tu viaje con " +
+                              paqueteObject.agencia +
+                              " en el maravilloso " +
+                              paqueteObject.hotelNombre +
+                              ", saliendo desde el " +
+                              paqueteObject.aeropuerto +
+                              ", " +
+                              paqueteObject.ciudadSalida,
+                          maxLines: 4,
+                          overflow: TextOverflow.fade,
+                          style: appTheme.textTheme.bodyText1,
+                        ),
+                      ),
                     ),
                     SizedBox(height: size.height * 0.02),
                     Column(
@@ -197,6 +208,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                 style: appTheme.textTheme.headline3,
                               ),
                             )),
+                        SizedBox(height: 12),
                       ],
                     )
                   ],

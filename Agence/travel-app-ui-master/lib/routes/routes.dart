@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
+import 'package:travelappui/views/HomePage/homepagetodo.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:travelappui/views/ViewDetails/viewDetails.dart';
 import 'package:travelappui/views/Login/login.dart';
+import 'package:travelappui/views/MisReservacionesPage/misreservaciones.dart';
 
 class AppRoutes {
 
@@ -10,9 +12,11 @@ class AppRoutes {
   static const String ROUTE_Initial = ROUTE_Splashscreen;
 
   static const String ROUTE_Home = "/home";
+  static const String ROUTE_HomeAll = "/homeall";
   static const String ROUTE_Splashscreen = "/splash";
   static const String ROUTE_ViewDetails = "/view";
   static const String ROUTE_Login = "/login";
+  static const String ROUTE_MisReservaciones = "/reservaciones";
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
 
@@ -32,6 +36,14 @@ class AppRoutes {
       case ROUTE_Login:
           return MaterialPageRoute(
             settings: settings, builder: (_) => LoginPage());
+        break;
+      case ROUTE_MisReservaciones:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => MisReservacionesPage());
+        break;
+      case ROUTE_HomeAll:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => HomePageAll());
       break;
     }
   }

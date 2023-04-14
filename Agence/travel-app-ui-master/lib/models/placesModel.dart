@@ -15,9 +15,10 @@ class PlaceModel{
   String hotelNombre;
   String hotelDireccion;
   String ciudadSalida;
+  String aeropuerto;
 
   PlaceModel({this.placeTitle,this.locationShort,this.rateperpackage,this.rating,this.description,
               this.duration,this.imgUrl,this.paquId,this.personas,this.fechaSalida,this.agencia,
-              this.hotelNombre,this.hotelDireccion,this.ciudadSalida});
+              this.hotelNombre,this.hotelDireccion,this.ciudadSalida,this.aeropuerto});
 
 }

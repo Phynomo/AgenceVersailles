@@ -27,6 +27,11 @@ class RESTAPI {
           locationShort: element["ciud_Nombre"] + ", " + element["pais_Nombre"],
           rateperpackage: element["paqu_Precio"],
           fechaSalida: DateFormat('dd/MM/yyyy').format(date),
+          ciudadSalida: element['ciud_Salida'],
+          hotelDireccion: element['hote_DireccionExacta'],
+          hotelNombre: element['hote_Nombre'],
+          agencia: element['agenvuel_Nombre'],
+          aeropuerto: element['aero_Nombre'],
           rating: double.parse(element["hote_Estellas"].toString())));
     });
     return lista;

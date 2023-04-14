@@ -11,12 +11,12 @@ import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
+class HomePageAll extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageAllState createState() => _HomePageAllState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageAllState extends State<HomePageAll> {
   ScrollController _mainScrollController = ScrollController();
 
   final double _bottomBarHeight = 90;
@@ -47,65 +47,10 @@ class _HomePageState extends State<HomePage> {
               controller: _mainScrollController,
               child: Column(
                 children: [
-                  TopFeaturedList(),
-                  Container(
-                    width: size.width,
-                    height: size.height * 0.33,
-                    child: StreamBuilder(
-                        stream: homepagestate.getFeaturedPlaces().asStream(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData)
-                            return Container(
-                                alignment: Alignment.center,
-                                width: 50,
-                                height: 50,
-                                child: CircularProgressIndicator());
-                          if (snapshot.connectionState == ConnectionState.waiting)
-                            return Container(
-                                alignment: Alignment.center,
-                                width: 50,
-                                height: 50,
-                                child: CircularProgressIndicator());
-                                
-                          return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, "/view", arguments: {"paqueteObject": snapshot.data[index]});
-                                    },
-                                    child: FeaturedCard(
-                                      placeModel: snapshot.data[index],
-                                    ));
-                              });
-                        }),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 12, right: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "   Recomendados",
-                          style: kAppTheme.textTheme.headline5,
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/homeall");
-                            },
-                            child: Text(
-                              "Ver Todo",
-                              style: kAppTheme.textTheme.headline6,
-                            ))
-                      ],
-                    ),
-                  ),
                   Container(
                     margin: EdgeInsets.all(16),
                     child: StreamBuilder(
-                        stream: homepagestate.getRecomendedPlaces().asStream(),
+                        stream: homepagestate.getAllPlaces().asStream(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData)
                             return Container(
@@ -175,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, "/homeall");
+                                    Navigator.pushNamed(context, "/reservaciones");
                                   }),
                               IconButton(
                                   icon: Icon(Icons.search,

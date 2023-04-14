@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:travelappui/models/placesModel.dart';
 import 'package:travelappui/utils/restAPI.dart';
@@ -17,7 +16,7 @@ class HomePageStateProvider extends ChangeNotifier
 
   List<String> kTopListLink = [
     'Popular',
-    'Todo',
+    'Destacado',
     'Más económico',    
     'Europa',
     'Asia',
@@ -34,16 +33,6 @@ class HomePageStateProvider extends ChangeNotifier
 
   Future<List<PlaceModel>> getRecomendedPlaces() async {
     return await api.getRecommendedPlaces();    
-  }
-
-  Future<void> GetTopList() async {
-
-      await Future.delayed(const Duration(milliseconds: 500), (){});
-
-      kTopListLink.add("India");
-  
-      notifyListeners();
-      
   }
 
 }

@@ -849,6 +849,8 @@ BEGIN
 	WHERE paqu_Id = @paqu_Id
 END
 
+--******PROCEDIMIENTOS RESERVACIONES******--
+
 --Procedimiento insertar reservación
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbReservaciones_Insert

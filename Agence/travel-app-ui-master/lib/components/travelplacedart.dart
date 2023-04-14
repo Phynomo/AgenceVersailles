@@ -46,6 +46,7 @@ Widget TravelCard(PlaceModel placeModel) => Container(
                   Text(
                     placeModel.placeTitle,
                     style: kAppTheme.textTheme.subtitle1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Row(
                     children: [

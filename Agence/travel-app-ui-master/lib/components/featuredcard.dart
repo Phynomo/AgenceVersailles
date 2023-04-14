@@ -6,7 +6,6 @@ import 'package:travelappui/models/placesModel.dart';
 import 'package:travelappui/theme.dart';
 
 class FeaturedCard extends StatefulWidget {
-
   PlaceModel placeModel;
 
   FeaturedCard({this.placeModel});
@@ -20,13 +19,11 @@ class _FeaturedCardState extends State<FeaturedCard> {
   String title;
   bool favorite;
 
-  
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     ThemeData appTheme = Theme.of(context);
-    
+
     return Container(
         width: size.width * 0.85,
         height: max(200, size.height * 0.32),
@@ -39,7 +36,7 @@ class _FeaturedCardState extends State<FeaturedCard> {
             Container(
               height: double.maxFinite,
               width: double.maxFinite,
-              child: ClipRRect(                
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(18),
                 child: Image(
                   image: AssetImage(widget.placeModel.imgUrl),
@@ -64,18 +61,23 @@ class _FeaturedCardState extends State<FeaturedCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            widget.placeModel.placeTitle,
-                            style: kAppTheme.textTheme.headline3,
+                          Expanded(
+                            child: Text(
+                              widget.placeModel.placeTitle,
+                              style: kAppTheme.textTheme.headline3,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                           IconButton(
-                              icon: Icon(
-                                Icons.favorite_rounded,
-                                color: kAppTheme.primaryColor,
-                              ),
-                              onPressed: () {
-
-                              })
+                            icon: Icon(
+                              Icons.favorite_rounded,
+                              color: kAppTheme.primaryColor,
+                            ),
+                            onPressed: () {
+                              // add your onPressed logic here
+                            },
+                          ),
                         ],
                       ),
                     ),
