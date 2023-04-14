@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context, "/view");
+                                      Navigator.pushNamed(context, "/view", arguments: {"paqueteObject": snapshot.data[index]});
                                     },
                                     child: FeaturedCard(
                                       placeModel: snapshot.data[index],
@@ -88,13 +88,13 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "   Recommended",
+                          "   Recomendados",
                           style: kAppTheme.textTheme.headline5,
                         ),
                         TextButton(
                             onPressed: () {},
                             child: Text(
-                              "View All",
+                              "Ver Todo",
                               style: kAppTheme.textTheme.headline6,
                             ))
                       ],
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     margin: EdgeInsets.all(16),
                     child: StreamBuilder(
-                        stream: homepagestate.getAllPlaces().asStream(),
+                        stream: homepagestate.getRecomendedPlaces().asStream(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData)
                             return Container(
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context, "/view");
+                                      Navigator.pushNamed(context, "/view", arguments: {"paqueteObject": snapshot.data[index]});
                                     },
                                     child: TravelCard(snapshot.data[index]));
                               });

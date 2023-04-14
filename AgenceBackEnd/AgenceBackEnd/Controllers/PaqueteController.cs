@@ -43,6 +43,11 @@ namespace Agence.API.Controllers
             return Ok(list);
         }
 
-
+        [HttpGet("Find")]
+        public IActionResult Find(int id)
+        {
+            var list = _agenceService.FindPaquetes(id);
+            return Ok(list);
+        }
     }
 }
