@@ -16,7 +16,7 @@ namespace Agence.Entities.Entities
 
         public int ciud_Id { get; set; }
         public string ciud_Nombre { get; set; }
-        public int? depa_Id { get; set; }
+        public int depa_Id { get; set; }
 
         public virtual tbDepartamentos depa { get; set; }
         public virtual ICollection<tbAeropuertos> tbAeropuertos { get; set; }

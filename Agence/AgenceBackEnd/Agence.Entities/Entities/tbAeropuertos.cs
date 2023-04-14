@@ -16,7 +16,7 @@ namespace Agence.Entities.Entities
 
         public int aero_Id { get; set; }
         public string aero_Nombre { get; set; }
-        public int? ciud_Id { get; set; }
+        public int ciud_Id { get; set; }
         public string aero_DireccionExacta { get; set; }
 
         public virtual tbCiudades ciud { get; set; }

@@ -15,7 +15,7 @@ namespace Agence.Entities.Entities
 
         public int hote_Id { get; set; }
         public string hote_Nombre { get; set; }
-        public int? ciud_Id { get; set; }
+        public int ciud_Id { get; set; }
         public string hote_DireccionExacta { get; set; }
         public int? hote_Estellas { get; set; }
 

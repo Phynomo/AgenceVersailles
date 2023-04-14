@@ -50,6 +50,10 @@ namespace Agence.DataAccess.Context
 
                 entity.ToView("VW_tbPaquetes", "agen");
 
+                entity.Property(e => e.aero_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.agenvuel_Nombre)
                     .IsRequired()
                     .HasMaxLength(100);
@@ -57,6 +61,10 @@ namespace Agence.DataAccess.Context
                 entity.Property(e => e.ciud_Nombre)
                     .IsRequired()
                     .HasMaxLength(100);
+
+                entity.Property(e => e.ciud_Salida)
+                    .IsRequired()
+                    .HasMaxLength(202);
 
                 entity.Property(e => e.cont_Nombre)
                     .IsRequired()
@@ -72,7 +80,9 @@ namespace Agence.DataAccess.Context
 
                 entity.Property(e => e.habi_Precio).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.hote_DireccionExacta).HasMaxLength(500);
+                entity.Property(e => e.hote_DireccionExacta)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.hote_Nombre)
                     .IsRequired()
@@ -103,7 +113,9 @@ namespace Agence.DataAccess.Context
                     .IsRequired()
                     .HasMaxLength(150);
 
-                entity.Property(e => e.pers_Celular).HasMaxLength(20);
+                entity.Property(e => e.pers_Celular)
+                    .IsRequired()
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.pers_FechaNacimiento).HasColumnType("date");
 
@@ -165,7 +177,9 @@ namespace Agence.DataAccess.Context
 
                 entity.ToTable("tbAeropuertos", "agen");
 
-                entity.Property(e => e.aero_DireccionExacta).HasMaxLength(500);
+                entity.Property(e => e.aero_DireccionExacta)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.aero_Nombre)
                     .IsRequired()
@@ -174,6 +188,7 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.ciud)
                     .WithMany(p => p.tbAeropuertos)
                     .HasForeignKey(d => d.ciud_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbAeropuertos_gral_tbCiudades_ciud_Id");
             });
 
@@ -201,11 +216,13 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.clasvuel)
                     .WithMany(p => p.tbBilletesAvion)
                     .HasForeignKey(d => d.clasvuel_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbBilletesAvion_agen_tbClasesVuelos_clasvuel_Id");
 
                 entity.HasOne(d => d.vuel)
                     .WithMany(p => p.tbBilletesAvion)
                     .HasForeignKey(d => d.vuel_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbBilletesAvion_agen_tbVuelos_vuel_Id");
             });
 
@@ -235,6 +252,7 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.depa)
                     .WithMany(p => p.tbCiudades)
                     .HasForeignKey(d => d.depa_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_gral_tbCiudades_gral_tbDepartamentos_depa_Id");
             });
 
@@ -276,6 +294,7 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.pais)
                     .WithMany(p => p.tbDepartamentos)
                     .HasForeignKey(d => d.pais_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_gral_tbDepartamentos_gral_tbPaises_pais_Id");
             });
 
@@ -307,11 +326,13 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.cath)
                     .WithMany(p => p.tbHabitaciones)
                     .HasForeignKey(d => d.cath_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbHabitaicones_agen_tbCategorias_cath_Id");
 
                 entity.HasOne(d => d.hote)
                     .WithMany(p => p.tbHabitaciones)
                     .HasForeignKey(d => d.hote_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbHabitaicones_agen_tbHoteles_hote_Id");
             });
 
@@ -322,7 +343,9 @@ namespace Agence.DataAccess.Context
 
                 entity.ToTable("tbHoteles", "agen");
 
-                entity.Property(e => e.hote_DireccionExacta).HasMaxLength(500);
+                entity.Property(e => e.hote_DireccionExacta)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.hote_Nombre)
                     .IsRequired()
@@ -331,6 +354,7 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.ciud)
                     .WithMany(p => p.tbHoteles)
                     .HasForeignKey(d => d.ciud_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbHoteles_gral_tbCiudades_ciud_Id");
             });
 
@@ -348,6 +372,7 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.cont)
                     .WithMany(p => p.tbPaises)
                     .HasForeignKey(d => d.cont_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_gral_tbPaises_gral_tbContientes_cont_Id");
             });
 
@@ -367,11 +392,13 @@ namespace Agence.DataAccess.Context
                 entity.HasOne(d => d.habi)
                     .WithMany(p => p.tbPaquetes)
                     .HasForeignKey(d => d.habi_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbPaquetes_agen_tbHabitaciones_habi_Id");
 
                 entity.HasOne(d => d.vuel)
                     .WithMany(p => p.tbPaquetes)
                     .HasForeignKey(d => d.vuel_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_agen_tbPaquetes_agen_tbVuelos_vuel_Id");
             });
 
@@ -386,7 +413,9 @@ namespace Agence.DataAccess.Context
                     .IsRequired()
                     .HasMaxLength(150);
 
-                entity.Property(e => e.pers_Celular).HasMaxLength(20);
+                entity.Property(e => e.pers_Celular)
+                    .IsRequired()
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.pers_FechaNacimiento).HasColumnType("date");
 

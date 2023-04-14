@@ -50,6 +50,16 @@ namespace Agence.DataAccess.Repository
             return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Listar_PaquetesBaratos, null, commandType: System.Data.CommandType.StoredProcedure);
         }
 
+        public IEnumerable<VW_tbPaquetes> ListXPerson(int id)
+        {
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@pers_Id", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Listar_PaquetesPorPersona, parametros, commandType: System.Data.CommandType.StoredProcedure);
+        }
+
 
         public RequestStatus Update(tbPaquetes item)
         {

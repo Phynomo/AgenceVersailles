@@ -9,9 +9,9 @@ namespace Agence.Entities.Entities
     public partial class tbBilletesAvion
     {
         public int bill_Id { get; set; }
-        public int? vuel_Id { get; set; }
-        public int? clasvuel_Id { get; set; }
-        public decimal? bill_Precio { get; set; }
+        public int vuel_Id { get; set; }
+        public int clasvuel_Id { get; set; }
+        public decimal bill_Precio { get; set; }
 
         public virtual tbClasesVuelos clasvuel { get; set; }
         public virtual tbVuelos vuel { get; set; }

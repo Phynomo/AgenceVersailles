@@ -15,7 +15,7 @@ namespace Agence.Entities.Entities
 
         public int pais_Id { get; set; }
         public string pais_Nombre { get; set; }
-        public int? cont_Id { get; set; }
+        public int cont_Id { get; set; }
 
         public virtual tbContinentes cont { get; set; }
         public virtual ICollection<tbDepartamentos> tbDepartamentos { get; set; }
