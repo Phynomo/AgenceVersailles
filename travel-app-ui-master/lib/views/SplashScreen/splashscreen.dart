@@ -17,7 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: kPrimaryColor,
       body: Column(children: [
         Container(
-          height: size.height * 0.55,
+          height: size.height * 0.50,
+          width: size.width * 0.98,
           decoration: BoxDecoration(
               color: kAccentColor,
               borderRadius: BorderRadius.only(

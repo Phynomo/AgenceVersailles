@@ -55,6 +55,18 @@ namespace Agence.DataAccess.Repository
             return db.Query<VW_tbUsuarios>(ScriptsDataBase.UDP_Listar_Usuarios, null, commandType: System.Data.CommandType.StoredProcedure);
         }
 
+        public IEnumerable<VW_tbUsuarios> Login(tbUsuarios item)
+        {
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@usua_NombreUsuario", item.usua_NombreUsuario, DbType.String, ParameterDirection.Input);
+            parametros.Add("@usua_Correo", item.usua_Correo, DbType.String, ParameterDirection.Input);
+            parametros.Add("@usua_Contrasena", item.usua_Contrasena, DbType.String, ParameterDirection.Input);
+
+            return db.Query<VW_tbUsuarios>(ScriptsDataBase.UDP_Login, parametros, commandType: System.Data.CommandType.StoredProcedure);
+        }
+
+
         public RequestStatus Update(tbUsuarios item)
         {
             throw new NotImplementedException();

@@ -522,12 +522,31 @@ BEGIN
 	SELECT * FROM acce.VW_tbUsuarios
 END
 
+
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_VW_tbUsuarios_Login 
+	@usua_NombreUsuario		NVARCHAR(100),
+	@usua_Correo			NVARCHAR(200),	
+	@usua_Contrasena		NVARCHAR(Max)
+AS
+BEGIN
+	
+	
+	DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
+
+	SELECT usua_Id, usua_NombreUsuario, usua_Correo, pers_Id, usua_PersonaNombreCompleto, usua_EsAdmin, usua_UsuCreacion, usua_NombreUsuarioCreacion, usua_FechaCreacion, usua_UsuModificacion, usua_NombreUsuarioModificacion, usua_FechaModificacion FROM acce.VW_tbUsuarios T1
+	WHERE (T1.usua_NombreUsuario = @usua_NombreUsuario OR T1.usua_Correo = @usua_Correo)
+	and	t1.usua_Contrasena = @contraEncript
+
+END
+
+
 --Procedimiento insertar usuarios
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Insert
 	@usua_NombreUsuario		NVARCHAR(100),
 	@usua_Correo			NVARCHAR(200),	
-	@usua_Contrasena		NVARCHAR(200),
+	@usua_Contrasena		NVARCHAR(Max),
 	@pers_Id				INT,
 	@usua_UsuCreacion		INT
 AS
@@ -768,11 +787,23 @@ SELECT [paqu_Id]
 	  ,T5.hote_DireccionExacta
       ,[paqu_Personas]
       ,[paqu_Precio]
+	  ,T5.ciud_Id
+	  ,T6.ciud_Nombre
+	  ,T7.depa_Id
+	  ,T7.depa_Nombre
+	  ,T8.pais_Id
+	  ,T8.pais_Nombre
+	  ,T9.cont_Id
+	  ,T9.cont_Nombre
   FROM [agen].[tbPaquetes] T1 INNER JOIN agen.tbVuelos T2
   ON T1.vuel_Id = T2.vuel_Id INNER JOIN agen.tbAgenciasVuelos T3
   ON T3.agenvuel_Id = T2.agenvuel_Id INNER JOIN agen.tbHabitaciones T4
   ON t4.habi_Id = T1.habi_Id INNER JOIN agen.tbHoteles T5
-  ON t5.hote_Id = T4.hote_Id
+  ON t5.hote_Id = T4.hote_Id INNER JOIN gral.tbCiudades T6
+  ON T6.ciud_Id = t5.ciud_Id INNER JOIN gral.tbDepartamentos T7
+  ON t7.depa_Id = T6.depa_Id INNER JOIN gral.tbPaises T8
+  ON T8.pais_Id = T7.pais_Id INNER JOIN gral.tbContinentes T9
+  On T8.cont_Id = T9.cont_Id 
 GO
 
 --Procedimiento listar paquetes
