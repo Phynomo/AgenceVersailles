@@ -32,6 +32,21 @@ namespace Agence.BusinessLogic.Services
                 return result.Error(e.Message);
             }
         }
+
+        public ServiceResult Login(tbUsuarios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _usuarioRepository.Login(item);
+                return result.Ok(list);
+            }
+            catch (Exception e)
+            {
+                return result.Error(e.Message);
+            }
+        }
+
         public ServiceResult InsertarUsuarios(tbUsuarios item)
         {
             var result = new ServiceResult();

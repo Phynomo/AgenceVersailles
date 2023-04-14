@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:travelappui/views/ViewDetails/viewDetails.dart';
+import 'package:travelappui/views/Login/login.dart';
 
 class AppRoutes {
 
@@ -30,7 +31,7 @@ class AppRoutes {
         break;
       case ROUTE_Login:
           return MaterialPageRoute(
-            settings: settings, builder: (_) => HomePage());
+            settings: settings, builder: (_) => LoginPage());
       break;
     }
   }

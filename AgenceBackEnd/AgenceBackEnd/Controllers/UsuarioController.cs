@@ -32,6 +32,14 @@ namespace Agence.API.Controllers
             return Ok(list);
         }
 
+        [HttpPut("Login")]
+        public IActionResult Login(UsuarioViewModel usuario)
+        {
+            var item = _mapper.Map<tbUsuarios>(usuario);
+            var list = _seguridadServivce.Login(item);
+            return Ok(list);
+        }
+
         [HttpPost("Insertar")]
         public IActionResult Insert(UsuarioViewModel usuarios)
         {

@@ -10,6 +10,7 @@ namespace Agence.DataAccess.Repository
     {
         #region Usuarios
         public static string UDP_Listar_Usuarios = "acce.UDP_VW_tbUsuarios_List";
+        public static string UDP_Login = "acce.UDP_VW_tbUsuarios_Login";
         public static string UDP_Insertar_Usuarios = "acce.UDP_tbUsuarios_Insert";
         public static string UDP_Editar_Usuarios = "acce.UDP_tbUsuarios_Edit";
         public static string UDP_Eliminar_Usuarios = "acce.UDP_tbUsuarios_Delete";

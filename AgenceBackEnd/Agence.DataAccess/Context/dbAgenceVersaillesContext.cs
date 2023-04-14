@@ -54,6 +54,18 @@ namespace Agence.DataAccess.Context
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.Property(e => e.ciud_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.cont_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.habi_Nombre)
                     .IsRequired()
                     .HasMaxLength(100);
@@ -63,6 +75,10 @@ namespace Agence.DataAccess.Context
                 entity.Property(e => e.hote_DireccionExacta).HasMaxLength(500);
 
                 entity.Property(e => e.hote_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.pais_Nombre)
                     .IsRequired()
                     .HasMaxLength(100);
 
