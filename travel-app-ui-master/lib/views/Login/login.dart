@@ -110,19 +110,26 @@ class _LoginPageState extends State<LoginPage> {
 
           var body = json.encode(data); //Json encriptado
 
-          var url = Uri.parse('https://localhost:44313/api/Usuario/Login'); //Url
+          var url = Uri.parse('http://www.agenciaversalles.somee.com/api/Usuario/Login'); //Url
 
           http.put(url, body: body, headers: {'Content-Type': 'application/json'}).then((response) { //Brujeria
           if (response.statusCode == 200) { // resultado
-             Navigator.push(
+            var jsonResponse = jsonDecode(response.body);
+            var data = jsonResponse['data'];
+            if (data != null) {
+              Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage()),
             );
-          }else{
-            Navigator.push(
+            }else{
+              Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SplashScreen()),
             );
+            }
+             
+          }else{
+            
           }
 });       //tqm, gracias por el carrito 
           } catch (e) {

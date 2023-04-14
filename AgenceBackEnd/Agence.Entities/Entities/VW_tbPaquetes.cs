@@ -27,5 +27,13 @@ namespace Agence.Entities.Entities
         public string hote_DireccionExacta { get; set; }
         public int? paqu_Personas { get; set; }
         public decimal? paqu_Precio { get; set; }
+        public int? ciud_Id { get; set; }
+        public string ciud_Nombre { get; set; }
+        public int depa_Id { get; set; }
+        public string depa_Nombre { get; set; }
+        public int pais_Id { get; set; }
+        public string pais_Nombre { get; set; }
+        public int cont_Id { get; set; }
+        public string cont_Nombre { get; set; }
     }
 }
