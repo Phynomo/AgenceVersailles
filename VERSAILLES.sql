@@ -313,6 +313,7 @@ INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Seúl', 26);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Manila', 27);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Singapur Central', 28);
 INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('Bangkok', 29);
+INSERT INTO gral.tbDepartamentos (depa_Nombre, pais_Id) VALUES ('California', 1);
 
 
 --Ciudades
@@ -341,28 +342,30 @@ INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Bogotá', 22);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Caracas', 23);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('La Habana', 24);
 INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Sídney', 25);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Los Ángeles', 30);
+INSERT INTO gral.tbCiudades(ciud_Nombre, depa_Id) VALUES ('Toronto', 2);
 
 --Aeropuertos
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de la Ciudad de México', 1, 'Av Capitán Carlos León S/N, Peñón de los Baños, Venustiano Carranza, 15620 Ciudad de México, CDMX, México');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Los Angeles', 2, '1 World Way, Los Angeles, CA 90045, Estados Unidos');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Toronto', 3, '6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canadá');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de la Ciudad de México', 3, 'Av Capitán Carlos León S/N, Peñón de los Baños, Venustiano Carranza, 15620 Ciudad de México, CDMX, México');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Los Angeles', 26, '1 World Way, Los Angeles, CA 90045, Estados Unidos');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Toronto', 27, '6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canadá');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Brasilia', 4, 'Lago Sul - Zona Industrial, Brasília - DF, Brasil');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Ministro Pistarini', 5, 'Au. Teniente General Pablo Riccheri Km 33,5, B1802 Ezeiza, Provincia de Buenos Aires, Argentina');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Ministro Pistarini', 11, 'Au. Teniente General Pablo Riccheri Km 33,5, B1802 Ezeiza, Provincia de Buenos Aires, Argentina');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Comodoro Arturo Merino Benítez', 6, 'Comodoro Arturo Merino Benítez, Pudahuel, Región Metropolitana, Chile');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional Jorge Chávez', 7, 'Av. Elmer Faucett s/n, Callao 07031, Perú');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Adolfo Suárez Madrid-Barajas', 8, 'Av de la Hispanidad, s/n, 28042 Madrid, España');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de Fráncfort del Meno', 9, '60547 Frankfurt, Alemania');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto de París-Charles de Gaulle', 10, '95700 Roissy-en-France, Francia');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES ('Aeropuerto Internacional de Roma-Fiumicino', 11, 'Via dell Aeroporto di Fiumicino, 00054 Fiumicino RM, Italia');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Düsseldorf', 11, 'Flughafenstraße 120, 40474 Düsseldorf, Alemania');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Frankfurt', 12, '60547 Frankfurt, Alemania');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto de Heathrow', 13, 'Longford TW6, Reino Unido');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Narita', 14, '1-1 Furugome, Narita, Chiba 282-0004, Japón');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Pekín', 15, 'Shunyi, Pekín, China');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Nueva Delhi', 16, 'Indira Gandhi International Airport, New Delhi, Delhi 110037, India');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional Sheremétievo', 17, 'Khimki, Moskovskaya oblast, Rusia');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto de Sídney', 18, 'Sydney NSW 2020, Australia');
-INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Auckland', 19, 'Auckland Airport (AKL), Auckland 2022, Nueva Zelanda');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Düsseldorf', 9, 'Flughafenstraße 120, 40474 Düsseldorf, Alemania');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Frankfurt', 9, '60547 Frankfurt, Alemania');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto de Heathrow', 12, 'Longford TW6, Reino Unido');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Narita', 13, '1-1 Furugome, Narita, Chiba 282-0004, Japón');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Pekín', 14, 'Shunyi, Pekín, China');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Nueva Delhi', 15, 'Indira Gandhi International Airport, New Delhi, Delhi 110037, India');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional Sheremétievo', 16, 'Khimki, Moskovskaya oblast, Rusia');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto de Sídney', 25, 'Sydney NSW 2020, Australia');
+INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Auckland', 21, 'Auckland Airport (AKL), Auckland 2022, Nueva Zelanda');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Denpasar', 20, 'Jalan Raya Gusti Ngurah Rai, Tuban, Kuta, Kabupaten Badung, Bali 80362, Indonesia');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Incheon', 21, '272 Gonghang-ro, Unseo-dong, Jung-gu, Incheon, Corea del Sur');
 INSERT INTO agen.tbAeropuertos (aero_Nombre, ciud_Id, aero_DireccionExacta) VALUES('Aeropuerto Internacional de Manila', 22, 'Andrews Ave, Pasay, Metro Manila, Filipinas');
@@ -773,6 +776,8 @@ SELECT [paqu_Id]
       ,[paqu_Imagen]
       ,T1.[vuel_Id]
 	  ,T2.vuel_AeropuertoSalida
+	  ,T10.aero_Nombre
+	  ,(T11.ciud_Nombre + ', ' + T13.pais_Nombre) as ciud_Salida
 	  ,T2.vuel_AeropuertoLlegada
 	  ,T2.vuel_FechaSalida
 	  ,T2.vuel_FechaLlegada
@@ -783,11 +788,11 @@ SELECT [paqu_Id]
 	  ,T4.habi_Precio
 	  ,t4.hote_Id
 	  ,T5.hote_Nombre
-	  ,T5.hote_Estellas
 	  ,T5.hote_DireccionExacta
       ,[paqu_Personas]
       ,[paqu_Precio]
 	  ,T5.ciud_Id
+	  ,T5.hote_Estellas
 	  ,T6.ciud_Nombre
 	  ,T7.depa_Id
 	  ,T7.depa_Nombre
@@ -803,7 +808,11 @@ SELECT [paqu_Id]
   ON T6.ciud_Id = t5.ciud_Id INNER JOIN gral.tbDepartamentos T7
   ON t7.depa_Id = T6.depa_Id INNER JOIN gral.tbPaises T8
   ON T8.pais_Id = T7.pais_Id INNER JOIN gral.tbContinentes T9
-  On T8.cont_Id = T9.cont_Id 
+  On T8.cont_Id = T9.cont_Id INNER JOIN agen.tbAeropuertos T10
+  ON T2.vuel_AeropuertoSalida = T10.aero_Id INNER JOIN gral.tbCiudades T11
+  ON T10.ciud_Id = T11.ciud_Id INNER JOIN gral.tbDepartamentos T12
+  ON T11.depa_Id = T12.depa_Id INNER JOIN gral.tbPaises T13
+  ON T12.pais_Id = T13.pais_Id
 GO
 
 --Procedimiento listar paquetes

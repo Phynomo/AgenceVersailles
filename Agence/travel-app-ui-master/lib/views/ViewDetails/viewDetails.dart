@@ -31,7 +31,7 @@ class _ViewDetailsState extends State<ViewDetails> {
     final arguments = ModalRoute.of(context).settings.arguments;
     final argMap = arguments as Map<String, dynamic>;
     final paqueteObject = argMap['paqueteObject'];
-    if(arguments == null){
+    if (arguments == null) {
       Navigator.pushNamed(context, "/home");
     }
 
@@ -72,7 +72,8 @@ class _ViewDetailsState extends State<ViewDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(paqueteObject.placeTitle, style: appTheme.textTheme.headline2),
+                    Text(paqueteObject.placeTitle,
+                        style: appTheme.textTheme.headline2),
                     SizedBox(height: 4),
                     Row(children: [
                       Icon(
@@ -86,7 +87,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                       )
                     ]),
                     SizedBox(height: 8),
-                    Rating(rating: 4.5, color: Colors.black),
+                    Rating(rating: paqueteObject.rating, color: Colors.black),
                     SizedBox(height: 18),
                     Row(
                       children: [
@@ -153,14 +154,15 @@ class _ViewDetailsState extends State<ViewDetails> {
                       overflow: TextOverflow.fade,
                       style: appTheme.textTheme.bodyText1,
                     ),
-                    SizedBox(height: size.height*0.02),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    SizedBox(height: size.height * 0.02),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RichText(
                           text: TextSpan(children: [
                             TextSpan(
-                                text: "\$" + paqueteObject.rateperpackage.toString(),
+                                text: "\$" +
+                                    paqueteObject.rateperpackage.toString(),
                                 style: TextStyle(
                                     color: appTheme.accentColor,
                                     fontSize: 32,
@@ -173,8 +175,12 @@ class _ViewDetailsState extends State<ViewDetails> {
                                     fontWeight: FontWeight.bold))
                           ]),
                         ),
+                        SizedBox(
+                          height: 16,
+                        ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                                // padding: EdgeInsets.zero,
                                 primary: appTheme.accentColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)),
@@ -190,7 +196,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                 "Reservar",
                                 style: appTheme.textTheme.headline3,
                               ),
-                            ))
+                            )),
                       ],
                     )
                   ],
