@@ -13,6 +13,7 @@ namespace Agence.API.Extensions
         public MappingProfileExtensions()
         {
             CreateMap<UsuarioViewModel, tbUsuarios>().ReverseMap();
+            CreateMap<PersonaViewModel, tbPersonas>().ReverseMap();
         }
     }
 }

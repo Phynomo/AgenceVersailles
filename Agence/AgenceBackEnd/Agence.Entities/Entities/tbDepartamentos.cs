@@ -15,7 +15,7 @@ namespace Agence.Entities.Entities
 
         public int depa_Id { get; set; }
         public string depa_Nombre { get; set; }
-        public int? pais_Id { get; set; }
+        public int pais_Id { get; set; }
 
         public virtual tbPaises pais { get; set; }
         public virtual ICollection<tbCiudades> tbCiudades { get; set; }

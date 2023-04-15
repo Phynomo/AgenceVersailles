@@ -42,6 +42,13 @@ namespace Agence.API.Controllers
             var list = _agenceService.ListadoPaquetesBaratos();
             return Ok(list);
         }
+        
+        [HttpGet("ListadoPorPersona")]
+        public IActionResult listXPerson(int id)
+        {
+            var list = _agenceService.ListadoPorPersona(id);
+            return Ok(list);
+        }
 
         [HttpGet("Find")]
         public IActionResult Find(int id)

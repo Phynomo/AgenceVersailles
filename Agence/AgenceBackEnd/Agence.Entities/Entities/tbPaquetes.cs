@@ -16,10 +16,10 @@ namespace Agence.Entities.Entities
         public int paqu_Id { get; set; }
         public string paqu_Nombre { get; set; }
         public string paqu_Imagen { get; set; }
-        public int? vuel_Id { get; set; }
-        public int? habi_Id { get; set; }
-        public int? paqu_Personas { get; set; }
-        public decimal? paqu_Precio { get; set; }
+        public int vuel_Id { get; set; }
+        public int habi_Id { get; set; }
+        public int paqu_Personas { get; set; }
+        public decimal paqu_Precio { get; set; }
 
         public virtual tbHabitaciones habi { get; set; }
         public virtual tbVuelos vuel { get; set; }

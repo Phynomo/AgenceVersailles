@@ -19,7 +19,7 @@ namespace Agence.Entities.Entities
         public DateTime vuel_FechaLlegada { get; set; }
         public int vuel_AeropuertoSalida { get; set; }
         public int vuel_AeropuertoLlegada { get; set; }
-        public int? agenvuel_Id { get; set; }
+        public int agenvuel_Id { get; set; }
 
         public virtual tbAeropuertos vuel_AeropuertoLlegadaNavigation { get; set; }
         public virtual tbAeropuertos vuel_AeropuertoSalidaNavigation { get; set; }

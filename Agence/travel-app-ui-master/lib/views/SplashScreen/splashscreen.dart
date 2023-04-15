@@ -58,7 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 style: appTheme.textTheme.bodyText1,
               ),
               SizedBox(height: 18),
-              ElevatedButton(
+              Row(
+  children: [ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, AppRoutes.ROUTE_Login);
                   },
@@ -74,7 +75,32 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text("Iniciar sesión"),
+                  )),
+                  SizedBox(width: 10),
+                OutlinedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.ROUTE_SingUp);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      side: BorderSide(width: 2, color: Colors.purple.shade900),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      elevation: 0,
+                      textStyle: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'PlayFair',
+                          fontWeight: FontWeight.bold)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text("Registrarse",
+                    style: TextStyle(
+                      color: Colors.purple.shade900,
+                    ),
+                    ),
                   ))
+  ],
+),
+              
             ],
           ),
         )

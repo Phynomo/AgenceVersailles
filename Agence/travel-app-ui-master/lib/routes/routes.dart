@@ -5,6 +5,7 @@ import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:travelappui/views/ViewDetails/viewDetails.dart';
 import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/MisReservacionesPage/misreservaciones.dart';
+import 'package:travelappui/views/Signup/signup.dart';
 
 class AppRoutes {
 
@@ -17,6 +18,7 @@ class AppRoutes {
   static const String ROUTE_ViewDetails = "/view";
   static const String ROUTE_Login = "/login";
   static const String ROUTE_MisReservaciones = "/reservaciones";
+  static const String ROUTE_SingUp = "/signup";
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
 
@@ -44,6 +46,10 @@ class AppRoutes {
       case ROUTE_HomeAll:
           return MaterialPageRoute(
             settings: settings, builder: (_) => HomePageAll());
+      break;
+      case ROUTE_SingUp:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => Signupscreen());
       break;
     }
   }

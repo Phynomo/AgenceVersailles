@@ -15,8 +15,8 @@ namespace Agence.Entities.Entities
 
         public int habi_Id { get; set; }
         public string habi_Nombre { get; set; }
-        public int? hote_Id { get; set; }
-        public int? cath_Id { get; set; }
+        public int hote_Id { get; set; }
+        public int cath_Id { get; set; }
         public decimal? habi_Precio { get; set; }
 
         public virtual tbCategoriasHabitacional cath { get; set; }

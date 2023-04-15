@@ -815,6 +815,7 @@ SELECT [paqu_Id]
   ON T12.pais_Id = T13.pais_Id
 GO
 
+
 --Procedimiento listar paquetes
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_List
@@ -822,6 +823,7 @@ AS
 BEGIN
 	SELECT * FROM agen.VW_tbPaquetes
 END
+
 
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListTop5Caros
@@ -849,7 +851,19 @@ BEGIN
 	WHERE paqu_Id = @paqu_Id
 END
 
---******PROCEDIMIENTOS RESERVACIONES******--
+
+--Procedimiento listar paquetes
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPerson
+@pers_Id int
+AS
+BEGIN
+	SELECT * 
+	FROM agen.VW_tbPaquetes
+	WHERE paqu_Id IN (select paqu_Id from agen.tbReservaciones WHERE pers_Id = @pers_Id)
+END
+
+
 
 --Procedimiento insertar reservación
 GO
