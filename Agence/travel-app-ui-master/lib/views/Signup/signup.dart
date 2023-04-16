@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:travelappui/views/Signup/Forms/info_Usuario.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({Key key}) : super(key: key);
@@ -369,6 +372,17 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                   decoration: InputDecoration(
                       labelText: 'Numero de identidad',
                       errorText: _identidaderror),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Este campo es requerido';
+                    }
+                    final RegExp regex = RegExp(r'^\d{4}-\d{4}-\d{5}$');
+                    if (!regex.hasMatch(value)) {
+                      return 'El número de identificación debe tener el formato 0000-0000-00000';
+                    }
+                    return null;
+                  },
                   style: TextStyle(color: Colors.black),
                   initialValue: _identidad,
                   onChanged: (value) {
@@ -383,10 +397,11 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                       width: MediaQuery.of(context).size.width * 0.88,
                       child: ElevatedButton(
                         onPressed: () {
+                          final RegExp regex = RegExp(r'^\d{4}-\d{4}-\d{5}$');
                           setState(() {
                             _identidaderror = null;
                           });
-                          if (_identidad != "") {
+                          if (_identidad != "" && regex.hasMatch(_identidad)) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -396,6 +411,12 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                             setState(() {
                               _identidaderror = "Este campo es requerido";
                             });
+                            if (!regex.hasMatch(_identidad)) {
+                              setState(() {
+                                _identidaderror =
+                                    'Formato no valido (0000-0000-00000)';
+                              });
+                            }
                           }
                         },
                         child: Text('Siguente'),
@@ -449,6 +470,8 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
   }
 }
 
+enum Gender { male, female }
+
 class SignUpSexo extends StatefulWidget {
   const SignUpSexo({Key key}) : super(key: key);
 
@@ -457,7 +480,8 @@ class SignUpSexo extends StatefulWidget {
 }
 
 class _SignUpSexoState extends State<SignUpSexo> {
-  String _sexoerror;
+  bool _sexoerror = false;
+  Gender _gender;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -496,15 +520,50 @@ class _SignUpSexoState extends State<SignUpSexo> {
                   'Ahora ingresa tu sexo biologico',
                   style: TextStyle(fontSize: 16.0),
                 ),
-                TextFormField(
-                  decoration:
-                      InputDecoration(labelText: 'Sexo', errorText: _sexoerror),
-                  style: TextStyle(color: Colors.black),
-                  initialValue: _sexo,
+                RadioListTile(
+                  title: Text(
+                    'Masculino',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  value: Gender.male,
+                  groupValue: _gender,
                   onChanged: (value) {
-                    _sexo = value;
+                    setState(() {
+                      _gender = value;
+                    });
                   },
                 ),
+                RadioListTile(
+                  title: Text(
+                    'Femenino',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  value: Gender.female,
+                  groupValue: _gender,
+                  onChanged: (value) {
+                    setState(() {
+                      _gender = value;
+                    });
+                  },
+                ),
+                if (_sexoerror)
+                  Text(
+                    'Selecciona uno de los dos sexos',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                // TextFormField(
+                //   decoration:
+                //       InputDecoration(labelText: 'Sexo', errorText: _sexoerror),
+                //   style: TextStyle(color: Colors.black),
+                //   initialValue: _sexo,
+                //   onChanged: (value) {
+                //     _sexo = value;
+                //   },
+                // ),
                 SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -514,8 +573,15 @@ class _SignUpSexoState extends State<SignUpSexo> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            _sexoerror = null;
+                            _sexoerror = false;
                           });
+
+                          if (_gender == Gender.male) {
+                            _sexo = "M";
+                          } else if (_gender == Gender.female) {
+                            _sexo = "F";
+                          }
+
                           if (_sexo != "") {
                             Navigator.push(
                               context,
@@ -525,7 +591,7 @@ class _SignUpSexoState extends State<SignUpSexo> {
                             );
                           } else {
                             setState(() {
-                              _sexoerror = "Este campo es requerido";
+                              _sexoerror = true;
                             });
                           }
                         },
@@ -589,7 +655,7 @@ class SignUpFechaNacimiento extends StatefulWidget {
 
 class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
   String _fechanacimientoerror;
-
+  DateTime _selectedDate = null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -628,15 +694,56 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                   style: TextStyle(fontSize: 16.0),
                 ),
                 TextFormField(
+                  onTap: () {
+                    DatePicker.showDatePicker(
+                      context,
+                      showTitleActions: true,
+                      minTime: DateTime(1900, 1, 1),
+                      maxTime: DateTime(2025, 12, 31),
+                      onConfirm: (date) {
+                        setState(() {
+                          _selectedDate = date;
+                          _fechanacimiento = date.toString();
+                        });
+                      },
+                      currentTime: _selectedDate != null
+                          ? _selectedDate
+                          : DateTime.now(),
+                      locale: LocaleType.es,
+                    );
+                  },
                   decoration: InputDecoration(
                       labelText: 'Fecha de nacimiento',
                       errorText: _fechanacimientoerror),
                   style: TextStyle(color: Colors.black),
-                  initialValue: _fechanacimiento,
+                  controller: TextEditingController(
+                    text: _selectedDate != null
+                        ? DateFormat('yyyy/MM/dd').format(_selectedDate)
+                        : 'Seleccione una fecha',
+                  ),
+                  readOnly: true,
+                  validator: (value) {
+                    if (_selectedDate == null) {
+                      return 'Por favor seleccione una fecha';
+                    }
+                    _fechanacimiento = value.toString();
+                    return null;
+                  },
                   onChanged: (value) {
-                    _fechanacimiento = value;
+                    _fechanacimiento = value.toString();
+                    print(_fechanacimiento);
                   },
                 ),
+                // TextFormField(
+                //   decoration: InputDecoration(
+                //       labelText: 'Fecha de nacimiento',
+                //       errorText: _fechanacimientoerror),
+                //   style: TextStyle(color: Colors.black),
+                //   initialValue: _fechanacimiento,
+                //   onChanged: (value) {
+                //     _fechanacimiento = value;
+                //   },
+                // ),
                 SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -646,9 +753,20 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            _fechanacimientoerror = null;
+                            //_fechanacimientoerror = null;
+                            _fechanacimientoerror = "Este campo es requerido";
                           });
-                          if (_fechanacimiento != "") {
+                          DateTime fechaActual = DateTime.now();
+
+                          Duration diferencia =
+                              fechaActual.difference(_selectedDate);
+                          int edad = diferencia.inDays ~/
+                              365; // Calcula la edad en años
+                          if (_fechanacimiento.toString() != "" && edad >= 18) {
+                            setState(() {
+                              _fechanacimientoerror = null;
+                              //_fechanacimientoerror = "Este campo es requerido";
+                            });
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -657,8 +775,15 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                             );
                           } else {
                             setState(() {
+                              // _fechanacimientoerror = null;
                               _fechanacimientoerror = "Este campo es requerido";
                             });
+                            if (edad < 18) {
+                              setState(() {
+                                _fechanacimientoerror =
+                                    "Tienes que ser mayor de edad";
+                              });
+                            }
                           }
                         },
                         child: Text('Siguente'),
@@ -720,7 +845,8 @@ class SignUpEstadoCivil extends StatefulWidget {
 }
 
 class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
-  String _estadocivilerror;
+  bool _estadocivilerror = false;
+  // String dropdownValue = 'Option 1';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -755,18 +881,47 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                 ),
                 SizedBox(height: 16.0),
                 Text(
-                  'Ahora ingresa tu estadi civil',
+                  'Ahora ingresa tu estado civil',
                   style: TextStyle(fontSize: 16.0),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: 'Estado civil', errorText: _estadocivilerror),
-                  style: TextStyle(color: Colors.black),
-                  initialValue: _estadocivil,
-                  onChanged: (value) {
-                    _estadocivil = value;
-                  },
-                ),
+                MyDropdownButton(),
+                if (_estadocivilerror)
+                  Text(
+                    'Selecciona un estado civil',
+                    style: TextStyle(color: Colors.red),
+                  ),
+// DropdownButton<String>(
+//   value: dropdownValue,
+//   icon: const Icon(Icons.arrow_downward),
+//   iconSize: 24,
+//   elevation: 16,
+//   style: const TextStyle(color: Colors.deepPurple),
+//   underline: Container(
+//     height: 2,
+//     color: Colors.deepPurpleAccent,
+//   ),
+//   onChanged: (String newValue) {
+//     setState(() {
+//       dropdownValue = newValue;
+//     });
+//   },
+//   items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
+//       .map<DropdownMenuItem<String>>((String value) {
+//     return DropdownMenuItem<String>(
+//       value: value,
+//       child: Text(value),
+//     );
+//   }).toList(),
+// ),
+                // TextFormField(
+                //   decoration: InputDecoration(
+                //       labelText: 'Estado civil', errorText: _estadocivilerror),
+                //   style: TextStyle(color: Colors.black),
+                //   initialValue: _estadocivil,
+                //   onChanged: (value) {
+                //     _estadocivil = value;
+                //   },
+                // ),
                 SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -776,7 +931,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            _estadocivilerror = null;
+                            _estadocivilerror = false;
                           });
                           if (_estadocivil != "") {
                             Navigator.push(
@@ -786,7 +941,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                             );
                           } else {
                             setState(() {
-                              _estadocivilerror = "Este campo es requerido";
+                              _estadocivilerror = true;
                             });
                           }
                         },
@@ -1126,6 +1281,8 @@ class SignUpContrasena extends StatefulWidget {
 
 class _SignUpContrasenaState extends State<SignUpContrasena> {
   String _contrasenaerror;
+  bool _showErrorMessage = false;
+  bool _showErrorConexion = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1162,7 +1319,16 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                 Text(
                   'Ahora ingresa tu numero contraseña, recuerda no olvidarla',
                   style: TextStyle(fontSize: 16.0),
-                ),
+                ),if (_showErrorMessage)
+            Text(
+              'Ocurrio un error',
+              style: TextStyle(color: Colors.red),
+            ),
+          if (_showErrorConexion)
+            Text(
+              'Error de conexion, Intentalo mas tarde',
+              style: TextStyle(color: Colors.red),
+            ),
                 TextFormField(
                   decoration: InputDecoration(
                       labelText: 'Contraseña', errorText: _contrasenaerror),
@@ -1185,6 +1351,53 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                             _contrasenaerror = null;
                           });
                           if (_contrasena != "") {
+                            var data = {
+                              'pers_Nombres': _nombre,
+                              'pers_Apellidos': _apellido,
+                              'pers_Identidad': _identidad,
+                              'estc_Id': _estadocivil,
+                              'pers_FechaNacimiento': _fechanacimiento,
+                              'pers_Sexo': _sexo,
+                              'pers_Celular': _celular,
+                              'pers_EsEmpleado': "false",
+                              'usua_NombreUsuario': _usuario,
+                              'usua_Correo': _email,
+                              'usua_Contrasena': _contrasena,
+                              'usua_UsuCreacion': "1"
+                            }; //datos xd
+
+                            var body = json.encode(data); //Json encriptado
+
+                            var url = Uri.parse('https://localhost:44313/api/Persona/InsertarCliente'); //Url
+
+                            http.post(url, body: body, headers: {'Content-Type': 'application/json'}).then((response) {
+                              //Brujeria
+                              
+                            setState(() {
+                              _contrasenaerror = response.statusCode.toString() + _nombre + _apellido +
+                              _identidad + _estadocivil + _fechanacimiento + _sexo + _celular + _usuario + _email + _contrasena;
+                            });
+                              if (response.statusCode == 200) {
+                                // resultado
+                                var jsonResponse = jsonDecode(response.body);
+                                var message = jsonResponse['message'];
+                                if (message == "El registro se ha insertado con éxito") {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SplashScreen()),
+                                  );
+                                } else {
+                                  setState(() {
+                                    _showErrorMessage = true;
+                                  });
+                                }
+                              } else {
+                                setState(() {
+                                  _showErrorConexion = true;
+                                });
+                              }
+                            }); //tqm, gracias por el carrito
                           } else {
                             setState(() {
                               _contrasenaerror = "Este campo es requerido";
@@ -1238,6 +1451,80 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class MyDropdownButton extends StatefulWidget {
+  @override
+  _MyDropdownButtonState createState() => _MyDropdownButtonState();
+}
+
+class _MyDropdownButtonState extends State<MyDropdownButton> {
+  String _selectedValue = 'Seleccione un estado civil';
+  List<Map<String, dynamic>> estadosCiviles = [
+    {"id": 1, "nombre": "Soltero(a)"},
+    {"id": 2, "nombre": "Casado(a)"},
+    {"id": 3, "nombre": "Divorciado(a)"},
+    {"id": 4, "nombre": "Viudo(a)"},
+  ];
+  void _showDropdown() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          child: ListView.builder(
+            itemCount: estadosCiviles.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(
+                  estadosCiviles[index]['nombre'],
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    _selectedValue = estadosCiviles[index]['nombre'];
+                    _estadocivil = estadosCiviles[index]['id'].toString();
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 10),
+        Center(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.95,
+            height: 40.0,
+            child: ElevatedButton(
+              onPressed: _showDropdown,
+              child: Text(_selectedValue),
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromRGBO(255, 252, 252, 1),
+                onPrimary: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  side: BorderSide(
+                      color: Color.fromRGBO(255, 252, 252, 1), width: 1),
+                  // Puedes personalizar los otros lados de la misma manera
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

@@ -131,6 +131,31 @@ namespace Agence.BusinessLogic.Services
             }
         }
 
+        public ServiceResult InsertarPersonaCliente(tbPersonas item, tbUsuarios item2)
+        {
+            var result = new ServiceResult();
+
+            try
+            {
+                var insert = _personaRepository.InsertCliente(item, item2);
+
+                if (insert.MessageStatus == "El registro se ha insertado con éxito")
+                    return result.SetMessage(insert.MessageStatus, ServiceResultType.Success);
+                else if (insert.MessageStatus == "Ya existe una persona con este número de identidad")
+                    return result.Conflict(insert.MessageStatus);
+                else if (insert.MessageStatus == "Ya existe un usuario con este nombre")
+                    return result.Conflict(insert.MessageStatus);
+                else if (insert.MessageStatus == "Ha ocurrido un error")
+                    return result.Error("Algun dato ha sido enviado de forma incorrecta");
+                else
+                    return result.SetMessage("Conexión perdida", ServiceResultType.Error);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
+
 
         #endregion
 
