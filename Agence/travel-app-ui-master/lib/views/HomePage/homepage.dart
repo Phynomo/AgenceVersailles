@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               controller: _mainScrollController,
               child: Column(
                 children: [
-                  TopFeaturedList(),
+                  TopFeaturedList(nombrePag: 'Popular'),
                   Container(
                     width: size.width,
                     height: size.height * 0.33,
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, "/homeall");
+                              Navigator.pushNamed(context, "/Todo");
                             },
                             child: Text(
                               "Ver Todo",

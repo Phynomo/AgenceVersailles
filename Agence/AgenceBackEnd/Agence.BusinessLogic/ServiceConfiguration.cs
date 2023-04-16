@@ -17,6 +17,7 @@ namespace Agence.BusinessLogic
             service.AddScoped<UsuarioRepository>();
             service.AddScoped<PaqueteRepository>();
             service.AddScoped<PersonaRepository>();
+            service.AddScoped<ReservacionRepository>();
             AgenceContext.BuildConnectionString(connectionString);
         }
         public static void BusinessLogic(this IServiceCollection service)

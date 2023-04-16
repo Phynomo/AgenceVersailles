@@ -478,7 +478,7 @@ INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Pe
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete romántico en San Miguel de Allende', '15.jpg', 2, 8, 2, 5500.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ski en Aspen', '16.webp', 3, 15, 4, 12000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de relax en Tulum', '17.jpg', 2, 10, 2, 3000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en Baja California', '18.avif', 1, 6, 4, 5000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en Baja California', '18.jpg', 1, 6, 4, 5000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ciudad en Nueva York', '19.jpg', 3, 20, 2, 10000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Puerto Escondido', '20.webp', 2, 11, 2, 2000.00);
 
@@ -854,24 +854,32 @@ END
 
 --Procedimiento listar paquetes
 GO
-CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPerson
-@pers_Id int
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPerson 
+	@pers_Id int
 AS
 BEGIN
 	SELECT * 
 	FROM agen.VW_tbPaquetes
 	WHERE paqu_Id IN (select paqu_Id from agen.tbReservaciones WHERE pers_Id = @pers_Id)
+	ORDER BY vuel_FechaSalida
 END
 
-
+--******PROCEDIMIENTOS RESERVACIONES******--
 
 --Procedimiento insertar reservación
 GO
-CREATE OR ALTER PROCEDURE agen.UDP_tbReservaciones_Insert
+CREATE OR ALTER PROCEDURE agen.UDP_tbReservaciones_Insert 
 	@paqu_Id	INT,
 	@pers_Id	INT
 AS
 BEGIN
-	INSERT INTO [agen].[tbReservaciones]
-	VALUES(@paqu_Id, @pers_Id)
+	BEGIN TRY
+		INSERT INTO [agen].[tbReservaciones]
+		VALUES(@paqu_Id, @pers_Id)
+
+		SELECT 'El registro ha sido insertado con éxito'
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+	END CATCH
 END

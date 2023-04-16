@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelappui/models/placesModel.dart';
+import 'package:travelappui/models/reservacionesModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
@@ -9,14 +10,15 @@ String urlFeatured =
     "http://www.agenciaversalles.somee.com/api/Paquete/Listado5Caros";
 String urlRecommended =
     "http://www.agenciaversalles.somee.com/api/Paquete/Listado10Baratos";
+String urlInsertBooking = "https://localhost:44313/api/Reservacion/Insertar";
 // String urlFind = "https://localhost:44313/api/Paquete/Find?id=";
 
 class RESTAPI {
   List<PlaceModel> dummyPlaces(List<dynamic> info) {
     List<PlaceModel> lista = [];
     info.forEach((element) {
-          String dateStr = element["vuel_FechaSalida"];
-          DateTime date = DateTime.parse(dateStr);
+      String dateStr = element["vuel_FechaSalida"];
+      DateTime date = DateTime.parse(dateStr);
       lista.add(PlaceModel(
           paquId: element["paqu_Id"],
           placeTitle: element["paqu_Nombre"],
@@ -73,9 +75,20 @@ class RESTAPI {
     }
   }
 
-  // Future<dynamic> insertReservacion() async{
-  //   final respuesta = await http.post()
-  // }
+  Future<dynamic> insertReservacion(data) async {
+    var body = json.encode(data.toJson());
+    var url = Uri.parse(urlInsertBooking);
+
+    http.post(url,
+        body: body,
+        headers: {'Content-Type': 'application/json'}).then((response) {
+      if (response.statusCode == 200) {
+        // resultado
+        var jsonResponse = json.decode(response.body);
+        print(jsonResponse["message"].toString());
+      } else {}
+    });
+  }
 
   // Future<List<PlaceModel>> findPlace() async {
   //   final respuesta = await http.post(Uri.parse(urlFind + '2'));

@@ -12,8 +12,8 @@ class AppRoutes {
 
   static const String ROUTE_Initial = ROUTE_Splashscreen;
 
-  static const String ROUTE_Home = "/home";
-  static const String ROUTE_HomeAll = "/homeall";
+  static const String ROUTE_Home = "/Popular";
+  static const String ROUTE_HomeAll = "/Todo";
   static const String ROUTE_Splashscreen = "/splash";
   static const String ROUTE_ViewDetails = "/view";
   static const String ROUTE_Login = "/login";

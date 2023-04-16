@@ -4,17 +4,23 @@ import 'package:travelappui/theme.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 
 class TopFeaturedList extends StatefulWidget {
+  const TopFeaturedList({this.nombrePag});
+
+  final String nombrePag;
   @override
-  _TopFeaturedListState createState() => _TopFeaturedListState();
+  _TopFeaturedListState createState() => _TopFeaturedListState(nombrePag: nombrePag);
 }
 
 class _TopFeaturedListState extends State<TopFeaturedList> {
+  final String nombrePag;
+  _TopFeaturedListState({this.nombrePag});
 
   @override
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;   
     
+
     return Container(
               margin: EdgeInsets.only(bottom: 4),
               padding: EdgeInsets.only(left: 12, right: 12, top: 8),
@@ -27,16 +33,16 @@ class _TopFeaturedListState extends State<TopFeaturedList> {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      if (index == 0)
+                      if (state.kTopListLink[index].toString() == nombrePag)
                         return TextButton(
                           child: Padding(
                             padding: const EdgeInsets.only(left: 4, right: 4),
                             child: Text(state.kTopListLink[index],
-                                style: kAppTheme.textTheme.headline4.merge(
+                                style: kAppTheme.textTheme.headline4?.merge(
                                     TextStyle(fontWeight: FontWeight.bold, color: kAppTheme.accentColor))),
                           ),
                           onPressed: () {
-                               
+                            
                           },
                         );
 
@@ -46,7 +52,9 @@ class _TopFeaturedListState extends State<TopFeaturedList> {
                           child: Text(state.kTopListLink[index],
                               style: kAppTheme.textTheme.headline4),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/" + state.kTopListLink[index].toString());
+                        },
                       );
                     });
                 },                

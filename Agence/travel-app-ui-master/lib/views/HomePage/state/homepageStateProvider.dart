@@ -36,6 +36,10 @@ class HomePageStateProvider extends ChangeNotifier
     return await api.getRecommendedPlaces();    
   }
 
+  Future<List<PlaceModel>> insertReservacion(data) async {
+    return await api.insertReservacion(data);    
+  }
+
   Future<void> GetTopList() async {
 
       await Future.delayed(const Duration(milliseconds: 500), (){});

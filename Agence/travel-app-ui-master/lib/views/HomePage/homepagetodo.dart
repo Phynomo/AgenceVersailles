@@ -47,6 +47,7 @@ class _HomePageAllState extends State<HomePageAll> {
               controller: _mainScrollController,
               child: Column(
                 children: [
+                  TopFeaturedList(nombrePag: 'Todo'),
                   Container(
                     margin: EdgeInsets.all(16),
                     child: StreamBuilder(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:travelappui/components/rating,.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:travelappui/models/reservacionesModel.dart';
 
 class ViewDetails extends StatefulWidget {
   @override
@@ -28,21 +29,27 @@ class _ViewDetailsState extends State<ViewDetails> {
 
   @override
   Widget build(BuildContext context) {
+    HomePageStateProvider homepagestate =
+        Provider.of<HomePageStateProvider>(context);
     final arguments = ModalRoute.of(context).settings.arguments;
     final argMap = arguments as Map<String, dynamic>;
     final paqueteObject = argMap['paqueteObject'];
     if (arguments == null) {
-      Navigator.pushNamed(context, "/home");
+      Navigator.pushNamed(context, "/Popular");
     }
 
     Size size = MediaQuery.of(context).size;
     ThemeData appTheme = Theme.of(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        elevation: 0,
-        child: Icon(Icons.menu),
-        onPressed: () {},
-      ),
+      floatingActionButton: Transform.translate(
+          offset: Offset(0, 16),
+          child: FloatingActionButton(
+            elevation: 0,
+            child: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )),
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: Stack(
         children: [
@@ -200,7 +207,11 @@ class _ViewDetailsState extends State<ViewDetails> {
                                     fontSize: 18,
                                     fontFamily: 'PlayFair',
                                     fontWeight: FontWeight.bold)),
-                            onPressed: () {},
+                            onPressed: () {
+                              ReservacionModel reservacion = ReservacionModel(persId: 1, paquId: paqueteObject.paquId);
+                              homepagestate.insertReservacion(reservacion);
+                              reservacion = null;
+                            },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(

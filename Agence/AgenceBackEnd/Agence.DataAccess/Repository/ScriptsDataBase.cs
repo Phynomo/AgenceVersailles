@@ -30,7 +30,7 @@ namespace Agence.DataAccess.Repository
         //public static string UDP_Find_Usuarios = "acce.UDP_tbUsuarios_Find";
         #endregion
 
-        #region Paquetes
+        #region Personas
         public static string UDP_Listar_Personas = "agen.UDP_tbPersonas_List";
         public static string UDP_Insertar_Personas = "agen.UDP_tbPersonas_Insert";
         //public static string UDP_Editar_Usuarios = "acce.UDP_tbUsuarios_Edit";
@@ -38,6 +38,9 @@ namespace Agence.DataAccess.Repository
         //public static string UDP_Find_Usuarios = "acce.UDP_tbUsuarios_Find";
         #endregion
 
+        #region Reservaciones
+        public static string UDP_Insertar_Reservaciones = "agen.UDP_tbReservaciones_Insert";
+        #endregion
 
     }
 }
