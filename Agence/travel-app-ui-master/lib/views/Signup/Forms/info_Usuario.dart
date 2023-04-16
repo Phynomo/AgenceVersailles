@@ -7,15 +7,15 @@ import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 String usuario = "";
 String password = "";
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+class InfoUsuario extends StatefulWidget {
+  const InfoUsuario({Key key}) : super(key: key);
   static String id = "login_page";
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<InfoUsuario> createState() => _InfoUsuarioState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _InfoUsuarioState extends State<InfoUsuario> {
   TextEditingController _textController = TextEditingController();
   String _errorUsuario;
   String _errorPassword;
@@ -23,54 +23,54 @@ class _LoginPageState extends State<LoginPage> {
   bool _showErrorConexion = false;
   @override
   Widget build(BuildContext context) {
-  return SafeArea(
-    child: Scaffold(
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        children: [
-          SizedBox(height: 15.0),
-          Flexible(
-            child: Image.asset(
-              "assets/image/LogoMorado.png",
-              height: 300.0,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Agence Versailles",
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
+              ),
+              if (_showErrorMessage)
+                Text(
+                  'Usuario o contraseña incorrectos',
+                  style: TextStyle(color: Colors.red),
+                ),
+                if (_showErrorConexion)
+                Text(
+                  'Error de conexion, Intentalo mas tarde',
+                  style: TextStyle(color: Colors.red),
+                ),
+              SizedBox(
+                height: 15.0,
+              ),
+              _userTextField(),
+              SizedBox(
+                height: 15.0,
+              ),
+              _passwordTextField(),
+              SizedBox(
+                height: 20.0,
+              ),
+              _buttonLogin(),
+            ],
           ),
-          Center(
-  child: Text(
-    "Agence Versailles",
-    style: TextStyle(
-      fontSize: 24.0,
-    ),
-  ),
-),
-          if (_showErrorMessage)
-            Text(
-              'Usuario o contraseña incorrectos',
-              style: TextStyle(color: Colors.red),
-            ),
-          if (_showErrorConexion)
-            Text(
-              'Error de conexion, Intentalo mas tarde',
-              style: TextStyle(color: Colors.red),
-            ),
-          SizedBox(height: 15.0),
-          _userTextField(),
-          SizedBox(height: 15.0),
-          _passwordTextField(),
-          SizedBox(height: 20.0),
-          _buttonLogin(),
-        ],
+        ),
       ),
-    ),
-  );
-
+    );
   }
 
   Widget _userTextField() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
+        padding: EdgeInsets.symmetric(horizontal: 35.0),
         child: TextField(
+          
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -93,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
+        padding: EdgeInsets.symmetric(horizontal: 35.0),
         child: TextField(
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
@@ -119,8 +120,8 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           try {
             setState(() {
-              _errorPassword = null;
-              _errorUsuario = null;
+              _errorPassword = '';
+              _errorUsuario = '';
               _showErrorMessage = false;
               _showErrorConexion = false;
             });

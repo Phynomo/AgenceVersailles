@@ -26,8 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   bottomRight: Radius.circular(20))),
           child: ClipRRect(
             borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(36),
-                  bottomRight: Radius.circular(36)),
+                bottomLeft: Radius.circular(36),
+                bottomRight: Radius.circular(36)),
             child: Image(
               image: AssetImage('assets/image/LogoFondoMoradoConL.gif'),
               fit: BoxFit.cover,
@@ -59,48 +59,50 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               SizedBox(height: 18),
               Row(
-  children: [ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.ROUTE_Login);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: appTheme.accentColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      elevation: 0,
-                      textStyle: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'PlayFair',
-                          fontWeight: FontWeight.bold)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("Iniciar sesión"),
-                  )),
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.ROUTE_Login);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          primary: appTheme.accentColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          elevation: 0,
+                          textStyle: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'PlayFair',
+                              fontWeight: FontWeight.bold)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text("Iniciar sesión"),
+                      )),
                   SizedBox(width: 10),
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.ROUTE_SingUp);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      side: BorderSide(width: 2, color: Colors.purple.shade900),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      elevation: 0,
-                      textStyle: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'PlayFair',
-                          fontWeight: FontWeight.bold)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("Registrarse",
-                    style: TextStyle(
-                      color: Colors.purple.shade900,
-                    ),
-                    ),
-                  ))
-  ],
-),
-              
+                  OutlinedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.ROUTE_SingUp);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          side: BorderSide(
+                              width: 2, color: Colors.purple.shade900),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          elevation: 0,
+                          textStyle: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'PlayFair',
+                              fontWeight: FontWeight.bold)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          "Registrarse",
+                          style: TextStyle(
+                            color: Colors.purple.shade900,
+                          ),
+                        ),
+                      ))
+                ],
+              ),
             ],
           ),
         )
