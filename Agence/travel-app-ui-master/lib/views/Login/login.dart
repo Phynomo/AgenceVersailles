@@ -59,7 +59,10 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 15.0),
             _passwordTextField(),
             SizedBox(height: 20.0),
-            _buttonLogin(),
+            SizedBox(
+              width: 10.0,
+              child: _buttonLogin(),
+            ),
             SizedBox(height: 10.0),
             _buttonRecuperar(),
           ],
@@ -117,75 +120,82 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buttonLogin() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return ElevatedButton(
-        onPressed: () {
-          try {
-            setState(() {
-              _errorPassword = null;
-              _errorUsuario = null;
-              _showErrorMessage = false;
-              _showErrorConexion = false;
-            });
-            if (usuario != "" && password != "") {
-              var data = {
-                'usua_NombreUsuario': usuario,
-                'usua_Correo': usuario,
-                'usua_Contrasena': password
-              }; //datos xd
+      return Center(
+        child: ElevatedButton(
+          onPressed: () {
+            try {
+              setState(() {
+                _errorPassword = null;
+                _errorUsuario = null;
+                _showErrorMessage = false;
+                _showErrorConexion = false;
+              });
+              if (usuario != "" && password != "") {
+                var data = {
+                  'usua_NombreUsuario': usuario,
+                  'usua_Correo': usuario,
+                  'usua_Contrasena': password
+                }; //datos xd
 
-              var body = json.encode(data); //Json encriptado
+                var body = json.encode(data); //Json encriptado
 
-              var url = Uri.parse(
-                  'http://www.agenciaversalles.somee.com/api/Usuario/Login'); //Url
+                var url = Uri.parse(
+                    'http://www.agenciaversalles.somee.com/api/Usuario/Login'); //Url
 
-              http.put(url, body: body, headers: {
-                'Content-Type': 'application/json'
-              }).then((response) {
-                //Brujeria
-                if (response.statusCode == 200) {
-                  // resultado
-                  var jsonResponse = jsonDecode(response.body);
-                  var data = jsonResponse['data'];
-                  if (data != null && data.toString().length > 2) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
+                http.put(url, body: body, headers: {
+                  'Content-Type': 'application/json'
+                }).then((response) {
+                  //Brujeria
+                  if (response.statusCode == 200) {
+                    // resultado
+                    var jsonResponse = jsonDecode(response.body);
+                    var data = jsonResponse['data'];
+                    if (data != null && data.toString().length > 2) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    } else {
+                      setState(() {
+                        _showErrorMessage = true;
+                      });
+                    }
                   } else {
                     setState(() {
-                      _showErrorMessage = true;
+                      _showErrorConexion = true;
                     });
                   }
-                } else {
+                }); //tqm, gracias por el carrito
+              } else {
+                if (usuario.isEmpty) {
                   setState(() {
-                    _showErrorConexion = true;
+                    _errorUsuario = 'Complete el campo';
                   });
                 }
-              }); //tqm, gracias por el carrito
-            } else {
-              if (usuario.isEmpty) {
-                setState(() {
-                  _errorUsuario = 'Complete el campo';
-                });
+                if (password.isEmpty) {
+                  setState(() {
+                    _errorPassword = 'Complete el campo';
+                  });
+                }
               }
-              if (password.isEmpty) {
-                setState(() {
-                  _errorPassword = 'Complete el campo';
-                });
-              }
-            }
-          } catch (e) {}
-        },
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-          child: Text(
-            "Inciar Sesión",
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            } catch (e) {}
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+            child: Text(
+              "Iniciar sesión",
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all<Color>(Colors.purple.shade900),
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.purple.shade900),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+            ),
+          ),
         ),
       );
     });
