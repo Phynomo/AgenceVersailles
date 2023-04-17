@@ -10,11 +10,16 @@ import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:mailer/smtp_server/gmail.dart';
-
-
+import 'dart:math';
 
 String usuario = "";
 String password = "";
+
+// Generar un número aleatorio de 4 dígitos
+int generateRandomNumber() {
+  var rng = new Random();
+  return rng.nextInt(9000) + 1000;
+}
 
 class Recuperar extends StatefulWidget {
   const Recuperar({Key key}) : super(key: key);
@@ -24,20 +29,34 @@ class Recuperar extends StatefulWidget {
 }
 
 class _RecuperarState extends State<Recuperar> {
-Future<void> sendingmail() async {
-  
-   var userEmail = "agenceversailles.65@gmail.com";
-   var message = Message();
-   message.subject = "Hola de nuevo";
-   message.text = "Hey TQM";
-   message.from = Address(userEmail.toString()); 
-   message.recipients.add(userEmail);
-   var smtpServer = gmailSaslXoauth2(userEmail, 'wsdjohmnfisrpyeh');
-   send(message, smtpServer);
-   print("Exito hurraaaaaaaaaan se envio o algo asi ");
-  
-}
 
+
+  Future sendingmail() async {
+    
+ final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+    final service_id = "service_j1kwebo";
+    final template_id = "template_y2gd6ee";
+    final user_id = "dx505AHX7RBKJ9QXs";
+
+    var randomNumber = generateRandomNumber();
+
+    var respond = await http.post(url,
+        headers: {
+          'origin': 'http:/localhost',
+          'Content-Type': 'application/json'
+        },
+        body: json.encode({
+          "service_id": service_id,
+          "template_id": template_id,
+          "user_id": user_id,
+          "template_params": {
+            "message": "Tu código de verificación es: " + randomNumber.toString(),
+            "to_email": "martinezleyla22@gmail.com",
+          }
+        }));
+    print(respond.body);
+
+  }
 
   TextEditingController _textController = TextEditingController();
   String _errorUsuario;
@@ -69,22 +88,24 @@ Future<void> sendingmail() async {
             ),
           ),
         ),
-        SizedBox(height: 20.0,),
-        if(!_showErrorMessage && !_showErrorConexion)
-        Text(
-                'Recuperar usuario',
-                style: TextStyle(color: Colors.black),
-              ),
-          if (_showErrorMessage)
-              Text(
-                'Usuario o contraseña incorrectos',
-                style: TextStyle(color: Colors.red),
-              ),
-            if (_showErrorConexion)
-              Text(
-                'Error de conexion, Intentalo mas tarde',
-                style: TextStyle(color: Colors.red),
-              ),
+        SizedBox(
+          height: 20.0,
+        ),
+        if (!_showErrorMessage && !_showErrorConexion)
+          Text(
+            'Recuperar usuario',
+            style: TextStyle(color: Colors.black),
+          ),
+        if (_showErrorMessage)
+          Text(
+            'Usuario o contraseña incorrectos',
+            style: TextStyle(color: Colors.red),
+          ),
+        if (_showErrorConexion)
+          Text(
+            'Error de conexion, Intentalo mas tarde',
+            style: TextStyle(color: Colors.red),
+          ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 32.0),
           // alignment: Alignment.bottomCenter,
@@ -93,16 +114,14 @@ Future<void> sendingmail() async {
             // mainAxisAlignment: MainAxisAlignment.end,
             children: [
               //  SizedBox(height: 15.0),
-            
+
               _userTextField(),
-            SizedBox(height: 15.0),
-            _passwordTextField(),
-            SizedBox(height: 20.0),
-            _buttonLogin(),
-            SizedBox(height: 10.0),
-            _buttonRecuperar(),
-
-
+              SizedBox(height: 15.0),
+              _passwordTextField(),
+              SizedBox(height: 20.0),
+              _buttonLogin(),
+              SizedBox(height: 10.0),
+              _buttonRecuperar(),
             ],
           ),
         )
@@ -110,8 +129,7 @@ Future<void> sendingmail() async {
     );
   }
 
-
-Widget _userTextField() {
+  Widget _userTextField() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
@@ -203,10 +221,4 @@ Widget _userTextField() {
       );
     });
   }
-
-
-
 }
-
-
-
