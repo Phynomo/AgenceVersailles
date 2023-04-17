@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, "/homeall");
+                                    Navigator.pushNamed(context, "/reservaciones");
                                   }),
                               IconButton(
                                   icon: Icon(Icons.search,

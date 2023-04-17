@@ -883,3 +883,123 @@ BEGIN
 		SELECT 'Ha ocurrido un error'
 	END CATCH
 END
+
+--Procedimiento insertar cliente
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_InsertarCliente
+		@pers_Nombres nvarchar(150),
+        @pers_Apellidos nvarchar(150),
+        @pers_Identidad nvarchar(15),
+        @estc_Id int,
+        @pers_FechaNacimiento date,
+        @pers_Sexo char(1),
+        @pers_Celular nvarchar(20),
+        @pers_EsEmpleado bit,
+		@usua_NombreUsuario		NVARCHAR(100),
+		@usua_Correo			NVARCHAR(200),	
+		@usua_Contrasena		NVARCHAR(Max),
+		@usua_UsuCreacion		INT
+AS
+BEGIN
+
+BEGIN TRY
+		IF NOT EXISTS (SELECT *
+					   FROM [agen].[tbPersonas]
+					   WHERE [pers_Identidad] = @pers_Identidad)
+			BEGIN
+				INSERT INTO [agen].[tbPersonas](pers_Nombres, pers_Apellidos, pers_Identidad, estc_Id, pers_FechaNacimiento, pers_Sexo, pers_Celular, pers_EsEmpleado)
+				VALUES(@pers_Nombres, 
+					   @pers_Apellidos, 
+					   @pers_Identidad, 
+					   @estc_Id, 
+					   @pers_FechaNacimiento, 
+					   @pers_Sexo, 
+					   @pers_Celular, 
+					   @pers_EsEmpleado)
+
+			   DECLARE @pers_Id INT = (SELECT SCOPE_IDENTITY());
+
+			END
+		ELSE
+			SELECT 'Ya existe una persona con este número de identidad'
+	
+
+		DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
+
+		DECLARE @usua_EsAdmin BIT 
+
+		IF (@pers_EsEmpleado = 1)
+			SET @usua_EsAdmin = 1
+		ELSE
+			SET @usua_EsAdmin = 0
+
+
+		IF NOT EXISTS (SELECT usua_NombreUsuario 
+					   FROM acce.tbUsuarios 
+					   WHERE usua_NombreUsuario = @usua_NombreUsuario)
+			BEGIN			
+				INSERT INTO [acce].[tbUsuarios](usua_NombreUsuario, 
+												usua_Correo, 
+												usua_Contrasena, 
+												pers_Id, 
+												usua_EsAdmin, 
+												usua_UsuCreacion)
+				VALUES (@usua_NombreUsuario, @usua_Correo, @contraEncript, @pers_Id, @usua_EsAdmin, @usua_UsuCreacion)
+
+				SELECT 'El registro se ha insertado con éxito'
+			END
+		ELSE IF EXISTS (SELECT usua_NombreUsuario 
+					    FROM acce.tbUsuarios  
+					    WHERE usua_NombreUsuario = @usua_NombreUsuario
+						AND usua_Estado = 1)
+			BEGIN
+				UPDATE acce.tbUsuarios
+				SET usua_Estado = 1,
+					usua_Correo = @usua_Correo,
+					usua_Contrasena = @contraEncript,
+					usua_EsAdmin = @usua_EsAdmin,
+					pers_Id = @pers_Id,
+					usua_UsuCreacion = @usua_UsuCreacion
+				WHERE usua_NombreUsuario = @usua_NombreUsuario
+
+				SELECT 'El registro se ha insertado con éxito'
+			END
+		ELSE
+			SELECT 'Ya existe un usuario con este nombre'
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+	END CATCH
+
+END
+
+--Validar si el usuario existe
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_UsuarioExiste
+    @usua_NombreUsuario        NVARCHAR(100)
+AS
+BEGIN
+        IF NOT EXISTS (SELECT * FROM acce.tbUsuarios WHERE usua_NombreUsuario = @usua_NombreUsuario)
+        Begin
+        select 'Si puede'
+        END
+        ELSE
+        BEGIN
+        select 'No puede'
+        END
+END
+
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_IdentidadExiste
+    @pers_Identidad        NVARCHAR(15)
+AS
+BEGIN
+        IF NOT EXISTS (SELECT * FROM agen.tbPersonas WHERE pers_Identidad = @pers_Identidad)
+        Begin
+        select 'Si puede'
+        END
+        ELSE
+        BEGIN
+        select 'No puede'
+        END
+END

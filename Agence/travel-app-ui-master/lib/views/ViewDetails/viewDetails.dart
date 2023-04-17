@@ -209,7 +209,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                     fontWeight: FontWeight.bold)),
                             onPressed: () {
                               ReservacionModel reservacion = ReservacionModel(persId: 1, paquId: paqueteObject.paquId);
-                              homepagestate.insertReservacion(reservacion);
+                              homepagestate.insertReservacion(reservacion, context);
                               reservacion = null;
                             },
                             child: Padding(
