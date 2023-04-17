@@ -900,6 +900,7 @@ BEGIN
 END
 --******PROCEDIMIENTOS CLIENTES******--
 --Procedimiento insertar cliente
+
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_InsertarCliente
 		@pers_Nombres nvarchar(150),
@@ -1002,6 +1003,8 @@ BEGIN
         BEGIN
         select 'No puede'
         END
+
+
 END
 
 GO
@@ -1018,3 +1021,10 @@ BEGIN
         select 'No puede'
         END
 END
+
+
+
+
+
+
+

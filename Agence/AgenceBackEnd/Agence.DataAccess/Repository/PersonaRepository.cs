@@ -17,6 +17,20 @@ namespace Agence.DataAccess.Repository
             throw new NotImplementedException();
         }
 
+        public RequestStatus Existe(string identidad)
+        {
+            RequestStatus result = new RequestStatus();
+
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@pers_Identidad", identidad, DbType.String, ParameterDirection.Input);
+
+            var resultado = db.QueryFirst<string>(ScriptsDataBase.UDP_ExisteIdentidad, parametros, commandType: System.Data.CommandType.StoredProcedure);
+            result.MessageStatus = resultado;
+
+            return result;
+        }
+
         public VW_tbPersonas find(int? id)
         {
             throw new NotImplementedException();
@@ -42,6 +56,7 @@ namespace Agence.DataAccess.Repository
 
             return result;
         }
+
 
         public IEnumerable<VW_tbPersonas> List()
         {

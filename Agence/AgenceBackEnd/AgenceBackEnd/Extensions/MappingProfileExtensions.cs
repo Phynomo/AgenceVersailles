@@ -15,6 +15,8 @@ namespace Agence.API.Extensions
             CreateMap<UsuarioViewModel, tbUsuarios>().ReverseMap();
             CreateMap<PersonaViewModel, tbPersonas>().ReverseMap();
             CreateMap<ReservacionViewModel, tbReservaciones>().ReverseMap();
+            CreateMap<InsertarPersonaViewModel, tbPersonas>().ReverseMap();
+            CreateMap<InsertarPersonaViewModel, tbUsuarios>().ReverseMap();
         }
     }
 }

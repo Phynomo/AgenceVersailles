@@ -134,6 +134,21 @@ namespace Agence.BusinessLogic.Services
             }
         }
 
+        public ServiceResult Existe(string identidad)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _personaRepository.Existe(identidad);
+                return result.Ok(list);
+            }
+            catch (Exception e)
+            {
+                return result.Error(e.Message);
+            }
+        }
+
+
 
         #endregion
 

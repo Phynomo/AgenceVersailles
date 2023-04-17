@@ -39,5 +39,13 @@ namespace Agence.API.Controllers
         }
 
 
+        [HttpGet("Existe")]
+        public IActionResult Existe(string identidad)
+        {
+            var response = _agenceService.Existe(identidad);
+            return Ok(response);
+        }
+
+
     }
 }
