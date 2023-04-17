@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 bottomRight: Radius.circular(36)),
             child: Image(
               image: AssetImage('assets/image/LogoFondoMoradoConL.gif'),
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
         ),

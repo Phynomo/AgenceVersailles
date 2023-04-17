@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:travelappui/views/HomePage/homepage.dart';
+import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 
 String usuario = "";
@@ -23,47 +24,48 @@ class _LoginPageState extends State<LoginPage> {
   bool _showErrorConexion = false;
   @override
   Widget build(BuildContext context) {
-  return SafeArea(
-    child: Scaffold(
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        children: [
-          SizedBox(height: 15.0),
-          Flexible(
-            child: Image.asset(
-              "assets/image/LogoMorado.png",
-              height: 300.0,
+    return SafeArea(
+      child: Scaffold(
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          children: [
+            SizedBox(height: 15.0),
+            Flexible(
+              child: Image.asset(
+                "assets/image/LogoMorado.png",
+                height: 300.0,
+              ),
             ),
-          ),
-          Center(
-  child: Text(
-    "Agence Versailles",
-    style: TextStyle(
-      fontSize: 24.0,
-    ),
-  ),
-),
-          if (_showErrorMessage)
-            Text(
-              'Usuario o contraseña incorrectos',
-              style: TextStyle(color: Colors.red),
+            Center(
+              child: Text(
+                "Agence Versailles",
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
+              ),
             ),
-          if (_showErrorConexion)
-            Text(
-              'Error de conexion, Intentalo mas tarde',
-              style: TextStyle(color: Colors.red),
-            ),
-          SizedBox(height: 15.0),
-          _userTextField(),
-          SizedBox(height: 15.0),
-          _passwordTextField(),
-          SizedBox(height: 20.0),
-          _buttonLogin(),
-        ],
+            if (_showErrorMessage)
+              Text(
+                'Usuario o contraseña incorrectos',
+                style: TextStyle(color: Colors.red),
+              ),
+            if (_showErrorConexion)
+              Text(
+                'Error de conexion, Intentalo mas tarde',
+                style: TextStyle(color: Colors.red),
+              ),
+            SizedBox(height: 15.0),
+            _userTextField(),
+            SizedBox(height: 15.0),
+            _passwordTextField(),
+            SizedBox(height: 20.0),
+            _buttonLogin(),
+            SizedBox(height: 10.0),
+            _buttonRecuperar(),
+          ],
+        ),
       ),
-    ),
-  );
-
+    );
   }
 
   Widget _userTextField() {
@@ -156,8 +158,8 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 } else {
                   setState(() {
-                      _showErrorConexion = true;
-                    });
+                    _showErrorConexion = true;
+                  });
                 }
               }); //tqm, gracias por el carrito
             } else {
@@ -184,6 +186,29 @@ class _LoginPageState extends State<LoginPage> {
         style: ButtonStyle(
           backgroundColor:
               MaterialStateProperty.all<Color>(Colors.purple.shade900),
+        ),
+      );
+    });
+  }
+
+  Widget _buttonRecuperar() {
+    return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return TextButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Recuperar(),
+            ),
+          );
+        },
+        child: Text(
+          '¿Olvidaste tu contraseña?',
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 16,
+          ),
         ),
       );
     });

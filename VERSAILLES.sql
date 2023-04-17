@@ -969,3 +969,39 @@ END
 
 
 
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_UsuarioExiste
+	@usua_NombreUsuario		NVARCHAR(100)
+AS
+BEGIN
+		IF NOT EXISTS (SELECT * FROM acce.tbUsuarios WHERE usua_NombreUsuario = @usua_NombreUsuario)
+		Begin
+		select 'Si puede'
+		END
+		ELSE
+		BEGIN
+		select 'No puede'
+		END
+END
+
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_IdentidadExiste
+	@pers_Identidad		NVARCHAR(15)
+AS
+BEGIN
+		IF NOT EXISTS (SELECT * FROM agen.tbPersonas WHERE pers_Identidad = @pers_Identidad)
+		Begin
+		select 'Si puede'
+		END
+		ELSE
+		BEGIN
+		select 'No puede'
+		END
+END
+
+
+
+
+
+
+

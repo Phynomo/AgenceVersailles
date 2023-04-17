@@ -49,7 +49,6 @@ C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Ent
 C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Entities\bin\Release\net5.0\Agence.Entities.dll
 C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Entities\bin\Release\net5.0\ref\Agence.Entities.dll
 C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Entities\bin\Release\net5.0\Agence.Entities.pdb
-C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Entities\obj\Release\net5.0\Agence.Entities.csproj.AssemblyReference.cache
 C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Entities\obj\Release\net5.0\Agence.Entities.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Entities\obj\Release\net5.0\Agence.Entities.AssemblyInfoInputs.cache
 C:\Users\danie\Documents\GitHub\AgenceVersailles\Agence\AgenceBackEnd\Agence.Entities\obj\Release\net5.0\Agence.Entities.AssemblyInfo.cs

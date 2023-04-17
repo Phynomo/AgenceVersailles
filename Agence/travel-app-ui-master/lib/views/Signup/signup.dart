@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,20 @@ class _SignupscreenState extends State<Signupscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Registro'),
+        centerTitle: true,
+        backgroundColor: Colors.purple.shade900,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SplashScreen()),
+            );
+          },
+        ),
+      ),
       body: ListView(
         children: [
           Stack(
@@ -77,57 +92,89 @@ class _SignupscreenState extends State<Signupscreen> {
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 40),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: FloatingActionButton(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.purple.shade900,
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.65,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUpNombres(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.purple.shade900,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                               elevation: 0,
-                              child: Icon(Icons.arrow_back),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SplashScreen()),
-                                );
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.65,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignUpNombres(),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.purple.shade900,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                elevation: 0,
-                                textStyle: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: 'PlayFair',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text("¡Iniciemos tu viaje!"),
+                              textStyle: TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'PlayFair',
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text("¡Iniciemos tu viaje!"),
+                            ),
                           ),
-                        ],
+                        ),
                       ),
+
+                      // Row(
+                      //   children: [
+                      //     // SizedBox(
+                      //     //   width: 50.0,
+                      //     //   height: 50.0,
+                      //     //   child: FloatingActionButton(
+                      //     //     backgroundColor: Colors.white,
+                      //     //     foregroundColor: Colors.purple.shade900,
+                      //     //     elevation: 0,
+                      //     //     child: Icon(Icons.arrow_back),
+                      //     //     onPressed: () {
+                      //     //       Navigator.push(
+                      //     //         context,
+                      //     //         MaterialPageRoute(
+                      //     //             builder: (context) => SplashScreen()),
+                      //     //       );
+                      //     //     },
+                      //     //   ),
+                      //     // ),
+                      //     SizedBox(width: 10.0),
+                      //     SizedBox(
+                      //       width: MediaQuery.of(context).size.width * 0.65,
+                      //       child: ElevatedButton(
+                      //         onPressed: () {
+                      //           Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //               builder: (context) => SignUpNombres(),
+                      //             ),
+                      //           );
+                      //         },
+                      //         style: ElevatedButton.styleFrom(
+                      //           primary: Colors.purple.shade900,
+                      //           shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(30),
+                      //           ),
+                      //           elevation: 0,
+                      //           textStyle: TextStyle(
+                      //             fontSize: 18,
+                      //             fontFamily: 'PlayFair',
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //         child: Padding(
+                      //           padding: const EdgeInsets.all(12.0),
+                      //           child: Text("¡Iniciemos tu viaje!"),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
 
                       // SizedBox(height: 10.0,),
                       //    SizedBox(
@@ -401,12 +448,44 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                           setState(() {
                             _identidaderror = null;
                           });
+
+                          Future<void> getDataFromAPI() async {
+                            String apiUrl =
+                                "https://localhost:44313/api/Persona/Existe?identidad=" +
+                                    _identidad; // URL de la API
+
+                            try {
+                              final response =
+                                  await http.get(Uri.parse(apiUrl));
+
+                              if (response.statusCode == 200) {
+                                final jsonData = json.decode(response.body);
+                                String data = jsonData["data"].toString();
+
+                                if (data.toString().contains("No puede")) {
+                                  setState(() {
+                                    _identidaderror = "Este DNI ya esta en uso";
+                                  });
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpSexo()),
+                                  );
+                                }
+                              } else {
+                                setState(() {
+                                  _identidaderror =
+                                      "Error al verificar, intentalo luego";
+                                });
+                              }
+                            } catch (error) {
+                              print(error);
+                            }
+                          }
+
                           if (_identidad != "" && regex.hasMatch(_identidad)) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpSexo()),
-                            );
+                            getDataFromAPI();
                           } else {
                             setState(() {
                               _identidaderror = "Este campo es requerido";
@@ -1046,6 +1125,7 @@ class _SignUpCelularState extends State<SignUpCelular> {
                   decoration: InputDecoration(
                       labelText: 'Celular', errorText: _celularerror),
                   style: TextStyle(color: Colors.black),
+                  keyboardType: TextInputType.number,
                   initialValue: _celular,
                   onChanged: (value) {
                     _celular = value;
@@ -1202,12 +1282,45 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                             _emailerror = null;
                             _usuarioerror = null;
                           });
+                          Future<void> getDataFromAPI() async {
+                            String apiUrl =
+                                "https://localhost:44313/api/Usuario/Existe?usuario=" +
+                                    _usuario; // URL de la API
+
+                            try {
+                              final response =
+                                  await http.get(Uri.parse(apiUrl));
+
+                              if (response.statusCode == 200) {
+                                final jsonData = json.decode(response.body);
+                                String data = jsonData["data"].toString();
+
+                                if (data.toString().contains("No puede")) {
+                                  setState(() {
+                                    _usuarioerror =
+                                        "Este usuario ya esta en uso";
+                                  });
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SignUpContrasena()),
+                                  );
+                                }
+                              } else {
+                                setState(() {
+                                  _usuarioerror =
+                                      "Error al verificar, intentalo luego";
+                                });
+                              }
+                            } catch (error) {
+                              print(error);
+                            }
+                          }
+
                           if (_usuario != "" && _email != "") {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpContrasena()),
-                            );
+                            getDataFromAPI();
                           } else {
                             if (_usuario == "") {
                               setState(() {
@@ -1283,6 +1396,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
   String _contrasenaerror;
   bool _showErrorMessage = false;
   bool _showErrorConexion = false;
+  String quepasa = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1319,16 +1433,17 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                 Text(
                   'Ahora ingresa tu numero contraseña, recuerda no olvidarla',
                   style: TextStyle(fontSize: 16.0),
-                ),if (_showErrorMessage)
-            Text(
-              'Ocurrio un error',
-              style: TextStyle(color: Colors.red),
-            ),
-          if (_showErrorConexion)
-            Text(
-              'Error de conexion, Intentalo mas tarde',
-              style: TextStyle(color: Colors.red),
-            ),
+                ),
+                if (_showErrorMessage)
+                  Text(
+                    'Ocurrió un error: ' + quepasa.toString(),
+                    style: TextStyle(color: Colors.red),
+                  ),
+                if (_showErrorConexion)
+                  Text(
+                    'Ocurrió un error: ' + quepasa.toString(),
+                    style: TextStyle(color: Colors.red),
+                  ),
                 TextFormField(
                   decoration: InputDecoration(
                       labelText: 'Contraseña', errorText: _contrasenaerror),
@@ -1351,37 +1466,84 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                             _contrasenaerror = null;
                           });
                           if (_contrasena != "") {
+                            // Map<String, dynamic> data = {
+                            //   'pers_Nombres': "_nombre",
+                            //   'pers_Apellidos': _apellido,
+                            //   'pers_Identidad': _identidad,
+                            //   'estc_Id': _estadocivil,
+                            //   'pers_FechaNacimiento': _fechanacimiento,
+                            //   'pers_Sexo': _sexo,
+                            //   'pers_Celular': _celular,
+                            //   'pers_EsEmpleado': "false",
+                            //   'usua_NombreUsuario': _usuario,
+                            //   'usua_Correo': _email,
+                            //   'usua_Contrasena': _contrasena,
+                            //   'usua_UsuCreacion': "1"
+                            // };
+
+//  Map<String, dynamic> data2 = {
+//                               'pers_Nombres': "_nombre",
+//                               'pers_Apellidos': "_apellido",
+//                               'pers_Identidad': "_identidad",
+//                               'estc_Id': "1",
+//                               'pers_FechaNacimiento': "2000-10-10",
+//                               'pers_Sexo': "M",
+//                               'pers_Celular': "98989862",
+//                               'pers_EsEmpleado': "false",
+//                               'usua_NombreUsuario': "_usuario",
+//                               'usua_Correo': "_email",
+//                               'usua_Contrasena': "_contrasena",
+//                               'usua_UsuCreacion': "1"
+//                             };
+
+                            // void enviarJson() async {
+                            //   final Map<String, dynamic> datos = {
+                            //     'nombre': 'Juan',
+                            //     'edad': 25,
+                            //     'email': 'juan@example.com'
+                            //   };
+                            //   final url =
+                            //       Uri.parse('https://miapi.com/endpoint');
+                            //   final respuesta = await http.post(
+                            //     url,
+                            //     headers: {'Content-Type': 'application/json'},
+                            //     body: json.encode(datos),
+                            //   );
+                            //   print(respuesta.body);
+                            // }
                             var data = {
                               'pers_Nombres': _nombre,
                               'pers_Apellidos': _apellido,
                               'pers_Identidad': _identidad,
-                              'estc_Id': _estadocivil,
-                              'pers_FechaNacimiento': _fechanacimiento,
+                              'estc_Id': int.parse(_estadocivil),
+                              "pers_FechaNacimiento": _fechanacimiento
+                                  .replaceFirst(" 00:00:00.000", ""),
                               'pers_Sexo': _sexo,
                               'pers_Celular': _celular,
-                              'pers_EsEmpleado': "false",
+                              'pers_EsEmpleado': false,
                               'usua_NombreUsuario': _usuario,
                               'usua_Correo': _email,
                               'usua_Contrasena': _contrasena,
-                              'usua_UsuCreacion': "1"
+                              'usua_UsuCreacion': 1
                             }; //datos xd
 
-                            var body = json.encode(data); //Json encriptado
-
-                            var url = Uri.parse('https://localhost:44313/api/Persona/InsertarCliente'); //Url
-
-                            http.post(url, body: body, headers: {'Content-Type': 'application/json'}).then((response) {
-                              //Brujeria
-                              
-                            setState(() {
-                              _contrasenaerror = response.statusCode.toString() + _nombre + _apellido +
-                              _identidad + _estadocivil + _fechanacimiento + _sexo + _celular + _usuario + _email + _contrasena;
-                            });
+                            Future<void> enviarJson() async {
+                              var jsonBody = jsonEncode(data);
+                              final url = Uri.parse(
+                                  'http://www.agenciaversalles.somee.com/api/Usuario/Registrarse');
+                              final response = await http.post(
+                                url,
+                                body: jsonBody,
+                                headers: <String, String>{
+                                  'Content-Type':
+                                      'application/json; charset=UTF-8',
+                                },
+                              );
                               if (response.statusCode == 200) {
-                                // resultado
                                 var jsonResponse = jsonDecode(response.body);
                                 var message = jsonResponse['message'];
-                                if (message == "El registro se ha insertado con éxito") {
+                                if (message ==
+                                    "El registro se ha insertado con éxito") {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -1389,19 +1551,20 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                                   );
                                 } else {
                                   setState(() {
+                                    quepasa = message;
                                     _showErrorMessage = true;
                                   });
                                 }
                               } else {
                                 setState(() {
+                                  quepasa = response.statusCode.toString();
                                   _showErrorConexion = true;
                                 });
                               }
-                            }); //tqm, gracias por el carrito
-                          } else {
-                            setState(() {
-                              _contrasenaerror = "Este campo es requerido";
-                            });
+                            }
+
+                            // enviarJson();
+                            enviarJson();
                           }
                         },
                         child: Text('Siguente'),
@@ -1460,8 +1623,9 @@ class MyDropdownButton extends StatefulWidget {
   _MyDropdownButtonState createState() => _MyDropdownButtonState();
 }
 
+String _selectedValue = 'Seleccione un estado civil';
+
 class _MyDropdownButtonState extends State<MyDropdownButton> {
-  String _selectedValue = 'Seleccione un estado civil';
   List<Map<String, dynamic>> estadosCiviles = [
     {"id": 1, "nombre": "Soltero(a)"},
     {"id": 2, "nombre": "Casado(a)"},

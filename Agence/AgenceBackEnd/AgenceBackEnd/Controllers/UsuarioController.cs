@@ -55,5 +55,22 @@ namespace Agence.API.Controllers
             var result = _seguridadServivce.EliminarUsuarios(item);
             return Ok(result);
         }
+
+        [HttpPost("Registrarse")]
+        public IActionResult Registrarse(InsertarPersonaViewModel Persona)
+        {
+            var item = _mapper.Map<tbPersonas>(Persona);
+            var item2 = _mapper.Map<tbUsuarios>(Persona);
+            var response = _seguridadServivce.InsertarPersonaCliente(item, item2);
+            return Ok(response);
+        }
+        
+        [HttpGet("Existe")]
+        public IActionResult Existe(string usuario)
+        {
+            var response = _seguridadServivce.Existe(usuario);
+            return Ok(response);
+        }
+
     }
 }

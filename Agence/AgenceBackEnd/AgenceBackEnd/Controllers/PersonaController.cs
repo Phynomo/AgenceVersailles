@@ -38,12 +38,11 @@ namespace Agence.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("InsertarCliente")]
-        public IActionResult InsertCliente(InsertarPersonaViewModel Persona)
+
+        [HttpGet("Existe")]
+        public IActionResult Existe(string identidad)
         {
-            var item = _mapper.Map<tbPersonas>(Persona);
-            var item2 = _mapper.Map<tbUsuarios>(Persona);
-            var response = _agenceService.InsertarPersonaCliente(item, item2);
+            var response = _agenceService.Existe(identidad);
             return Ok(response);
         }
 

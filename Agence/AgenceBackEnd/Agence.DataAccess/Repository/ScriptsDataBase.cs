@@ -15,6 +15,8 @@ namespace Agence.DataAccess.Repository
         public static string UDP_Editar_Usuarios = "acce.UDP_tbUsuarios_Edit";
         public static string UDP_Eliminar_Usuarios = "acce.UDP_tbUsuarios_Delete";
         public static string UDP_Find_Usuarios = "acce.UDP_tbUsuarios_Find";
+        public static string UDP_Existe = "acce.UDP_UsuarioExiste";
+        public static string UDP_ExisteIdentidad = "agen.UDP_IdentidadExiste";
         #endregion
 
 
