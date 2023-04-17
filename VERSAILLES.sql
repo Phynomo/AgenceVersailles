@@ -812,7 +812,7 @@ SELECT [paqu_Id]
   ON T2.vuel_AeropuertoSalida = T10.aero_Id INNER JOIN gral.tbCiudades T11
   ON T10.ciud_Id = T11.ciud_Id INNER JOIN gral.tbDepartamentos T12
   ON T11.depa_Id = T12.depa_Id INNER JOIN gral.tbPaises T13
-  ON T12.pais_Id = T13.pais_Id
+  ON T12.pais_Id = T13.pais_Id 
 GO
 
 
@@ -854,13 +854,15 @@ END
 
 --Procedimiento listar paquetes
 GO
-CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPerson 
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPerson
 	@pers_Id int
 AS
 BEGIN
 	SELECT * 
-	FROM agen.VW_tbPaquetes
-	WHERE paqu_Id IN (select paqu_Id from agen.tbReservaciones WHERE pers_Id = @pers_Id)
+	FROM agen.VW_tbPaquetes T1
+	LEFT JOIN agen.tbReservaciones T2
+	ON T1.paqu_Id = T2.paqu_Id
+	WHERE pers_Id = @pers_Id
 	ORDER BY vuel_FechaSalida
 END
 
@@ -884,6 +886,19 @@ BEGIN
 	END CATCH
 END
 
+--Procedimiento eliminar reservación
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbReservaciones_Delete 
+	@rese_Id	INT
+AS
+BEGIN
+	DELETE 
+	FROM agen.tbReservaciones
+	WHERE rese_Id = @rese_Id
+
+	SELECT 'La reservacion ha sido cancelada'
+END
+--******PROCEDIMIENTOS CLIENTES******--
 --Procedimiento insertar cliente
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_InsertarCliente

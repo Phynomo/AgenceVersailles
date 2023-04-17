@@ -34,5 +34,13 @@ namespace Agence.API.Controllers
             var response = _agenceService.InsertarReservacion(item);
             return Ok(response);
         }
+
+        [HttpPut("Eliminar")]
+        public IActionResult Delete(ReservacionViewModel reservaciones)
+        {
+            var item = _mapper.Map<tbReservaciones>(reservaciones);
+            var response = _agenceService.EliminarReservacion(item);
+            return Ok(response);
+        }
     }
 }

@@ -5,12 +5,12 @@ import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/models/reservacionesModel.dart';
 
-class ViewDetails extends StatefulWidget {
+class ViewDetailsReservacion extends StatefulWidget {
   @override
-  _ViewDetailsState createState() => _ViewDetailsState();
+  _ViewDetailsStateReservacion createState() => _ViewDetailsStateReservacion();
 }
 
-class _ViewDetailsState extends State<ViewDetails> {
+class _ViewDetailsStateReservacion extends State<ViewDetailsReservacion> {
   int numberPackage = 0;
 
   removePackage() {
@@ -200,7 +200,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 // padding: EdgeInsets.zero,
-                                primary: appTheme.accentColor,
+                                primary: Colors.red,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)),
                                 elevation: 0,
@@ -212,15 +212,15 @@ class _ViewDetailsState extends State<ViewDetails> {
                               ReservacionModel reservacion = ReservacionModel(
                                   persId: 1,
                                   paquId: paqueteObject.paquId,
-                                  reseId: 0);
-                              homepagestate.insertReservacion(
+                                  reseId: paqueteObject.reseId);
+                              homepagestate.eliminarReservacion(
                                   reservacion, context);
                               reservacion = null;
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Reservar",
+                                "Cancelar Reservación",
                                 style: appTheme.textTheme.headline3,
                               ),
                             )),

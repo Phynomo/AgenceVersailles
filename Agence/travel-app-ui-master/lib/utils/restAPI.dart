@@ -14,8 +14,9 @@ String urlFeatured =
     "http://www.agenciaversalles.somee.com/api/Paquete/Listado5Caros";
 String urlRecommended =
     "http://www.agenciaversalles.somee.com/api/Paquete/Listado10Baratos";
-String urlUserPlaces = "https://localhost:44313/api/Paquete/ListadoPorPersona?id=";
-String urlInsertBooking = "https://localhost:44313/api/Reservacion/Insertar";
+String urlUserPlaces = "http://www.agenciaversalles.somee.com/api/Paquete/ListadoPorPersona?id=";
+String urlInsertBooking = "http://www.agenciaversalles.somee.com/api/Reservacion/Insertar";
+String urlDeleteBooking = "http://www.agenciaversalles.somee.com/api/Reservacion/Eliminar";
 // String urlFind = "https://localhost:44313/api/Paquete/Find?id=";
 
 class RESTAPI {
@@ -39,6 +40,7 @@ class RESTAPI {
           hotelNombre: element['hote_Nombre'],
           agencia: element['agenvuel_Nombre'],
           aeropuerto: element['aero_Nombre'],
+          reseId: element['rese_Id'],
           rating: double.parse(element["hote_Estellas"].toString())));
     });
     return lista;
@@ -91,12 +93,44 @@ class RESTAPI {
       if (response.statusCode == 200) {
         // resultado
         // print(jsonResponse["message"].toString());
+        print(jsonResponse["message"].toString());
         ElegantNotification.success(
           // title:  Text("Exitoso"),
-          description:  Text("El paquete ha sido agregado a 'Mis Reservaciones",
+          description:  Text("El paquete ha sido agregado a 'Mis Reservaciones'",
                               style: TextStyle(color: Colors.black),),
         ).show(context);
       } else {
+        print(jsonResponse["message"].toString());
+        ElegantNotification.error(
+          // title:  Text("Exitoso"),
+          description:  Text("Ha ocurrido un error",
+                            style: TextStyle(color: Colors.black),),
+        ).show(context);
+      }
+    });
+  }
+
+Future<dynamic> eliminarReservacion(data, context) async {
+    var body = json.encode(data.toJson());
+    var url = Uri.parse(urlDeleteBooking);
+
+    http.put(url,
+        body: body,
+        headers: {'Content-Type': 'application/json'}).then((response) {
+        var jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        // resultado
+        // print(jsonResponse["message"].toString());
+        print(jsonResponse["message"].toString());
+        ElegantNotification.success(
+          // title:  Text("Exitoso"),
+          description:  Text("La reservación ha sido cancelada",
+                              style: TextStyle(color: Colors.black),),
+        ).show(context);
+
+          Navigator.pushNamed(context, "/reservaciones");
+      } else {
+        print(jsonResponse["message"].toString());
         ElegantNotification.error(
           // title:  Text("Exitoso"),
           description:  Text(jsonResponse["message"].toString(),

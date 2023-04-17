@@ -48,50 +48,54 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
-                    child: Text(  
-                      "Mis reservaciones",
-                      style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold)
-                    ),),
+                    child: Text("Mis reservaciones",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)),
+                  ),
                   SizedBox(
                     height: size.height,
                     child: StreamBuilder(
                       stream: homepagestate.getPaquetesXPersona(1).asStream(),
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData)
-                          return Container(
-                            alignment: Alignment.center,
-                            width: 50,
-                            height: 50,
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
                             child: CircularProgressIndicator(),
                           );
-                        if (snapshot.connectionState == ConnectionState.waiting)
-                          return Container(
-                            alignment: Alignment.center,
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(),
-                          );
-                        return ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, "/view",
-                                    arguments: {
-                                      "paqueteObject": snapshot.data[index]
-                                    });
-                              },
-                              child: FeaturedCard(
-                                placeModel: snapshot.data[index],
+                        } else if (!snapshot.hasData) {
+                          return Stack(
+                            children: [
+                              ListView(),
+                              Center(
+                                child: Text(
+                                  "Aún no tienes reservaciones",
+                                  style: TextStyle(color: Colors.black),
+                                ),
                               ),
-                            );
-                          },
-                        );
+                            ],
+                          );
+                        } else {
+                          return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/viewReservacion",
+                                      arguments: {
+                                        "paqueteObject": snapshot.data[index]
+                                      });
+                                },
+                                child: FeaturedCard(
+                                  placeModel: snapshot.data[index],
+                                ),
+                              );
+                            },
+                          );
+                        }
                       },
                     ),
                   ),
@@ -124,17 +128,18 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                             children: [
                               IconButton(
                                   icon: Icon(Icons.home_rounded,
-                                      size: 36, color: kAppTheme.accentColor
-                                                    .withOpacity(0.35)),
+                                      size: 36,
+                                      color: kAppTheme.accentColor
+                                          .withOpacity(0.35)),
                                   onPressed: () {
                                     Navigator.pushNamed(context, "/Popular");
                                   }),
                               IconButton(
                                   icon: Icon(Icons.calendar_today_rounded,
-                                      size: 36,
-                                      color: kAppTheme.accentColor),
+                                      size: 36, color: kAppTheme.accentColor),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, "/reservaciones");
+                                    Navigator.pushNamed(
+                                        context, "/reservaciones");
                                   }),
                               IconButton(
                                   icon: Icon(Icons.search,

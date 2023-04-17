@@ -158,6 +158,24 @@ namespace Agence.BusinessLogic.Services
                 return result.Error(ex.Message);
             }
         }
+        public ServiceResult EliminarReservacion(tbReservaciones item)
+        {
+            var result = new ServiceResult();
+
+            try
+            {
+                var delete = _reservacionRepository.Delete(item);
+
+                if (delete.MessageStatus == "La reservacion ha sido cancelada")
+                    return result.SetMessage(delete.MessageStatus, ServiceResultType.Success);
+                else
+                    return result.SetMessage("Conexión perdida", ServiceResultType.Error);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+            }
+        }
         #endregion
     }
 }

@@ -3,6 +3,7 @@ import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/HomePage/homepagetodo.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:travelappui/views/ViewDetails/viewDetails.dart';
+import 'package:travelappui/views/ViewDetails/viewDetailsReservacion.dart';
 import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/MisReservacionesPage/misreservaciones.dart';
 import 'package:travelappui/views/Signup/signup.dart';
@@ -16,6 +17,7 @@ class AppRoutes {
   static const String ROUTE_HomeAll = "/Todo";
   static const String ROUTE_Splashscreen = "/splash";
   static const String ROUTE_ViewDetails = "/view";
+  static const String ROUTE_ViewDetailsReservacion = "/viewReservacion";
   static const String ROUTE_Login = "/login";
   static const String ROUTE_MisReservaciones = "/reservaciones";
   static const String ROUTE_SingUp = "/signup";
@@ -34,6 +36,10 @@ class AppRoutes {
       case ROUTE_ViewDetails:
           return MaterialPageRoute(
             settings: settings, builder: (_) => ViewDetails());
+        break;
+      case ROUTE_ViewDetailsReservacion:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => ViewDetailsReservacion());
         break;
       case ROUTE_Login:
           return MaterialPageRoute(

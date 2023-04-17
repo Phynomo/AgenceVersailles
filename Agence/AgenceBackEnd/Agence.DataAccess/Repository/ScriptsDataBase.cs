@@ -40,6 +40,7 @@ namespace Agence.DataAccess.Repository
 
         #region Reservaciones
         public static string UDP_Insertar_Reservaciones = "agen.UDP_tbReservaciones_Insert";
+        public static string UDP_Eliminar_Reservaciones = "agen.UDP_tbReservaciones_Delete";
         #endregion
 
     }
