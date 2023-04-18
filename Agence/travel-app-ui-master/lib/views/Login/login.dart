@@ -5,22 +5,25 @@ import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String usuario = "";
 String password = "";
 
+UsuarioModel sacainfoUsuario(info) {
+  UsuarioModel usuario = new UsuarioModel();
 
-UsuarioModel sacainfoUsuario(dynamic info) {
-     UsuarioModel usuario;
-     //usuario.usuaId = info["usua_Id"];
-     usuario.usuaNombreUsuario = info["usua_NombreUsuario"];
-     usuario.usuaCorreo = info["usua_Correo"];
-     usuario.usuaContrasena = info["usua_Contrasena"];
-     //usuario.persId = info["pers_Id"];
-     usuario.usuaPersonaNombreCompleto = info["usua_PersonaNombreCompleto"];
-     //usuario.usuaEsAdmin = info["usua_EsAdmin"];
-     return usuario;
-   }
+  usuario.usuaId = info[0]["usua_Id"].toString();
+  usuario.usuaNombreUsuario = info[0]["usua_NombreUsuario"].toString();
+  usuario.usuaCorreo = info[0]["usua_Correo"].toString();
+  usuario.usuaContrasena = info[0]["usua_Contrasena"].toString();
+  usuario.persId = info[0]["pers_Id"].toString();
+  usuario.usuaPersonaNombreCompleto =
+      info[0]["usua_PersonaNombreCompleto"].toString();
+  usuario.usuaEsAdmin = info[0]["usua_EsAdmin"].toString();
+
+  return usuario;
+}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -143,33 +146,36 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () {
             Future<void> iniciarsesionlogin() async {
               try {
-                var data = {
-                  'usua_NombreUsuario': usuario,
-                  'usua_Correo': usuario,
-                  'usua_Contrasena': password
-                }; //datos xd
+                // var data = {
+                //   'usua_NombreUsuario': usuario,
+                //   'usua_Correo': usuario,
+                //   'usua_Contrasena': password
+                // }; //datos xd
 
-                var body = json.encode(data); //Json encriptado
+                // var body = json.encode(data); //Json encriptado
 
-                var url = Uri.parse(
-                    'http://www.agenciaversalles.somee.com/api/Usuario/Login'); //Url
-                final response = await http.put(url,
-                    body: body, headers: {'Content-Type': 'application/json'});
+                var url =
+                    'http://www.agenciaversalles.somee.com/api/Usuario/Login?usuario=$usuario&contrasena=$password'; //Url
+                final response = await http.get(Uri.parse(url));
+
+                var jsonResponse = jsonDecode(response.body);
+                var data = jsonResponse['data'];
+
+                // print(data);
 
                 //Brujeria
                 if (response.statusCode == 200) {
                   // resultado
 
-
-                  var jsonResponse = jsonDecode(response.body);
-                  var data = jsonResponse['data'];
                   if (data != null && data.toString().length > 2) {
-                    // var info = sacainfoUsuario(jsonResponse['data']);
-                    // UsuarioModel usuarios = sacainfoUsuario(info);
+                    var usuarios = sacainfoUsuario(data);
 
-
-                    // print(usuarios.usuaNombreUsuario);
-                    
+                    print(usuarios.usuaNombreUsuario.toString());
+                    // To save a value to the session:
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString('usuId', data[0]['usua_Id'].toString());
+                    prefs.setString('usuNombreUsuario', data[0]['usua_NombreUsuario'].toString());
 
 
                     Navigator.push(

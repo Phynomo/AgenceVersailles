@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/components/appbar.dart';
 import 'package:travelappui/components/featuredcard.dart';
 import 'package:travelappui/theme.dart';
+// import 'package:';s
 
 class MisReservacionesPage extends StatefulWidget {
   const MisReservacionesPage({Key key}) : super(key: key);
@@ -14,11 +16,18 @@ class MisReservacionesPage extends StatefulWidget {
   State<MisReservacionesPage> createState() => _MisReservacionesPageState();
 }
 
+Future<void> infoUsuarios() async {
+  // To retrieve a value from the session:
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String usuId = prefs.getString('usuNombreUsuario');
+}
+
 class _MisReservacionesPageState extends State<MisReservacionesPage> {
   ScrollController _mainScrollController = ScrollController();
 
   final double _bottomBarHeight = 90;
   HomepageSrollListner _model;
+
 
   @override
   void initState() {
@@ -27,6 +36,8 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
     _model = HomepageSrollListner.initialise(_mainScrollController);
   }
 
+  var infoUsuario = infoUsuarios();
+  
   @override
   Widget build(BuildContext context) {
     HomePageStateProvider homepagestate =
@@ -104,60 +115,61 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
               ),
             ),
             AnimatedBuilder(
-                animation: _model,
-                builder: (context, child) {
-                  return Positioned(
-                      bottom: _model.bottom,
-                      right: 22,
-                      left: 22,
-                      child: Container(
-                        padding: EdgeInsets.only(left: 12, right: 12),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  blurRadius: 15,
-                                  color: Colors.black.withOpacity(0.4))
-                            ],
-                            borderRadius: BorderRadius.circular(45)),
-                        height: 75,
-                        alignment: Alignment.center,
-                        child: Material(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                  icon: Icon(Icons.home_rounded,
-                                      size: 36,
-                                      color: kAppTheme.accentColor
-                                          .withOpacity(0.35)),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, "/Popular");
-                                  }),
-                              IconButton(
-                                  icon: Icon(Icons.calendar_today_rounded,
-                                      size: 36, color: kAppTheme.accentColor),
-                                  onPressed: () {}),
-                              IconButton(
-                                  icon: Icon(Icons.search,
-                                      size: 36,
-                                      color: kAppTheme.accentColor
-                                          .withOpacity(0.35)),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, "/Todo");
-                                  }),
-                              IconButton(
-                                  icon: Icon(Icons.person,
-                                      size: 36,
-                                      color: kAppTheme.accentColor
-                                          .withOpacity(0.35)),
-                                  onPressed: () {})
-                            ],
-                          ),
+              animation: _model,
+              builder: (context, child) {
+                return Positioned(
+                  bottom: _model.bottom,
+                  right: 22,
+                  left: 22,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 12, right: 12),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 15,
+                              color: Colors.black.withOpacity(0.4))
+                        ],
+                        borderRadius: BorderRadius.circular(45)),
+                    height: 75,
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.home_rounded,
+                              size: 36,
+                              color: kAppTheme.accentColor.withOpacity(0.35)),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/Popular");
+                          },
                         ),
-                      ));
-                })
+                        IconButton(
+                          icon: Icon(Icons.calendar_today_rounded,
+                              size: 36, color: kAppTheme.accentColor),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.search,
+                              size: 36,
+                              color: kAppTheme.accentColor.withOpacity(0.35)),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/Todo");
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.person,
+                              size: 36,
+                              color: kAppTheme.accentColor.withOpacity(0.35)),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
