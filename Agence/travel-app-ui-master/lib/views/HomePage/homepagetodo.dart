@@ -4,16 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/components/appbar.dart';
-import 'package:travelappui/components/featuredcard.dart';
 import 'package:travelappui/components/travelplacedart.dart';
 import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/theme.dart';
-import 'package:travelappui/views/HomePage/components/featurelist.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
-import 'package:http/http.dart' as http;
 
-import '../../constants/strings.dart';
 import '../../models/placesModel.dart';
 
 get controller => null;
@@ -36,11 +32,15 @@ class _HomePageAllState extends State<HomePageAll> {
     _model = HomepageSrollListner.initialise(_mainScrollController);
   }
 
+  List<PlaceModel> allPlaces;
+  var place;
+
   @override
   Widget build(BuildContext context) {
     HomePageStateProvider homepagestate =
         Provider.of<HomePageStateProvider>(context);
     Size size = MediaQuery.of(context).size;
+
 
     return Scaffold(
       backgroundColor: kPrimaryColor,
@@ -61,6 +61,7 @@ class _HomePageAllState extends State<HomePageAll> {
                     child: StreamBuilder(
                         stream: homepagestate.getAllPlaces().asStream(),
                         builder: (context, snapshot) {
+                          allPlaces = snapshot.data;
                           if (!snapshot.hasData)
                             return Container(
                                 alignment: Alignment.center,
@@ -85,6 +86,7 @@ class _HomePageAllState extends State<HomePageAll> {
                                       crossAxisSpacing: 16,
                                       crossAxisCount: 2),
                               itemBuilder: (context, index) {
+                                final place = snapshot.data[index];
                                 return GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
@@ -92,7 +94,7 @@ class _HomePageAllState extends State<HomePageAll> {
                                         "paqueteObject": snapshot.data[index]
                                       });
                                     },
-                                    child: TravelCard(snapshot.data[index]));
+                                    child: TravelCard(place));
                               });
                         }),
                   ),
@@ -163,24 +165,14 @@ class _HomePageAllState extends State<HomePageAll> {
     );
   }
 
-  HomePageStateProvider homepagestatesearch = HomePageStateProvider();
-
-  List<PlaceModel> _placeList = [];
-  Timer _debounce;
-
   void searchPlace(String query) {
-    if (_debounce?.isActive ?? false) _debounce.cancel();
+    final suggestions = allPlaces.where((element) {
+      final placeTitle = element.placeTitle.toLowerCase();
+      final input = query.toLowerCase();
 
-    _debounce = Timer(Duration(milliseconds: 500), () async {
-      final placeList = await HomePageStateProvider().getAllPlaces();
-      final List<PlaceModel> suggestions = placeList.where((element) {
-        final placeTitle = element.placeTitle.toLowerCase();
-        final input = query.toLowerCase();
+      return placeTitle.contains(input);
+    }).toList();
 
-        return placeTitle.contains(input);
-      }).toList();
-
-      setState(() => _placeList = suggestions);
-    });
-  }
+    setState(() => place = suggestions);
+}
 }
