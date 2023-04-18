@@ -49,6 +49,23 @@ namespace Agence.DataAccess.Repository
             return result;
         }
 
+
+
+        public RequestStatus Recuperar(tbUsuarios item)
+        {
+            RequestStatus result = new RequestStatus();
+
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@usua_Correo", item.usua_Correo, DbType.String, ParameterDirection.Input);
+            parametros.Add("@usua_Contrasena", item.usua_Contrasena, DbType.String, ParameterDirection.Input);
+
+            var resultado = db.QueryFirst<string>(ScriptsDataBase.UDP_Recuperar_Usuarios, parametros, commandType: System.Data.CommandType.StoredProcedure);
+            result.MessageStatus = resultado;
+
+            return result;
+        }
+
         public RequestStatus InsertCliente(tbPersonas item, tbUsuarios item2)
         {
             RequestStatus result = new RequestStatus();
@@ -100,6 +117,19 @@ namespace Agence.DataAccess.Repository
             parametros.Add("@usua_NombreUsuario", usuario, DbType.String, ParameterDirection.Input);
 
             var resultado = db.QueryFirst<string>(ScriptsDataBase.UDP_Existe, parametros, commandType: System.Data.CommandType.StoredProcedure);
+            result.MessageStatus = resultado;
+
+            return result;
+        }
+          public RequestStatus ExisteCorreo(string usuario)
+        {
+            RequestStatus result = new RequestStatus();
+
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@usua_Correo", usuario, DbType.String, ParameterDirection.Input);
+
+            var resultado = db.QueryFirst<string>(ScriptsDataBase.UDP_ExisteCorreo, parametros, commandType: System.Data.CommandType.StoredProcedure);
             result.MessageStatus = resultado;
 
             return result;

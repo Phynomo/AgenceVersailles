@@ -1,12 +1,26 @@
 import "package:flutter/material.dart";
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 
 String usuario = "";
 String password = "";
+
+
+UsuarioModel sacainfoUsuario(dynamic info) {
+     UsuarioModel usuario;
+     //usuario.usuaId = info["usua_Id"];
+     usuario.usuaNombreUsuario = info["usua_NombreUsuario"];
+     usuario.usuaCorreo = info["usua_Correo"];
+     usuario.usuaContrasena = info["usua_Contrasena"];
+     //usuario.persId = info["pers_Id"];
+     usuario.usuaPersonaNombreCompleto = info["usua_PersonaNombreCompleto"];
+     //usuario.usuaEsAdmin = info["usua_EsAdmin"];
+     return usuario;
+   }
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -45,14 +59,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             if (_showErrorMessage)
-              Text(
-                'Usuario o contraseña incorrectos',
-                style: TextStyle(color: Colors.red),
+              Center(
+                child: Text(
+                  'Usuario o contraseña incorrectos',
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
             if (_showErrorConexion)
-              Text(
-                'Error de conexion, Intentalo mas tarde',
-                style: TextStyle(color: Colors.red),
+              Center(
+                child: Text(
+                  'Error de conexion, Intentalo mas tarde',
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
             SizedBox(height: 15.0),
             _userTextField(),
@@ -123,14 +141,8 @@ class _LoginPageState extends State<LoginPage> {
       return Center(
         child: ElevatedButton(
           onPressed: () {
-            try {
-              setState(() {
-                _errorPassword = null;
-                _errorUsuario = null;
-                _showErrorMessage = false;
-                _showErrorConexion = false;
-              });
-              if (usuario != "" && password != "") {
+            Future<void> iniciarsesionlogin() async {
+              try {
                 var data = {
                   'usua_NombreUsuario': usuario,
                   'usua_Correo': usuario,
@@ -141,31 +153,56 @@ class _LoginPageState extends State<LoginPage> {
 
                 var url = Uri.parse(
                     'http://www.agenciaversalles.somee.com/api/Usuario/Login'); //Url
+                final response = await http.put(url,
+                    body: body, headers: {'Content-Type': 'application/json'});
 
-                http.put(url, body: body, headers: {
-                  'Content-Type': 'application/json'
-                }).then((response) {
-                  //Brujeria
-                  if (response.statusCode == 200) {
-                    // resultado
-                    var jsonResponse = jsonDecode(response.body);
-                    var data = jsonResponse['data'];
-                    if (data != null && data.toString().length > 2) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
-                    } else {
-                      setState(() {
-                        _showErrorMessage = true;
-                      });
-                    }
+                //Brujeria
+                if (response.statusCode == 200) {
+                  // resultado
+
+
+                  var jsonResponse = jsonDecode(response.body);
+                  var data = jsonResponse['data'];
+                  if (data != null && data.toString().length > 2) {
+                    // var info = sacainfoUsuario(jsonResponse['data']);
+                    // UsuarioModel usuarios = sacainfoUsuario(info);
+
+
+                    // print(usuarios.usuaNombreUsuario);
+                    
+
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
                   } else {
                     setState(() {
-                      _showErrorConexion = true;
+                      _showErrorMessage = true;
                     });
                   }
-                }); //tqm, gracias por el carrito
+                } else {
+                  setState(() {
+                    _showErrorConexion = true;
+                  });
+                } //tqm, gracias por el carrito
+              } catch (e) {
+                print(e.toString());
+                setState(() {
+                  _showErrorConexion = true;
+                });
+              }
+            }
+
+            try {
+              setState(() {
+                _errorPassword = null;
+                _errorUsuario = null;
+                _showErrorMessage = false;
+                _showErrorConexion = false;
+              });
+              if (usuario != "" && password != "") {
+                iniciarsesionlogin();
               } else {
                 if (usuario.isEmpty) {
                   setState(() {

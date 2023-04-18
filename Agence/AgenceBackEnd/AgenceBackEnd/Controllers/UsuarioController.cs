@@ -71,6 +71,23 @@ namespace Agence.API.Controllers
             var response = _seguridadServivce.Existe(usuario);
             return Ok(response);
         }
+        
+        
+        [HttpGet("ExisteCorreo")]
+        public IActionResult ExisteCorreo(string correo)
+        {
+            var response = _seguridadServivce.ExisteCorreo(correo);
+            return Ok(response);
+        }
+
+        [HttpPut("Recuperar")]
+        public IActionResult Recuperar(UsuarioViewModel usuarios)
+        {
+            var item = _mapper.Map<tbUsuarios>(usuarios);
+            var response = _seguridadServivce.RecuperarUsuarios(item);
+            return Ok(response);
+        }
+
 
     }
 }

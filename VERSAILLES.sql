@@ -537,9 +537,9 @@ BEGIN
 	
 	DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
 
-	SELECT usua_Id, usua_NombreUsuario, usua_Correo, pers_Id, usua_PersonaNombreCompleto, usua_EsAdmin, usua_UsuCreacion, usua_NombreUsuarioCreacion, usua_FechaCreacion, usua_UsuModificacion, usua_NombreUsuarioModificacion, usua_FechaModificacion FROM acce.VW_tbUsuarios T1
-	WHERE (T1.usua_NombreUsuario = @usua_NombreUsuario OR T1.usua_Correo = @usua_Correo)
-	and	t1.usua_Contrasena = @contraEncript
+	SELECT * FROM acce.VW_tbUsuarios
+	WHERE (usua_NombreUsuario = @usua_NombreUsuario OR usua_Correo = @usua_Correo)
+	and	usua_Contrasena = @contraEncript
 
 END
 
@@ -1022,6 +1022,55 @@ BEGIN
         END
 END
 
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_CorreoExiste
+    @usua_Correo        NVARCHAR(300)
+AS
+BEGIN
+        IF NOT EXISTS (SELECT * FROM acce.tbUsuarios WHERE [usua_Correo] = @usua_Correo)
+        Begin
+        select 'No Existe'
+        END
+        ELSE
+        BEGIN
+        select 'Si Existe'
+        END
+
+
+END
+
+
+
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_RecuperarUsuario
+ @usua_Correo        NVARCHAR(300),
+	@usua_Contrasena	NVARCHAR(MAX)
+AS
+BEGIN
+BEGIN TRY
+
+DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @usua_Contrasena));
+
+UPDATE [acce].[tbUsuarios]
+   SET [usua_Contrasena] = @password
+ WHERE usua_Correo = @usua_Correo
+
+ 
+ IF EXISTS (select * FROM acce.tbUsuarios WHERE usua_Correo = @usua_Correo
+												AND [usua_Contrasena] = @password)
+ BEGIN
+ SELECT 'usuario recuperado' as Proceso
+ END
+ ELSE
+ SELECT 'usuario errado' as Proceso
+END TRY
+BEGIN CATCH
+ SELECT 'error en operacion' as Proceso
+END CATCH
+
+
+
+END
 
 
 

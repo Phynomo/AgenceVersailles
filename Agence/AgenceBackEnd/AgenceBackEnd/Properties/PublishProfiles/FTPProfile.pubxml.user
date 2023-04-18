@@ -8,47 +8,47 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA2WmH8vIqkk6bxebod0yAnAAAAAACAAAAAAAQZgAAAAEAACAAAAAKYjutjj2BIquFkURFSJq0ci53GFIO4MFN9EqMUDO23AAAAAAOgAAAAAIAACAAAADsgZDCAKqfY0OA4ypxcS1xTkQZ6uLTLRgKaK+LJJlAaCAAAABpLv5wucva8RFCLry9JQ7aqtHYoN9uvO4pPise++X19kAAAABuz964ApOAzeCpIfvtaUUY4GkG8Ntr3E9Nns/BJmFjfxie5rMgqGlLbSEeDaCFVtg7+u5uA3zTdioGRAUgQEl4</EncryptedPassword>
     <_PublishTargetUrl>ftp://155.254.244.39/www.AgenciaVersalles.somee.com</_PublishTargetUrl>
-    <History>True|2023-04-16T21:48:26.2565829Z;True|2023-04-16T14:32:47.0667946-06:00;True|2023-04-16T13:45:35.6261283-06:00;False|2023-04-16T13:39:11.5259940-06:00;True|2023-04-16T12:47:56.3134184-06:00;False|2023-04-14T12:45:28.1991210-06:00;False|2023-04-14T12:04:51.7519149-06:00;False|2023-04-14T11:38:36.6683455-06:00;False|2023-04-14T11:31:33.7998859-06:00;True|2023-04-13T22:18:10.1978504-06:00;True|2023-04-13T22:09:38.3275361-06:00;True|2023-04-13T11:21:23.0197302-06:00;False|2023-04-13T11:02:58.0538017-06:00;False|2023-04-13T11:02:26.8418214-06:00;True|2023-04-12T12:14:20.6098354-06:00;</History>
+    <History>True|2023-04-17T23:00:58.6244271Z;True|2023-04-17T10:22:42.4805356-06:00;True|2023-04-16T15:48:26.2565829-06:00;True|2023-04-16T14:32:47.0667946-06:00;True|2023-04-16T13:45:35.6261283-06:00;False|2023-04-16T13:39:11.5259940-06:00;True|2023-04-16T12:47:56.3134184-06:00;False|2023-04-14T12:45:28.1991210-06:00;False|2023-04-14T12:04:51.7519149-06:00;False|2023-04-14T11:38:36.6683455-06:00;False|2023-04-14T11:31:33.7998859-06:00;True|2023-04-13T22:18:10.1978504-06:00;True|2023-04-13T22:09:38.3275361-06:00;True|2023-04-13T11:21:23.0197302-06:00;False|2023-04-13T11:02:58.0538017-06:00;False|2023-04-13T11:02:26.8418214-06:00;True|2023-04-12T12:14:20.6098354-06:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Agence.API.deps.json">
-      <publishTime>04/16/2023 15:44:52</publishTime>
+      <publishTime>04/17/2023 16:56:33</publishTime>
     </File>
     <File Include="Agence.API.dll">
-      <publishTime>04/16/2023 15:44:51</publishTime>
+      <publishTime>04/17/2023 16:56:31</publishTime>
     </File>
     <File Include="Agence.API.exe">
-      <publishTime>04/16/2023 15:44:51</publishTime>
+      <publishTime>04/17/2023 16:56:31</publishTime>
     </File>
     <File Include="Agence.API.pdb">
-      <publishTime>04/16/2023 15:44:51</publishTime>
+      <publishTime>04/17/2023 16:56:31</publishTime>
     </File>
     <File Include="Agence.API.runtimeconfig.json">
       <publishTime>04/16/2023 13:40:04</publishTime>
     </File>
     <File Include="Agence.BusinessLogic.dll">
-      <publishTime>04/16/2023 13:40:01</publishTime>
+      <publishTime>04/17/2023 16:32:16</publishTime>
     </File>
     <File Include="Agence.BusinessLogic.pdb">
-      <publishTime>04/16/2023 13:40:01</publishTime>
+      <publishTime>04/17/2023 16:32:16</publishTime>
     </File>
     <File Include="Agence.DataAccess.dll">
-      <publishTime>04/16/2023 13:39:59</publishTime>
+      <publishTime>04/17/2023 16:56:12</publishTime>
     </File>
     <File Include="Agence.DataAccess.pdb">
-      <publishTime>04/16/2023 13:39:59</publishTime>
+      <publishTime>04/17/2023 16:56:12</publishTime>
     </File>
     <File Include="Agence.Entities.dll">
-      <publishTime>04/16/2023 13:39:57</publishTime>
+      <publishTime>04/17/2023 10:10:22</publishTime>
     </File>
     <File Include="Agence.Entities.pdb">
-      <publishTime>04/16/2023 13:39:57</publishTime>
+      <publishTime>04/17/2023 10:10:22</publishTime>
     </File>
     <File Include="appsettings.Development.json">
       <publishTime>04/15/2023 07:44:18</publishTime>
     </File>
     <File Include="appsettings.json">
-      <publishTime>04/16/2023 12:36:24</publishTime>
+      <publishTime>04/17/2023 10:10:05</publishTime>
     </File>
     <File Include="AutoMapper.dll">
       <publishTime>01/16/2023 09:41:56</publishTime>
@@ -396,7 +396,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>07/24/2020 22:17:20</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>04/16/2023 15:44:54</publishTime>
+      <publishTime>04/17/2023 16:56:37</publishTime>
     </File>
     <File Include="zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>
