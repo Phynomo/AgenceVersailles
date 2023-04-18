@@ -534,12 +534,9 @@ CREATE OR ALTER PROCEDURE acce.UDP_VW_tbUsuarios_Login
 AS
 BEGIN
 
-
-    DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
-
-    SELECT * FROM acce.VW_tbUsuarios
-    WHERE (usua_NombreUsuario = @usua_NombreUsuario OR usua_Correo = @usua_Correo)
-    and    usua_Contrasena = @contraEncript
+	SELECT * FROM acce.VW_tbUsuarios
+	WHERE (usua_NombreUsuario = @usua_NombreUsuario OR usua_Correo = @usua_Correo)
+	and	usua_Contrasena = @contraEncript
 
 END
 
@@ -1083,10 +1080,11 @@ BEGIN
 END
 
 
+
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_RecuperarUsuario
  @usua_Correo        NVARCHAR(300),
-    @usua_Contrasena    NVARCHAR(MAX)
+	@usua_Contrasena	NVARCHAR(MAX)
 AS
 BEGIN
 BEGIN TRY
@@ -1099,7 +1097,7 @@ UPDATE [acce].[tbUsuarios]
 
  
  IF EXISTS (select * FROM acce.tbUsuarios WHERE usua_Correo = @usua_Correo
-                                                AND [usua_Contrasena] = @password)
+												AND [usua_Contrasena] = @password)
  BEGIN
  SELECT 'usuario recuperado' as Proceso
  END
@@ -1113,6 +1111,7 @@ END CATCH
 
 
 END
+
 
 
 

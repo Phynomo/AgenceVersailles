@@ -1,10 +1,13 @@
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
+import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:math';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({Key key}) : super(key: key);
@@ -12,6 +15,8 @@ class Signupscreen extends StatefulWidget {
   State<Signupscreen> createState() => _SignupscreenState();
 }
 
+String codigoGenerado = "";
+String codigoUsuario = "";
 String _nombre = "";
 String _email = "";
 String _apellido = "";
@@ -22,6 +27,36 @@ String _estadocivil = "";
 String _usuario = "";
 String _celular = "";
 String _contrasena = "";
+
+int generateRandomNumber() {
+  var rng = new Random();
+  return rng.nextInt(900000) + 100000;
+}
+
+Future sendingmail(String to_email) async {
+  final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+  const service_id = "service_j1kwebo";
+  const template_id = "template_zskowtj";
+  const user_id = "dx505AHX7RBKJ9QXs";
+
+  var randomNumber = generateRandomNumber();
+  codigoGenerado = randomNumber.toString();
+  var respond = await http.post(url,
+      headers: {
+        'origin': 'http:/localhost',
+        'Content-Type': 'application/json'
+      },
+      body: json.encode({
+        "service_id": service_id,
+        "template_id": template_id,
+        "user_id": user_id,
+        "template_params": {
+          "message": "Tu código de verificación es: " + randomNumber.toString(),
+          "to_email": to_email.toString(),
+        }
+      }));
+  print(respond.body);
+}
 
 class _SignupscreenState extends State<Signupscreen> {
   @override
@@ -244,7 +279,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -394,7 +429,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -449,9 +484,9 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                             _identidaderror = null;
                           });
 
-                          Future<void> getDataFromAPI() async {
+                          Future<void> disponibleDNI() async {
                             String apiUrl =
-                                "https://localhost:44313/api/Persona/Existe?identidad=" +
+                                "http://www.agenciaversalles.somee.com/api/Persona/Existe?identidad=" +
                                     _identidad; // URL de la API
 
                             try {
@@ -480,12 +515,15 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                                 });
                               }
                             } catch (error) {
-                              print(error);
+                              setState(() {
+                                _identidaderror =
+                                    "Error de conexion, intentalo luego";
+                              });
                             }
                           }
 
                           if (_identidad != "" && regex.hasMatch(_identidad)) {
-                            getDataFromAPI();
+                            disponibleDNI();
                           } else {
                             setState(() {
                               _identidaderror = "Este campo es requerido";
@@ -578,7 +616,7 @@ class _SignUpSexoState extends State<SignUpSexo> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -751,7 +789,7 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -942,7 +980,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1100,7 +1138,7 @@ class _SignUpCelularState extends State<SignUpCelular> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1215,6 +1253,7 @@ class SignUpUsuario extends StatefulWidget {
 class _SignUpUsuarioState extends State<SignUpUsuario> {
   String _usuarioerror;
   String _emailerror;
+  bool puedepasar = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1231,7 +1270,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1265,6 +1304,8 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                   decoration: InputDecoration(
                       labelText: 'Correo', errorText: _emailerror),
                   style: TextStyle(color: Colors.black),
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.done,
                   initialValue: _email,
                   onChanged: (value) {
                     _email = value;
@@ -1282,9 +1323,9 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                             _emailerror = null;
                             _usuarioerror = null;
                           });
-                          Future<void> getDataFromAPI() async {
+                          Future<void> verificarUsuario() async {
                             String apiUrl =
-                                "https://localhost:44313/api/Usuario/Existe?usuario=" +
+                                "http://www.agenciaversalles.somee.com/api/Usuario/Existe?usuario=" +
                                     _usuario; // URL de la API
 
                             try {
@@ -1300,13 +1341,15 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                                     _usuarioerror =
                                         "Este usuario ya esta en uso";
                                   });
+                                  puedepasar = false;
                                 } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SignUpContrasena()),
-                                  );
+                                  puedepasar = true;
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           SignUpContrasena()),
+                                  // );
                                 }
                               } else {
                                 setState(() {
@@ -1315,12 +1358,75 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                                 });
                               }
                             } catch (error) {
-                              print(error);
+                              setState(() {
+                                _usuarioerror =
+                                    "Error al verificar, intentalo luego";
+                              });
                             }
                           }
 
-                          if (_usuario != "" && _email != "") {
-                            getDataFromAPI();
+                          Future<void> verificarCorreo() async {
+                            var url = Uri.parse(
+                                'http://www.agenciaversalles.somee.com/api/Usuario/ExisteCorreo?correo=' +
+                                    _email.toString()); // URL de la API
+
+                            try {
+                              final response = await http.get(url, headers: {
+                                'Content-Type': 'application/json'
+                              });
+
+                              if (response.statusCode == 200) {
+                                final jsonData = json.decode(response.body);
+                                String data = jsonData["data"].toString();
+
+                                if (data.toString().contains("Si Existe")) {
+                                  setState(() {
+                                    _emailerror = "Este correo en uso";
+                                  });
+                                  puedepasar = false;
+                                } else {
+                                  puedepasar = true;
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           SignUpCodigo()),
+                                  // );
+                                }
+                              } else {
+                                setState(() {
+                                  _emailerror =
+                                      "Error al verificar, intentalo luego";
+                                });
+                              }
+                            } catch (error) {
+                              setState(() {
+                                _emailerror =
+                                    "Conexion perdida, intentalo luego";
+                              });
+                            }
+                          }
+
+                          String pattern = r'\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}';
+
+                          final RegExp regex =
+                              RegExp(r'\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}');
+                          RegExp regExp = new RegExp(pattern);
+
+                          if (_usuario != "" &&
+                              _email != "" &&
+                              regex.hasMatch(_email)) {
+                            verificarUsuario();
+                            verificarCorreo();
+
+                            if (puedepasar) {
+                              sendingmail(_email);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpCodigo()),
+                              );
+                            }
                           } else {
                             if (_usuario == "") {
                               setState(() {
@@ -1330,6 +1436,12 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                             if (_email == "") {
                               setState(() {
                                 _emailerror = "Este campo es requerido";
+                              });
+                            }
+                            if (!regex.hasMatch(_email)) {
+                              setState(() {
+                                _emailerror =
+                                    "Se necesita un correo electronico";
                               });
                             }
                           }
@@ -1385,6 +1497,150 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
   }
 }
 
+class SignUpCodigo extends StatefulWidget {
+  const SignUpCodigo({Key key}) : super(key: key);
+
+  @override
+  State<SignUpCodigo> createState() => _SignUpCodigoState();
+}
+
+class _SignUpCodigoState extends State<SignUpCodigo> {
+  String _codigoerror;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height *
+                1, // ajustar la altura del modal
+            padding: EdgeInsets.all(16.0), // agregar un padding
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // SizedBox(height: 10.0),
+                Row(
+                  children: [
+                    FloatingActionButton(
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      foregroundColor: Colors.purple.shade900,
+                      elevation: 0,
+                      child: Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    SizedBox(width: 10.0),
+                    Text(
+                      'Codigo',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'Ingresa el ultimo codigo de verificacion que fue enviado',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                      labelText: 'Codigo', errorText: _codigoerror),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Este campo es requerido';
+                    }
+                    final RegExp regex = RegExp(r'^\d{6}$');
+                    if (!regex.hasMatch(value)) {
+                      return 'El codigo debe tener 6 digitos';
+                    }
+                    return null;
+                  },
+                  style: TextStyle(color: Colors.black),
+                  initialValue: codigoUsuario,
+                  onChanged: (value) {
+                    codigoUsuario = value;
+                  },
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.88,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          final RegExp regex = RegExp(r'^\d{6}$');
+                          setState(() {
+                            _codigoerror = null;
+                          });
+
+                          if (codigoUsuario != "" &&
+                              regex.hasMatch(codigoUsuario)) {
+                            if (codigoUsuario == codigoGenerado) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpContrasena()),
+                              );
+                            } else {
+                              setState(() {
+                                _codigoerror = "El codigo no concuerda";
+                              });
+                            }
+                          } else {
+                            setState(() {
+                              _codigoerror = "Este campo es requerido";
+                            });
+                            if (!regex.hasMatch(codigoUsuario)) {
+                              setState(() {
+                                _codigoerror = 'Ingresa el codigo de 6 digitos';
+                              });
+                            }
+                          }
+                        },
+                        child: Text('Siguente'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.88,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Signupscreen()),
+                          );
+                        },
+                        child: Text('Cancelar'),
+                        style: ElevatedButton.styleFrom(
+                          primary:
+                              Colors.red.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class SignUpContrasena extends StatefulWidget {
   const SignUpContrasena({Key key}) : super(key: key);
 
@@ -1413,7 +1669,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1544,6 +1800,18 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                                 var message = jsonResponse['message'];
                                 if (message ==
                                     "El registro se ha insertado con éxito") {
+                                  ElegantNotification.success(
+                                    // title:  Text("Exitoso"),
+                                    description: Text(
+                                      "Usuario creado correctamente",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    toastDuration:
+                                        const Duration(milliseconds: 5000),
+                                    animationDuration:
+                                        const Duration(milliseconds: 700),
+                                  ).show(context);
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

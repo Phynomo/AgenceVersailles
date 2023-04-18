@@ -12,10 +12,12 @@ namespace Agence.DataAccess.Repository
         public static string UDP_Listar_Usuarios = "acce.UDP_VW_tbUsuarios_List";
         public static string UDP_Login = "acce.UDP_VW_tbUsuarios_Login";
         public static string UDP_Insertar_Usuarios = "acce.UDP_tbUsuarios_Insert";
+        public static string UDP_Recuperar_Usuarios = "acce.UDP_RecuperarUsuario";
         public static string UDP_Editar_Usuarios = "acce.UDP_tbUsuarios_Edit";
         public static string UDP_Eliminar_Usuarios = "acce.UDP_tbUsuarios_Delete";
         public static string UDP_Find_Usuarios = "acce.UDP_tbUsuarios_Find";
         public static string UDP_Existe = "acce.UDP_UsuarioExiste";
+        public static string UDP_ExisteCorreo = "acce.UDP_CorreoExiste";
         public static string UDP_ExisteIdentidad = "agen.UDP_IdentidadExiste";
         #endregion
 

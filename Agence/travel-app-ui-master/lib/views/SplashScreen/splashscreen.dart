@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
           height: size.height * 0.50,
           width: size.width * 0.98,
           decoration: BoxDecoration(
-              color: kAccentColor,
+              color: Color.fromRGBO(71, 16, 135, 1),
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20))),
@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
                               fontFamily: 'PlayFair',
                               fontWeight: FontWeight.bold)),
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Text("Iniciar sesión"),
                       )),
                   SizedBox(width: 10),
@@ -93,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
                               fontFamily: 'PlayFair',
                               fontWeight: FontWeight.bold)),
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Text(
                           "Registrarse",
                           style: TextStyle(
