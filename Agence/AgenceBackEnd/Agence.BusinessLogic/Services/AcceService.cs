@@ -33,12 +33,12 @@ namespace Agence.BusinessLogic.Services
             }
         }
 
-        public ServiceResult Login(tbUsuarios item)
+        public ServiceResult Login(string usuario, string contrasena)
         {
             var result = new ServiceResult();
             try
             {
-                var list = _usuarioRepository.Login(item);
+                var list = _usuarioRepository.Login(usuario, contrasena);
                 return result.Ok(list);
             }
             catch (Exception e)
