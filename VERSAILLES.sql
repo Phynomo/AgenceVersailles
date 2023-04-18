@@ -825,8 +825,9 @@ GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPaises
 AS
 BEGIN
-	SELECT pais_Nombre,COUNT(paqu_Id)AS CantidadPaquetes FROM agen.VW_tbPaquetes
+	SELECT TOP(5) pais_Nombre,COUNT(paqu_Id)AS CantidadPaquetes FROM agen.VW_tbPaquetes
 	Group by (pais_Nombre)
+	Order by CantidadPaquetes desc
 END
 
 
