@@ -27,8 +27,8 @@ class HomePageStateProvider extends ChangeNotifier
     return await api.getFeaturedPlaces();    
   }
 
-  Future<List<PlaceModel>> getAllPlaces() async {
-    return await api.getAllPlaces();    
+  Future<List<PlaceModel>> getAllPlaces(String query) async {
+    return await api.getAllPlaces(query);    
   }
 
   Future<List<PlaceModel>> getRecomendedPlaces() async {

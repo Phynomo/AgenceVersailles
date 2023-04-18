@@ -70,12 +70,17 @@ class RESTAPI {
     }
   }
 
-  Future<List<PlaceModel>> getAllPlaces() async {
+  Future<List<PlaceModel>> getAllPlaces(String query) async {
     final respuesta = await http.get(Uri.parse(urlAll));
     if (respuesta.statusCode == 200) {
       final json = respuesta.body;
       final jsonMap = jsonDecode(json);
-      return dummyPlaces(jsonMap["data"]);
+      return dummyPlaces(jsonMap["data"]).where((element) {
+        final titleLower = element.placeTitle.toLowerCase(); 
+        final searchLower = query.toLowerCase();
+
+        return titleLower.contains(searchLower);
+      }).toList();
     } else {
       print("Error en la respuesta");
       throw Exception('Failed to load listado');

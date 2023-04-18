@@ -25,6 +25,8 @@ class _HomePageAllState extends State<HomePageAll> {
   final double _bottomBarHeight = 90;
   HomepageSrollListner _model;
 
+  String query = '';
+  
   @override
   void initState() {
     // TODO: implement initState
@@ -59,7 +61,7 @@ class _HomePageAllState extends State<HomePageAll> {
                   Container(
                     margin: EdgeInsets.all(16),
                     child: StreamBuilder(
-                        stream: homepagestate.getAllPlaces().asStream(),
+                        stream: homepagestate.getAllPlaces(query).asStream(),
                         builder: (context, snapshot) {
                           allPlaces = snapshot.data;
                           if (!snapshot.hasData)
@@ -77,7 +79,7 @@ class _HomePageAllState extends State<HomePageAll> {
                                 child: CircularProgressIndicator());
 
                           return GridView.builder(
-                              itemCount: snapshot.data.length,
+                              itemCount: allPlaces.length,
                               shrinkWrap: true,
                               primary: false,
                               gridDelegate:
@@ -86,12 +88,12 @@ class _HomePageAllState extends State<HomePageAll> {
                                       crossAxisSpacing: 16,
                                       crossAxisCount: 2),
                               itemBuilder: (context, index) {
-                                final place = snapshot.data[index];
+                                final place = allPlaces[index];
                                 return GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, "/view", arguments: {
-                                        "paqueteObject": snapshot.data[index]
+                                        "paqueteObject": allPlaces[index]
                                       });
                                     },
                                     child: TravelCard(place));
@@ -165,14 +167,14 @@ class _HomePageAllState extends State<HomePageAll> {
     );
   }
 
-  void searchPlace(String query) {
-    final suggestions = allPlaces.where((element) {
-      final placeTitle = element.placeTitle.toLowerCase();
-      final input = query.toLowerCase();
+  Future searchPlace(String query) async {
+    final places = await HomePageStateProvider().getAllPlaces(query);
 
-      return placeTitle.contains(input);
-    }).toList();
+    if(!mounted) return;
 
-    setState(() => place = suggestions);
+    setState((){
+      this.query = query;
+      this.allPlaces = places;
+    });
 }
 }

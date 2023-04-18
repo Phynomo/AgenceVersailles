@@ -77,7 +77,9 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                             ],
                           );
                         } else {
-                          return ListView.builder(
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 20),
+                            child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,
@@ -94,7 +96,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                 ),
                               );
                             },
-                          );
+                          ),);
                         }
                       },
                     ),
