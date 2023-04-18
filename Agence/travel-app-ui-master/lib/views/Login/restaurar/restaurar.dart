@@ -1,7 +1,5 @@
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server/gmail.dart';
 import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/routes/routes.dart';
 import 'package:travelappui/theme.dart';
@@ -11,7 +9,6 @@ import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
-import 'package:mailer/smtp_server/gmail.dart';
 import 'dart:math';
 
 String correo = "";
@@ -519,7 +516,7 @@ class _RecuperarContrasenaState extends State<RecuperarContrasena> {
                                   ElegantNotification.success(
                                     // title:  Text("Exitoso"),
                                     description: Text(
-                                      "Contraseña reestablecida exitosamente",
+                                      "Contraseña restablecida exitosamente",
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   ).show(context);
