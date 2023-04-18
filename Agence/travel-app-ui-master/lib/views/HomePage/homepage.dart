@@ -182,13 +182,17 @@ class _HomePageState extends State<HomePage> {
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {}),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/Todo");
+                                  }),
                               IconButton(
                                   icon: Icon(Icons.person,
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {})
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/perfil");
+                                  })
                             ],
                           ),
                         ),

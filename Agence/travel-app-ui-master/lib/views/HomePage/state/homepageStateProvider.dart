@@ -14,7 +14,6 @@ class HomePageStateProvider extends ChangeNotifier {
 
   List<String> kTopListLink = [
     'Popular',
-    'Todo',
     'Más económico',
     'Europa',
     'Asia',

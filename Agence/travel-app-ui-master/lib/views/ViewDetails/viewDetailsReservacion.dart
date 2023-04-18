@@ -121,14 +121,14 @@ class _ViewDetailsStateReservacion extends State<ViewDetailsReservacion> {
                         //       addPackage();
                         //     }),
                         Icon(
-                          Icons.calendar_today,
+                          Icons.monetization_on_sharp,
                           color: appTheme.accentColor,
                         ),
                         SizedBox(
                           width: 8,
                         ),
                         Text(
-                          paqueteObject.fechaSalida,
+                          paqueteObject.rateperpackage.toString(), 
                           style: appTheme.textTheme.caption
                               .merge(TextStyle(color: appTheme.accentColor)),
                         ),

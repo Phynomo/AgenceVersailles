@@ -528,18 +528,18 @@ END
 
 GO
 CREATE OR ALTER PROCEDURE acce.UDP_VW_tbUsuarios_Login 
-	@usua_NombreUsuario		NVARCHAR(100),
-	@usua_Correo			NVARCHAR(200),	
-	@usua_Contrasena		NVARCHAR(Max)
+    @usua_NombreUsuario        NVARCHAR(100),
+    @usua_Correo            NVARCHAR(200),
+    @usua_Contrasena        NVARCHAR(Max)
 AS
 BEGIN
-	
-	
-	DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
 
-	SELECT usua_Id, usua_NombreUsuario, usua_Correo, pers_Id, usua_PersonaNombreCompleto, usua_EsAdmin, usua_UsuCreacion, usua_NombreUsuarioCreacion, usua_FechaCreacion, usua_UsuModificacion, usua_NombreUsuarioModificacion, usua_FechaModificacion FROM acce.VW_tbUsuarios T1
-	WHERE (T1.usua_NombreUsuario = @usua_NombreUsuario OR T1.usua_Correo = @usua_Correo)
-	and	t1.usua_Contrasena = @contraEncript
+
+    DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
+
+    SELECT * FROM acce.VW_tbUsuarios
+    WHERE (usua_NombreUsuario = @usua_NombreUsuario OR usua_Correo = @usua_Correo)
+    and    usua_Contrasena = @contraEncript
 
 END
 
@@ -854,7 +854,7 @@ END
 
 --Procedimiento listar paquetes
 GO
-CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPerson
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPerson 
 	@pers_Id int
 AS
 BEGIN
@@ -866,6 +866,49 @@ BEGIN
 	ORDER BY vuel_FechaSalida
 END
 
+--Procedimiento listar paquetes x continente
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXContinente 
+	@cont_Nombre	NVARCHAR(100)
+AS
+BEGIN
+	SELECT *
+	FROM agen.VW_tbPaquetes
+	WHERE cont_Nombre = @cont_Nombre
+END
+
+--Procedimiento listar paquetes x país
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPais
+	@pais_Nombre	NVARCHAR(100)
+AS
+BEGIN
+	SELECT *
+	FROM agen.VW_tbPaquetes
+	WHERE pais_Nombre = @pais_Nombre
+END
+
+--Procedimiento listar paquetes x ciudad
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXCiudad 
+	@ciud_Nombre	NVARCHAR(100)
+AS
+BEGIN
+	SELECT *
+	FROM agen.VW_tbPaquetes
+	WHERE ciud_Nombre = @ciud_Nombre
+END
+
+--Procedimiento listar paquetes x cantidad de personas
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXCantidadPersonas 
+	@paqu_Personas	NVARCHAR(100)
+AS
+BEGIN
+	SELECT *
+	FROM agen.VW_tbPaquetes
+	WHERE paqu_Personas = @paqu_Personas
+END
 --******PROCEDIMIENTOS RESERVACIONES******--
 
 --Procedimiento insertar reservación
@@ -1022,7 +1065,54 @@ BEGIN
         END
 END
 
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_CorreoExiste
+    @usua_Correo        NVARCHAR(300)
+AS
+BEGIN
+        IF NOT EXISTS (SELECT * FROM acce.tbUsuarios WHERE [usua_Correo] = @usua_Correo)
+        Begin
+        select 'No Existe'
+        END
+        ELSE
+        BEGIN
+        select 'Si Existe'
+        END
 
+
+END
+
+
+GO
+CREATE OR ALTER PROCEDURE acce.UDP_RecuperarUsuario
+ @usua_Correo        NVARCHAR(300),
+    @usua_Contrasena    NVARCHAR(MAX)
+AS
+BEGIN
+BEGIN TRY
+
+DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @usua_Contrasena));
+
+UPDATE [acce].[tbUsuarios]
+   SET [usua_Contrasena] = @password
+ WHERE usua_Correo = @usua_Correo
+
+ 
+ IF EXISTS (select * FROM acce.tbUsuarios WHERE usua_Correo = @usua_Correo
+                                                AND [usua_Contrasena] = @password)
+ BEGIN
+ SELECT 'usuario recuperado' as Proceso
+ END
+ ELSE
+ SELECT 'usuario errado' as Proceso
+END TRY
+BEGIN CATCH
+ SELECT 'error en operacion' as Proceso
+END CATCH
+
+
+
+END
 
 
 

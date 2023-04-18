@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +12,11 @@ import 'package:travelappui/views/HomePage/components/featurelist.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:http/http.dart' as http;
+
+import '../../constants/strings.dart';
+import '../../models/placesModel.dart';
+
+get controller => null;
 
 class HomePageAll extends StatefulWidget {
   @override
@@ -37,7 +44,9 @@ class _HomePageAllState extends State<HomePageAll> {
 
     return Scaffold(
       backgroundColor: kPrimaryColor,
-      appBar: HomeAppBar,
+      appBar: HomeAppBarPersonalized(
+        onChanged: searchPlace,
+      ),
       body: Container(
         height: size.height,
         width: size.width,
@@ -47,7 +56,6 @@ class _HomePageAllState extends State<HomePageAll> {
               controller: _mainScrollController,
               child: Column(
                 children: [
-                  TopFeaturedList(nombrePag: 'Todo'),
                   Container(
                     margin: EdgeInsets.all(16),
                     child: StreamBuilder(
@@ -59,7 +67,8 @@ class _HomePageAllState extends State<HomePageAll> {
                                 width: 50,
                                 height: 50,
                                 child: CircularProgressIndicator());
-                          if (snapshot.connectionState == ConnectionState.waiting)
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting)
                             return Container(
                                 alignment: Alignment.center,
                                 width: 50,
@@ -78,7 +87,10 @@ class _HomePageAllState extends State<HomePageAll> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context, "/view", arguments: {"paqueteObject": snapshot.data[index]});
+                                      Navigator.pushNamed(
+                                          context, "/view", arguments: {
+                                        "paqueteObject": snapshot.data[index]
+                                      });
                                     },
                                     child: TravelCard(snapshot.data[index]));
                               });
@@ -113,28 +125,33 @@ class _HomePageAllState extends State<HomePageAll> {
                             children: [
                               IconButton(
                                   icon: Icon(Icons.home_rounded,
-                                      size: 36, color: kAppTheme.accentColor),
-                                  onPressed: () {}),
+                                      size: 36,
+                                      color: kAppTheme.accentColor
+                                          .withOpacity(0.35)),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/Popular");
+                                  }),
                               IconButton(
                                   icon: Icon(Icons.calendar_today_rounded,
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, "/reservaciones");
+                                    Navigator.pushNamed(
+                                        context, "/reservaciones");
                                   }),
                               IconButton(
                                   icon: Icon(Icons.search,
-                                      size: 36,
-                                      color: kAppTheme.accentColor
-                                          .withOpacity(0.35)),
+                                      size: 36, color: kAppTheme.accentColor),
                                   onPressed: () {}),
                               IconButton(
                                   icon: Icon(Icons.person,
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {})
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/perfil");
+                                  })
                             ],
                           ),
                         ),
@@ -144,5 +161,26 @@ class _HomePageAllState extends State<HomePageAll> {
         ),
       ),
     );
+  }
+
+  HomePageStateProvider homepagestatesearch = HomePageStateProvider();
+
+  List<PlaceModel> _placeList = [];
+  Timer _debounce;
+
+  void searchPlace(String query) {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+
+    _debounce = Timer(Duration(milliseconds: 500), () async {
+      final placeList = await HomePageStateProvider().getAllPlaces();
+      final List<PlaceModel> suggestions = placeList.where((element) {
+        final placeTitle = element.placeTitle.toLowerCase();
+        final input = query.toLowerCase();
+
+        return placeTitle.contains(input);
+      }).toList();
+
+      setState(() => _placeList = suggestions);
+    });
   }
 }

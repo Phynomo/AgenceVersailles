@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelappui/models/placesModel.dart';
-import 'package:elegant_notification/resources/arrays.dart';
+// import 'package:elegant_notification/resources/arrays.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
@@ -98,6 +98,8 @@ class RESTAPI {
           // title:  Text("Exitoso"),
           description:  Text("El paquete ha sido agregado a 'Mis Reservaciones'",
                               style: TextStyle(color: Colors.black),),
+          // toastDuration: const Duration(milliseconds: 5000),
+          // animationDuration: const Duration(milliseconds: 700),
         ).show(context);
       } else {
         print(jsonResponse["message"].toString());

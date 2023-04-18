@@ -84,10 +84,10 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context, "/viewReservacion",
-                                      arguments: {
-                                        "paqueteObject": snapshot.data[index]
-                                      });
+                                  Navigator.pushNamed(
+                                      context, "/viewReservacion", arguments: {
+                                    "paqueteObject": snapshot.data[index]
+                                  });
                                 },
                                 child: FeaturedCard(
                                   placeModel: snapshot.data[index],
@@ -102,6 +102,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                 ],
               ),
             ),
+            SizedBox(height: 15,),
             AnimatedBuilder(
                 animation: _model,
                 builder: (context, child) {
@@ -146,7 +147,9 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {}),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/Todo");
+                                  }),
                               IconButton(
                                   icon: Icon(Icons.person,
                                       size: 36,
