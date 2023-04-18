@@ -23,6 +23,7 @@ environment:
 
   
 dependencies:
+  syncfusion_flutter_charts: ^21.1.41
   http:
   flutter:
     sdk: flutter

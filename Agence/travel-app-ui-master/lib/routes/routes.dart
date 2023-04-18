@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:travelappui/views/Charts/chartspage.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/HomePage/homepagetodo.dart';
+import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:travelappui/views/ViewDetails/viewDetails.dart';
 import 'package:travelappui/views/ViewDetails/viewDetailsReservacion.dart';
@@ -21,6 +23,8 @@ class AppRoutes {
   static const String ROUTE_Login = "/login";
   static const String ROUTE_MisReservaciones = "/reservaciones";
   static const String ROUTE_SingUp = "/signup";
+  static const String ROUTE_Restaurar = "/recuperar";
+  static const String ROUTE_Charts = "/charts";
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
 
@@ -56,6 +60,14 @@ class AppRoutes {
       case ROUTE_SingUp:
           return MaterialPageRoute(
             settings: settings, builder: (_) => Signupscreen());
+      break;
+      case ROUTE_Restaurar:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => Recuperar());
+      break;
+      case ROUTE_Charts:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => ChartsPage());
       break;
     }
   }

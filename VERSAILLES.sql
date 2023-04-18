@@ -533,7 +533,7 @@ CREATE OR ALTER PROCEDURE acce.UDP_VW_tbUsuarios_Login
     @usua_Contrasena        NVARCHAR(Max)
 AS
 BEGIN
-
+	DECLARE @contraEncript NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Contrasena)
 	SELECT * FROM acce.VW_tbUsuarios
 	WHERE (usua_NombreUsuario = @usua_NombreUsuario OR usua_Correo = @usua_Correo)
 	and	usua_Contrasena = @contraEncript
@@ -819,6 +819,14 @@ CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_List
 AS
 BEGIN
 	SELECT * FROM agen.VW_tbPaquetes
+END
+--Procedimiento paise con mas paquetes
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPaises
+AS
+BEGIN
+	SELECT pais_Nombre,COUNT(paqu_Id)AS CantidadPaquetes FROM agen.VW_tbPaquetes
+	Group by (pais_Nombre)
 END
 
 
@@ -1108,9 +1116,9 @@ BEGIN CATCH
  SELECT 'error en operacion' as Proceso
 END CATCH
 
-
-
 END
+
+
 
 
 
