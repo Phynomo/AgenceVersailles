@@ -77,9 +77,8 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                             ],
                           );
                         } else {
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 20),
-                            child: ListView.builder(
+                          return ListView.builder(
+                            padding: EdgeInsets.only(bottom: 150),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,
@@ -96,7 +95,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                 ),
                               );
                             },
-                          ),);
+                          );
                         }
                       },
                     ),
@@ -104,7 +103,6 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                 ],
               ),
             ),
-            SizedBox(height: 15,),
             AnimatedBuilder(
                 animation: _model,
                 builder: (context, child) {
@@ -140,10 +138,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                               IconButton(
                                   icon: Icon(Icons.calendar_today_rounded,
                                       size: 36, color: kAppTheme.accentColor),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, "/reservaciones");
-                                  }),
+                                  onPressed: () {}),
                               IconButton(
                                   icon: Icon(Icons.search,
                                       size: 36,
