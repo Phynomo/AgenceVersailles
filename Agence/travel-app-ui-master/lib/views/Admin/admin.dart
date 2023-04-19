@@ -2,6 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:travelappui/constants/colors.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class Paquete {
+  String paisNombre;
+  int cantidadPaquetes;
+
+  Paquete({this.paisNombre, this.cantidadPaquetes});
+
+  factory Paquete.fromJson(Map<String, dynamic> json) {
+    return Paquete(
+      paisNombre: json['pais_Nombre'],
+      cantidadPaquetes: json['cantidadPaquetes'],
+    );
+  }
+}
+
+Future<List<Paquete>> fetchPaquetes() async {
+  final response = await http.get(Uri.parse('http://phynomo-001-site1.atempurl.com/api/Paquete/PaquetesPorPais'));
+
+  if (response.statusCode == 200) {
+    final List<dynamic> paquetesJson = jsonDecode(response.body);
+    return paquetesJson.map((json) => Paquete.fromJson(json)).toList();
+  } else {
+    throw Exception('Error al obtener los paquetes');
+  }
+}
+
+
+
 
 class AdminPage extends StatefulWidget {
   const AdminPage({Key key}) : super(key: key);
@@ -12,11 +42,22 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   List<_SalesData> _chartData;
+ List<Paquete> _paquetes = [];
+
+
 
   @override
   void initState() {
     _chartData = getChartData();
     super.initState();
+    _loadData();
+  }
+
+ void _loadData() async {
+    final paquetes = await fetchPaquetes();
+    setState(() {
+      _paquetes = paquetes;
+    });
   }
 
   @override
@@ -76,17 +117,17 @@ class _AdminPageState extends State<AdminPage> {
                           fontWeight: FontWeight.bold, fontSize: 18,
                         ),),
                         SfCircularChart(
-                          series: <CircularSeries<_SalesData, String>>[
-                            PieSeries<_SalesData, String>(
-                              dataSource: _chartData,
-                              xValueMapper: (_SalesData data, _) =>
-                                  data.salesPerson,
-                              yValueMapper: (_SalesData data, _) => data.sales,
+                          series: <CircularSeries<Paquete, String>>[
+                            PieSeries<Paquete, String>(
+                              dataSource: _paquetes,
+                              xValueMapper: (Paquete data, _) =>
+                                  data.paisNombre,
+                              yValueMapper: (Paquete data, _) => data.cantidadPaquetes,
                               explode: true,
                               explodeIndex: 0,
                               explodeOffset: '10%',
-                              dataLabelMapper: (_SalesData data, _) =>
-                                  '${data.salesPerson}: ${data.sales}',
+                              dataLabelMapper: (Paquete data, _) =>
+                                  '${data.paisNombre}: ${data.cantidadPaquetes}',
                               dataLabelSettings:
                                   DataLabelSettings(isVisible: true),
                             )
@@ -121,22 +162,22 @@ class _AdminPageState extends State<AdminPage> {
     );
   }
 
-  List<_SalesData> getChartData() {
-    final List<_SalesData> chartData = [
-      _SalesData('Alemania', 3),
-      _SalesData('Brasil', 5),
-      _SalesData('Chile', 4),
-      _SalesData('Estados Unidos', 3),
-      _SalesData('Francia', 3),
-    ];
-    return chartData;
-  }
+   List<_SalesData> getChartData() {
+     final List<_SalesData> chartData = [
+       _SalesData('Alemania', 3),
+       _SalesData('Brasil', 5),
+       _SalesData('Chile', 4),
+       _SalesData('Estados Unidos', 3),
+       _SalesData('Francia', 3),
+     ];
+     return chartData;
+   }
 }
 
 class _SalesData {
-  _SalesData(this.salesPerson, this.sales);
-  final String salesPerson;
-  final int sales;
+  _SalesData(this.pais_Nombre, this.cantidadPaquetes);
+  final String pais_Nombre;
+  final int cantidadPaquetes;
 }
 
 
