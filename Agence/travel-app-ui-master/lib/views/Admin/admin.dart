@@ -49,67 +49,71 @@ class _AdminPageState extends State<AdminPage> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 250,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  width: double.infinity,
-                  height: 500,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 15,
-                          offset: Offset(0, 5),
-                        )
-                      ]),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20,),
-                      Text("Top 5 paises con mas paquetes", style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18,
-                      ),),
-                      SfCircularChart(
-                        series: <CircularSeries<_SalesData, String>>[
-                          PieSeries<_SalesData, String>(
-                            dataSource: _chartData,
-                            xValueMapper: (_SalesData data, _) =>
-                                data.salesPerson,
-                            yValueMapper: (_SalesData data, _) => data.sales,
-                            explode: true,
-                            explodeIndex: 0,
-                            explodeOffset: '10%',
-                            dataLabelMapper: (_SalesData data, _) =>
-                                '${data.salesPerson}: ${data.sales}',
-                            dataLabelSettings:
-                                DataLabelSettings(isVisible: true),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 100,),
-                      //ElevatedButton(onPressed: null, child: Text("Pollo"),)
-                      MaterialButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                          disabledColor: Colors.grey,
-                          color: Colors.deepPurple.shade700,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 40, vertical:15 
-                            ),
-                            child: Text("Ingresar un paquete",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                          ),
-                        onPressed: () {},
-                        )
-                    ],
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 220,
                   ),
-                )
-              ],
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    width: double.infinity,
+                    //height: 500,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 15,
+                            offset: Offset(0, 5),
+                          )
+                        ]),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        Text("Top 5 paises con mas paquetes", style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18,
+                        ),),
+                        SfCircularChart(
+                          series: <CircularSeries<_SalesData, String>>[
+                            PieSeries<_SalesData, String>(
+                              dataSource: _chartData,
+                              xValueMapper: (_SalesData data, _) =>
+                                  data.salesPerson,
+                              yValueMapper: (_SalesData data, _) => data.sales,
+                              explode: true,
+                              explodeIndex: 0,
+                              explodeOffset: '10%',
+                              dataLabelMapper: (_SalesData data, _) =>
+                                  '${data.salesPerson}: ${data.sales}',
+                              dataLabelSettings:
+                                  DataLabelSettings(isVisible: true),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 30,),
+                        //ElevatedButton(onPressed: null, child: Text("Pollo"),)
+                        MaterialButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                            disabledColor: Colors.grey,
+                            color: Colors.deepPurple.shade700,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 40, vertical:15 
+                              ),
+                              child: Text("Agregar un paquete",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                            ),
+                          onPressed: () {},
+                          ),
+                          
+                        SizedBox(height: 30,),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),

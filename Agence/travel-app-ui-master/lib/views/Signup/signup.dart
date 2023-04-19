@@ -287,9 +287,9 @@ class _SignUpNombresState extends State<SignUpNombres> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Nombres',
+                      'Registro / Nombres',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -472,9 +472,9 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Identidad',
+                      'Registro / Identidad',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -659,9 +659,9 @@ class _SignUpSexoState extends State<SignUpSexo> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Sexo',
+                      'Registro / Sexo',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -832,9 +832,9 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Fecha de nacimiento',
+                      'Registro / Cuando nacimiento',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -1023,9 +1023,9 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Estado Civil',
+                      'Registro / Estado Civil',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -1181,9 +1181,9 @@ class _SignUpCelularState extends State<SignUpCelular> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Celular',
+                      'Registro / Celular',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -1313,9 +1313,9 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Identificadores',
+                      'Registro / Identificadores',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -1565,9 +1565,9 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Codigo',
+                      'Registro / Codigo',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -1712,9 +1712,9 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Contraseña',
+                      'Registro / Contraseña',
                       style: TextStyle(
-                        fontSize: 24.0,
+                        fontSize: 21.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
