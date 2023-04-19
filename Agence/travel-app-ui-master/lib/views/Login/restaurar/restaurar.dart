@@ -90,7 +90,7 @@ class _RecuperarState extends State<Recuperar> {
           ),
           if (!_showErrorConexion)
             Text(
-              'Recuperar usuario',
+              'Recuperar contraseña',
               style: TextStyle(color: Colors.black, fontSize: 24.0),
               textAlign: TextAlign.center,
             ),
@@ -245,12 +245,7 @@ class _RecuperarState extends State<Recuperar> {
       return Center(
         child: TextButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LoginPage(),
-              ),
-            );
+            Navigator.pop(context);
           },
           child: Text(
             '¿Ya recuerdas tu contraseña?',

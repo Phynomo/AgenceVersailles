@@ -6,10 +6,12 @@ import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:html';
+// import 'dart:html';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 String usuario = "";
 String password = "";
+final storage = FlutterSecureStorage();
 
 UsuarioModel sacainfoUsuario(info) {
   UsuarioModel usuario = new UsuarioModel();
@@ -156,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                 // var body = json.encode(data); //Json encriptado
 
                 var url =
-                    'https://localhost:44313/api/Usuario/Login?usuario=$usuario&contrasena=$password'; //Url
+                    'http://phynomo-001-site1.atempurl.com/api/Usuario/Login?usuario=$usuario&contrasena=$password'; //Url
                 final response = await http.get(Uri.parse(url));
 
                 var jsonResponse = jsonDecode(response.body);
@@ -171,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                   if (data != null && data.toString().length > 2) {
                     var usuarioModel = sacainfoUsuario(data);
                     String usuarioJson = jsonEncode(usuarioModel.toJson());
-                    window.sessionStorage['usuario'] = usuarioJson;
+                    await storage.write(key: 'usuario', value: usuarioJson);
 
                     Navigator.push(
                       context,

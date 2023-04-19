@@ -38,7 +38,7 @@ dependencies:
   fluttertoast: ^8.2.1
   elegant_notification: ^1.8.1
   shared_preferences: ^2.0.6
-
+  flutter_secure_storage: ^5.0.0
   flutter_datetime_picker: ^1.5.1
  
 dev_dependencies:

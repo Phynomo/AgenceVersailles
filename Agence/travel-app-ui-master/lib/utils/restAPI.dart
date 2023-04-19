@@ -9,15 +9,15 @@ import 'package:intl/intl.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 
 
-String urlAll = "https://localhost:44313/api/Paquete/Listado";
+String urlAll = "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado";
 String urlFeatured =
-    "https://localhost:44313/api/Paquete/Listado5Caros";
+    "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado5Caros";
 String urlRecommended =
-    "https://localhost:44313/api/Paquete/Listado10Baratos";
-String urlUserPlaces = "https://localhost:44313/api/Paquete/ListadoPorPersona?id=";
-String urlInsertBooking = "https://localhost:44313/api/Reservacion/Insertar";
-String urlDeleteBooking = "https://localhost:44313/api/Reservacion/Eliminar";
-// String urlFind = "https://localhost:44313/api/Paquete/Find?id=";
+    "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado10Baratos";
+String urlUserPlaces = "http://phynomo-001-site1.atempurl.com/api/Paquete/ListadoPorPersona?id=";
+String urlInsertBooking = "http://phynomo-001-site1.atempurl.com/api/Reservacion/Insertar";
+String urlDeleteBooking = "http://phynomo-001-site1.atempurl.com/api/Reservacion/Eliminar";
+// String urlFind = "http://phynomo-001-site1.atempurl.com/api/Paquete/Find?id=";
 
 class RESTAPI {
   List<PlaceModel> dummyPlaces(List<dynamic> info) {
@@ -175,7 +175,7 @@ Future<dynamic> eliminarReservacion(data, context) async {
 
 //           var body = json.encode(data); //Json encriptado
 
-//           var url = Uri.parse('https://localhost:44313/api/Usuario/Login'); //Url
+//           var url = Uri.parse('http://phynomo-001-site1.atempurl.com/api/Usuario/Login'); //Url
 
 //           http.put(url, body: body, headers: {'Content-Type': 'application/json'}).then((response) { //Brujeria
 //           if (response.statusCode == 200) { // resultado

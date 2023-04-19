@@ -8,8 +8,11 @@ import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/components/appbar.dart';
 import 'package:travelappui/components/featuredcard.dart';
 import 'package:travelappui/theme.dart';
-import 'dart:html';
+// import 'dart:html';
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../Login/login.dart';
 // import 'package:';s
 
 class MisReservacionesPage extends StatefulWidget {
@@ -24,7 +27,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
 
   final double _bottomBarHeight = 90;
   HomepageSrollListner _model;
-
+  UsuarioModel usuarioModel;
   @override
   void initState() {
     // TODO: implement initState
@@ -38,10 +41,13 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
         Provider.of<HomePageStateProvider>(context);
     Size size = MediaQuery.of(context).size;
 
-    // Retrieve the JSON string from session storage
-    String usuarioJson = window.sessionStorage['usuario'];
-    // Convert the JSON string back to a UsuarioModel object
-    UsuarioModel usuario = UsuarioModel.fromJson(json.decode(usuarioJson));
+    Future<void> infoPersona() async {
+      String usuarioJson = await storage.read(key: 'usuario');
+      if (usuarioJson != null) {
+        Map<String, dynamic> usuarioData = jsonDecode(usuarioJson);
+        usuarioModel = UsuarioModel.fromJson(usuarioData);
+      }
+    }
 
     return Scaffold(
       backgroundColor: kPrimaryColor,
@@ -67,8 +73,9 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                   SizedBox(
                     height: size.height,
                     child: StreamBuilder(
-                      stream:
-                          homepagestate.getPaquetesXPersona(usuario.persId).asStream(),
+                      stream: homepagestate
+                          .getPaquetesXPersona(usuarioModel.persId)
+                          .asStream(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

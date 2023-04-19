@@ -6,8 +6,10 @@ import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/models/reservacionesModel.dart';
-import 'dart:html';
+// import 'dart:html';
 import 'dart:convert';
+
+import 'package:travelappui/views/Login/login.dart';
 
 class ViewDetails extends StatefulWidget {
   @override
@@ -16,6 +18,8 @@ class ViewDetails extends StatefulWidget {
 
 class _ViewDetailsState extends State<ViewDetails> {
   int numberPackage = 0;
+
+  UsuarioModel usuarioModel;
 
   removePackage() {
     setState(() {
@@ -39,11 +43,14 @@ class _ViewDetailsState extends State<ViewDetails> {
     final argMap = arguments as Map<String, dynamic>;
     final paqueteObject = argMap['paqueteObject'];
 
-    
-    // Retrieve the JSON string from session storage
-    String usuarioJson = window.sessionStorage['usuario'];
-// Convert the JSON string back to a UsuarioModel object
-    UsuarioModel usuario = UsuarioModel.fromJson(json.decode(usuarioJson));
+    Future<void> infoPersona() async {
+      String usuarioJson = await storage.read(key: 'usuario');
+      if (usuarioJson != null) {
+        Map<String, dynamic> usuarioData = jsonDecode(usuarioJson);
+        usuarioModel = UsuarioModel.fromJson(usuarioData);
+      }
+    }
+
 
 
     Size size = MediaQuery.of(context).size;
@@ -217,7 +224,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                     fontWeight: FontWeight.bold)),
                             onPressed: () {
                               ReservacionModel reservacion = ReservacionModel(
-                                  persId: int.parse(usuario.persId),
+                                  persId: int.parse(usuarioModel.persId),
                                   paquId: paqueteObject.paquId,
                                   reseId: 0);
                               homepagestate.insertReservacion(
