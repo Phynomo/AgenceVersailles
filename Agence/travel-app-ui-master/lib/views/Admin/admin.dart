@@ -70,6 +70,10 @@ class _AdminPageState extends State<AdminPage> {
                       ]),
                   child: Column(
                     children: [
+                      SizedBox(height: 20,),
+                      Text("Top 5 paises con mas paquetes", style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18,
+                      ),),
                       SfCircularChart(
                         series: <CircularSeries<_SalesData, String>>[
                           PieSeries<_SalesData, String>(
@@ -96,7 +100,7 @@ class _AdminPageState extends State<AdminPage> {
                           color: Colors.deepPurple.shade700,
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 80, vertical:15 
+                              horizontal: 40, vertical:15 
                             ),
                             child: Text("Ingresar un paquete",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                           ),

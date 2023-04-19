@@ -19,9 +19,13 @@ namespace Agence.DataAccess.Context
         {
         }
 
+        public virtual DbSet<VW_tbHabitaciones> VW_tbHabitaciones { get; set; }
+        public virtual DbSet<VW_tbHoteles> VW_tbHoteles { get; set; }
+        public virtual DbSet<VW_tbPaises> VW_tbPaises { get; set; }
         public virtual DbSet<VW_tbPaquetes> VW_tbPaquetes { get; set; }
         public virtual DbSet<VW_tbPersonas> VW_tbPersonas { get; set; }
         public virtual DbSet<VW_tbUsuarios> VW_tbUsuarios { get; set; }
+        public virtual DbSet<VW_tbVuelos> VW_tbVuelos { get; set; }
         public virtual DbSet<tbAeropuertos> tbAeropuertos { get; set; }
         public virtual DbSet<tbAgenciasVuelos> tbAgenciasVuelos { get; set; }
         public virtual DbSet<tbBilletesAvion> tbBilletesAvion { get; set; }
@@ -43,6 +47,57 @@ namespace Agence.DataAccess.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<VW_tbHabitaciones>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbHabitaciones", "agen");
+
+                entity.Property(e => e.cath_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.habi_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.habi_Precio).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.hote_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_tbHoteles>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbHoteles", "agen");
+
+                entity.Property(e => e.hote_DireccionExacta)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.hote_Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.hote_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_tbPaises>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbPaises", "gral");
+
+                entity.Property(e => e.pais_Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.pais_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
 
             modelBuilder.Entity<VW_tbPaquetes>(entity =>
             {
@@ -168,6 +223,29 @@ namespace Agence.DataAccess.Context
                 entity.Property(e => e.usua_PersonaNombreCompleto)
                     .IsRequired()
                     .HasMaxLength(301);
+            });
+
+            modelBuilder.Entity<VW_tbVuelos>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbVuelos", "agen");
+
+                entity.Property(e => e.agenvuel_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.pais_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.vuel_FechaLlegada).HasColumnType("datetime");
+
+                entity.Property(e => e.vuel_FechaSalida).HasColumnType("datetime");
+
+                entity.Property(e => e.vuel_Info)
+                    .IsRequired()
+                    .HasMaxLength(307);
             });
 
             modelBuilder.Entity<tbAeropuertos>(entity =>

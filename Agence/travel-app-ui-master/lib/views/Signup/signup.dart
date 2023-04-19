@@ -327,7 +327,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.42,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -353,7 +353,42 @@ class _SignUpNombresState extends State<SignUpNombres> {
                             }
                           }
                         },
-                        child: Text('Siguente'),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.42,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _nombreerror = null;
+                            _apellidoerror = null;
+                          });
+                          if (_nombre != "" && _apellido != "") {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpIdentidad()),
+                            );
+                          } else {
+                            if (_nombre == "") {
+                              setState(() {
+                                _nombreerror = "Este campo es requerido";
+                              });
+                            }
+                            if (_apellido == "") {
+                              setState(() {
+                                _apellidoerror = "Este campo es requerido";
+                              });
+                            }
+                          }
+                        },
+                        child: Icon(Icons.arrow_right_alt),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -389,7 +424,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                         child: Text('Cancelar'),
                         style: ElevatedButton.styleFrom(
                           primary:
-                              Colors.red.shade900, // Define el color de fondo
+                              Colors.grey.shade500, // Define el color de fondo
                         ),
                       ),
                     ),

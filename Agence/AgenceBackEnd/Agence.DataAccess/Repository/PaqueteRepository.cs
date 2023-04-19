@@ -29,7 +29,22 @@ namespace Agence.DataAccess.Repository
 
         public RequestStatus Insert(tbPaquetes item)
         {
-            throw new NotImplementedException();
+            RequestStatus result = new RequestStatus();
+
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@paqu_Nombre", item.paqu_Nombre, DbType.String, ParameterDirection.Input); 
+            parametros.Add("@paqu_Imagen", item.paqu_Imagen, DbType.String, ParameterDirection.Input); 
+            parametros.Add("@vuel_Id", item.vuel_Id, DbType.Int32, ParameterDirection.Input); 
+            parametros.Add("@habi_Id", item.habi_Id, DbType.Int32, ParameterDirection.Input); 
+            parametros.Add("@paqu_Personas", item.paqu_Personas, DbType.Int32, ParameterDirection.Input); 
+            parametros.Add("@paqu_Precio", item.paqu_Precio, DbType.Decimal, ParameterDirection.Input); 
+
+            var resultado = db.QueryFirst<string>(ScriptsDataBase.UDP_Insertar_Paquetes, parametros, commandType: System.Data.CommandType.StoredProcedure);
+            result.MessageStatus = resultado;
+
+            return result;
         }
 
         public IEnumerable<VW_tbPaquetes> List()
