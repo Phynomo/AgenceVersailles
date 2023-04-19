@@ -279,7 +279,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -327,32 +327,9 @@ class _SignUpNombresState extends State<SignUpNombres> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.42,
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _nombreerror = null;
-                            _apellidoerror = null;
-                          });
-                          if (_nombre != "" && _apellido != "") {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpIdentidad()),
-                            );
-                          } else {
-                            if (_nombre == "") {
-                              setState(() {
-                                _nombreerror = "Este campo es requerido";
-                              });
-                            }
-                            if (_apellido == "") {
-                              setState(() {
-                                _apellidoerror = "Este campo es requerido";
-                              });
-                            }
-                          }
-                        },
+                        onPressed: () => Navigator.pop(context),
                         child: Icon(Icons.arrow_back),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
@@ -362,7 +339,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                     ),
                     SizedBox(width: MediaQuery.of(context).size.width * 0.04),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.42,
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -388,7 +365,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                             }
                           }
                         },
-                        child: Icon(Icons.arrow_right_alt),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -402,8 +379,8 @@ class _SignUpNombresState extends State<SignUpNombres> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -421,10 +398,12 @@ class _SignUpNombresState extends State<SignUpNombres> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.grey.shade500, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -464,7 +443,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -511,7 +490,19 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           final RegExp regex = RegExp(r'^\d{4}-\d{4}-\d{5}$');
@@ -521,7 +512,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
 
                           Future<void> disponibleDNI() async {
                             String apiUrl =
-                                "http://www.agenciaversalles.somee.com/api/Persona/Existe?identidad=" +
+                                "http://phynomo-001-site1.atempurl.com/api/Persona/Existe?identidad=" +
                                     _identidad; // URL de la API
 
                             try {
@@ -571,7 +562,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                             }
                           }
                         },
-                        child: Text('Siguente'),
+                        child:  Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -585,8 +576,8 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -604,10 +595,12 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.red.shade900, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -651,7 +644,7 @@ class _SignUpSexoState extends State<SignUpSexo> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -721,7 +714,19 @@ class _SignUpSexoState extends State<SignUpSexo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -747,7 +752,7 @@ class _SignUpSexoState extends State<SignUpSexo> {
                             });
                           }
                         },
-                        child: Text('Siguente'),
+                        child:  Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.purple.shade900,
                           // Define el color de fondo
@@ -761,8 +766,8 @@ class _SignUpSexoState extends State<SignUpSexo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -780,10 +785,12 @@ class _SignUpSexoState extends State<SignUpSexo> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red.shade900,
-                          // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -824,7 +831,7 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -832,7 +839,7 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      'Registro / Cuando nacimiento',
+                      'Registro / Cuando naciste',
                       style: TextStyle(
                         fontSize: 21.0,
                         fontWeight: FontWeight.bold,
@@ -901,19 +908,36 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
                             //_fechanacimientoerror = null;
                             _fechanacimientoerror = "Este campo es requerido";
                           });
-                          DateTime fechaActual = DateTime.now();
+                          int edad = 18;
 
-                          Duration diferencia =
-                              fechaActual.difference(_selectedDate);
-                          int edad = diferencia.inDays ~/
-                              365; // Calcula la edad en años
+                          if (_fechanacimiento.toString() != "") {
+                            DateTime fechaActual = DateTime.now();
+
+                            Duration diferencia =
+                                fechaActual.difference(_selectedDate);
+                            edad = diferencia.inDays ~/
+                                365; // Calcula la edad en años
+                          }
+
                           if (_fechanacimiento.toString() != "" && edad >= 18) {
                             setState(() {
                               _fechanacimientoerror = null;
@@ -938,7 +962,7 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                             }
                           }
                         },
-                        child: Text('Siguente'),
+                        child:  Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -952,8 +976,8 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -971,10 +995,12 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.red.shade900, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -1015,7 +1041,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1079,7 +1105,19 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -1097,7 +1135,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                             });
                           }
                         },
-                        child: Text('Siguente'),
+                        child:  Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1111,8 +1149,8 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -1130,10 +1168,12 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.red.shade900, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -1173,7 +1213,7 @@ class _SignUpCelularState extends State<SignUpCelular> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1209,7 +1249,19 @@ class _SignUpCelularState extends State<SignUpCelular> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -1227,7 +1279,7 @@ class _SignUpCelularState extends State<SignUpCelular> {
                             });
                           }
                         },
-                        child: Text('Siguente'),
+                        child:  Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1241,8 +1293,8 @@ class _SignUpCelularState extends State<SignUpCelular> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -1260,10 +1312,12 @@ class _SignUpCelularState extends State<SignUpCelular> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.red.shade900, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -1305,7 +1359,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1351,7 +1405,19 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -1360,7 +1426,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                           });
                           Future<void> verificarUsuario() async {
                             String apiUrl =
-                                "http://www.agenciaversalles.somee.com/api/Usuario/Existe?usuario=" +
+                                "http://phynomo-001-site1.atempurl.com/api/Usuario/Existe?usuario=" +
                                     _usuario; // URL de la API
 
                             try {
@@ -1402,7 +1468,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
 
                           Future<void> verificarCorreo() async {
                             var url = Uri.parse(
-                                'http://www.agenciaversalles.somee.com/api/Usuario/ExisteCorreo?correo=' +
+                                'http://phynomo-001-site1.atempurl.com/api/Usuario/ExisteCorreo?correo=' +
                                     _email.toString()); // URL de la API
 
                             try {
@@ -1481,7 +1547,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                             }
                           }
                         },
-                        child: Text('Siguente'),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1495,8 +1561,8 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -1514,10 +1580,12 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.red.shade900, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -1557,7 +1625,7 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1603,7 +1671,19 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           final RegExp regex = RegExp(r'^\d{6}$');
@@ -1635,7 +1715,7 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                             }
                           }
                         },
-                        child: Text('Siguente'),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1649,19 +1729,31 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
+                          _nombre = "";
+                          _email = "";
+                          _apellido = "";
+                          _identidad = "";
+                          _sexo = "";
+                          _fechanacimiento = "";
+                          _estadocivil = "";
+                          _usuario = "";
+                          _celular = "";
+                          _contrasena = "";
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.red.shade900, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -1704,7 +1796,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                 Row(
                   children: [
                     FloatingActionButton(
-                      backgroundColor: Color.fromRGBO(250, 250, 250,1),
+                      backgroundColor: Color.fromRGBO(250, 250, 250, 1),
                       foregroundColor: Colors.purple.shade900,
                       elevation: 0,
                       child: Icon(Icons.arrow_back),
@@ -1750,7 +1842,19 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Icon(Icons.arrow_back),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors
+                              .purple.shade900, // Define el color de fondo
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -1821,7 +1925,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                             Future<void> enviarJson() async {
                               var jsonBody = jsonEncode(data);
                               final url = Uri.parse(
-                                  'http://www.agenciaversalles.somee.com/api/Usuario/Registrarse');
+                                  'http://phynomo-001-site1.atempurl.com/api/Usuario/Registrarse');
                               final response = await http.post(
                                 url,
                                 body: jsonBody,
@@ -1870,7 +1974,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                             enviarJson();
                           }
                         },
-                        child: Text('Siguente'),
+                        child:  Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1884,8 +1988,8 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: ElevatedButton(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: TextButton(
                         onPressed: () {
                           _nombre = "";
                           _email = "";
@@ -1903,10 +2007,12 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                                 builder: (context) => Signupscreen()),
                           );
                         },
-                        child: Text('Cancelar'),
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.red.shade900, // Define el color de fondo
+                        child: Text(
+                          '¿Ya tienes cuenta?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
