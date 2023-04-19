@@ -825,9 +825,50 @@ GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_ListXPaises
 AS
 BEGIN
-	SELECT pais_Nombre,COUNT(paqu_Id)AS CantidadPaquetes FROM agen.VW_tbPaquetes
+	SELECT TOP(5) pais_Nombre,COUNT(paqu_Id)AS CantidadPaquetes FROM agen.VW_tbPaquetes
 	Group by (pais_Nombre)
+	Order by CantidadPaquetes desc
 END
+
+
+GO
+
+CREATE OR ALTER PROCEDURE agen.UDP_tbPaquetes_Insert
+@paqu_Nombre nvarchar(100),
+@paqu_Imagen nvarchar(max),
+@vuel_Id int,
+@habi_Id int,
+@paqu_Personas int,
+@paqu_Precio decimal(18,2)
+
+AS
+BEGIN
+BEGIN TRY
+
+INSERT INTO [agen].[tbPaquetes]
+           ([paqu_Nombre]
+           ,[paqu_Imagen]
+           ,[vuel_Id]
+           ,[habi_Id]
+           ,[paqu_Personas]
+           ,[paqu_Precio])
+     VALUES
+           (@paqu_Nombre
+           ,@paqu_Imagen
+           ,@vuel_Id
+           ,@habi_Id
+           ,@paqu_Personas
+           ,@paqu_Precio )
+
+SELECT 'El registro ha sido insertado con éxito'
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+END CATCH
+END
+
+
+
 
 
 GO
@@ -1118,9 +1159,99 @@ END CATCH
 
 END
 
+GO
+CREATE OR ALTER VIEW agen.VW_tbHabitaciones
+AS
+SELECT [habi_Id]
+      ,[habi_Nombre]
+      ,T1.[hote_Id]
+	  ,T2.hote_Nombre
+      ,T1.[cath_Id]
+	  ,T3.cath_Nombre
+      ,[habi_Precio]
+  FROM [agen].[tbHabitaciones] T1 INNER JOIN [agen].[tbHoteles] T2
+  ON T1.hote_Id = T2.hote_Id INNER JOIN [agen].[tbCategoriasHabitacional] T3
+  ON T3.cath_Id =  T1.cath_Id
+
+GO
+
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbHabitaciones_List
+AS
+BEGIN
+	SELECT * FROM agen.VW_tbHabitaciones
+END
+GO
+
+
+CREATE OR ALTER VIEW agen.VW_tbVuelos
+AS
+SELECT [vuel_Id]
+      ,[vuel_FechaSalida]
+      ,[vuel_FechaLlegada]
+      ,[vuel_AeropuertoSalida]
+      ,[vuel_AeropuertoLlegada]
+      ,T1.[agenvuel_Id]
+	  ,T2.agenvuel_Nombre
+	  ,T2.agenvuel_Nombre + ' de ' + T3.aero_Nombre + ' a ' + T4.aero_Nombre as vuel_Info
+	  ,T7.pais_Id
+	  ,T7.pais_Nombre
+  FROM [agen].[tbVuelos] T1 INNER JOIN [agen].[tbAgenciasVuelos] T2
+  ON T1.agenvuel_Id = t2.agenvuel_Id INNER JOIN [agen].[tbAeropuertos] T3
+  ON t3.aero_Id = T1.[vuel_AeropuertoSalida] INNER JOIN [agen].[tbAeropuertos] T4
+  ON t4.aero_Id = T1.vuel_AeropuertoLlegada INNER JOIN [gral].[tbCiudades] T5
+  ON T5.ciud_Id = T3.ciud_Id INNER JOIN [gral].[tbDepartamentos] T6
+  ON T6.depa_Id = T5.depa_Id INNER JOIN [gral].[tbPaises] T7
+  ON t7.pais_Id = T6.pais_Id
+
+  GO
+
+
+  GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbVuelos_List
+AS
+BEGIN
+	SELECT * FROM agen.VW_tbVuelos
+END
 
 
 
+GO
+  CREATE OR ALTER VIEw agen.VW_tbHoteles
+  as
+SELECT [hote_Id]
+      ,[hote_Nombre]
+      ,[ciud_Id]
+      ,[hote_DireccionExacta]
+      ,[hote_Estellas]
+  FROM [agen].[tbHoteles]
+
+GO
+
+
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbHoteles_List
+AS
+BEGIN
+	SELECT * FROM agen.VW_tbHoteles
+END
+GO
+
+CREATE OR ALTER VIEW gral.VW_tbPaises
+AS
+SELECT [pais_Id]
+      ,[pais_Nombre]
+      ,[cont_Id]
+  FROM [gral].[tbPaises]
+
+GO
+
+GO
+CREATE OR ALTER PROCEDURE gral.UDP_tbPaises_List
+AS
+BEGIN
+	SELECT * FROM gral.VW_tbPaises
+END
 
 
 

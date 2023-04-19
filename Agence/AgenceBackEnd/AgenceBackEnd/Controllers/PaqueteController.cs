@@ -1,4 +1,6 @@
-﻿using Agence.BusinessLogic.Services;
+﻿using Agence.API.Models;
+using Agence.BusinessLogic.Services;
+using Agence.Entities.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -56,5 +58,15 @@ namespace Agence.API.Controllers
             var list = _agenceService.FindPaquetes(id);
             return Ok(list);
         }
+
+        [HttpPost("Insertar")]
+        public IActionResult Insert(PaqueteViewModel paquete)
+        {
+            var item = _mapper.Map<tbPaquetes>(paquete);
+            var response = _agenceService.InsertarPaquete(item);
+            return Ok(response);
+        }
+
+
     }
 }

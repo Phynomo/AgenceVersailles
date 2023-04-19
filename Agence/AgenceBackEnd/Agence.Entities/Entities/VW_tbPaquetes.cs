@@ -42,5 +42,6 @@ namespace Agence.Entities.Entities
         public int? rese_Id { get; set; }
         [NotMapped]
         public int? pers_Id { get; set; }
+
     }
 }

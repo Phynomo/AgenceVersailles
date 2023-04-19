@@ -17,6 +17,10 @@ namespace Agence.BusinessLogic
             service.AddScoped<UsuarioRepository>();
             service.AddScoped<PaqueteRepository>();
             service.AddScoped<PersonaRepository>();
+            service.AddScoped<HabitacionRepository>();
+            service.AddScoped<HotelRepository>();
+            service.AddScoped<VueloRepository>();
+            service.AddScoped<PaisRepository>();
             service.AddScoped<ReservacionRepository>();
             AgenceContext.BuildConnectionString(connectionString);
         }
@@ -24,6 +28,7 @@ namespace Agence.BusinessLogic
         {
             service.AddScoped<AcceService>();
             service.AddScoped<AgenceService>();
+            service.AddScoped<GeneralService>();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Agence.DataAccess.Repository
         public static string UDP_Listar_PaquetesBaratos = "agen.UDP_tbPaquetes_ListTop10baratos";
         public static string UDP_Listar_PaquetesPorPersona = "agen.UDP_tbPaquetes_ListXPerson";
         public static string UDP_Encontrar_Paquetes = "agen.UDP_tbPaquetes_Find";
-        //public static string UDP_Insertar_Usuarios = "acce.UDP_tbUsuarios_Insert";
+        public static string UDP_Insertar_Paquetes = "agen.UDP_tbPaquetes_Insert";
         //public static string UDP_Editar_Usuarios = "acce.UDP_tbUsuarios_Edit";
         //public static string UDP_Eliminar_Usuarios = "acce.UDP_tbUsuarios_Delete";
         //public static string UDP_Find_Usuarios = "acce.UDP_tbUsuarios_Find";
@@ -47,6 +47,21 @@ namespace Agence.DataAccess.Repository
         public static string UDP_Insertar_Reservaciones = "agen.UDP_tbReservaciones_Insert";
         public static string UDP_Eliminar_Reservaciones = "agen.UDP_tbReservaciones_Delete";
         #endregion
+
+
+        //Hoteles
+
+        public static string UDP_Listar_Hoteles = "agen.UDP_tbHoteles_List";
+        //Habitaciones
+
+        public static string UDP_Listar_Habitaciones= "agen.UDP_tbHabitaciones_List";
+        //Vuelos
+
+        public static string UDP_Listar_Vuelos = "agen.UDP_tbVuelos_List";
+        //Paises
+
+        public static string UDP_Listar_Paises = "gral.UDP_tbPaises_List";
+
 
     }
 }
