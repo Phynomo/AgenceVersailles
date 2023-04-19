@@ -68,7 +68,7 @@ class _RecuperarState extends State<Recuperar> {
       body: ListView(
         children: [
           Container(
-            height: size.height * 0.50,
+            height: size.height * 0.45,
             width: size.width * 0.98,
             decoration: BoxDecoration(
                 color: kAccentColor,
@@ -86,7 +86,7 @@ class _RecuperarState extends State<Recuperar> {
             ),
           ),
           SizedBox(
-            height: 20.0,
+            height: 48.0,
           ),
           if (!_showErrorConexion)
             Text(
@@ -123,7 +123,7 @@ class _RecuperarState extends State<Recuperar> {
       return Container(
         child: TextField(
           style: TextStyle(color: Colors.black),
-          keyboardType: TextInputType.text,
+          keyboardType: TextInputType.text, 
           decoration: InputDecoration(
             icon: Icon(Icons.mail),
             hintText: "Correo",
@@ -176,7 +176,7 @@ class _RecuperarState extends State<Recuperar> {
             Future<void> verificarCorreo() async {
               try {
                 var url = Uri.parse(
-                    'http://www.agenciaversalles.somee.com/api/Usuario/ExisteCorreo?correo=' +
+                    'http://phynomo-001-site1.atempurl.com/api/Usuario/ExisteCorreo?correo=' +
                         correo.toString()); //Url
                 final response = await http
                     .get(url, headers: {'Content-Type': 'application/json'});
@@ -245,6 +245,9 @@ class _RecuperarState extends State<Recuperar> {
       return Center(
         child: TextButton(
           onPressed: () {
+            setState(() {
+              correo = "";
+            });
             Navigator.pop(context);
           },
           child: Text(
@@ -495,7 +498,7 @@ class _RecuperarContrasenaState extends State<RecuperarContrasena> {
                             Future<void> enviarJson() async {
                               var jsonBody = jsonEncode(data);
                               final url = Uri.parse(
-                                  'http://www.agenciaversalles.somee.com/api/Usuario/Recuperar');
+                                  'http://phynomo-001-site1.atempurl.com/api/Usuario/Recuperar');
                               final response = await http.put(
                                 url,
                                 body: jsonBody,
