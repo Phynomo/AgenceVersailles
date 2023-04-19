@@ -14,9 +14,12 @@ String urlFeatured =
     "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado5Caros";
 String urlRecommended =
     "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado10Baratos";
-String urlUserPlaces = "http://phynomo-001-site1.atempurl.com/api/Paquete/ListadoPorPersona?id=";
-String urlInsertBooking = "http://phynomo-001-site1.atempurl.com/api/Reservacion/Insertar";
-String urlDeleteBooking = "http://phynomo-001-site1.atempurl.com/api/Reservacion/Eliminar";
+String urlUserPlaces =
+    "http://phynomo-001-site1.atempurl.com/api/Paquete/ListadoPorPersona?id=";
+String urlInsertBooking =
+    "http://phynomo-001-site1.atempurl.com/api/Reservacion/Insertar";
+String urlDeleteBooking =
+    "http://phynomo-001-site1.atempurl.com/api/Reservacion/Eliminar";
 // String urlFind = "http://phynomo-001-site1.atempurl.com/api/Paquete/Find?id=";
 
 class RESTAPI {
@@ -76,7 +79,7 @@ class RESTAPI {
       final json = respuesta.body;
       final jsonMap = jsonDecode(json);
       return dummyPlaces(jsonMap["data"]).where((element) {
-        final titleLower = element.placeTitle.toLowerCase(); 
+        final titleLower = element.placeTitle.toLowerCase();
         final searchLower = query.toLowerCase();
 
         return titleLower.contains(searchLower);
@@ -94,15 +97,17 @@ class RESTAPI {
     http.post(url,
         body: body,
         headers: {'Content-Type': 'application/json'}).then((response) {
-        var jsonResponse = json.decode(response.body);
+      var jsonResponse = json.decode(response.body);
       if (response.statusCode == 200) {
         // resultado
         // print(jsonResponse["message"].toString());
         print(jsonResponse["message"].toString());
         ElegantNotification.success(
           // title:  Text("Exitoso"),
-          description:  Text("El paquete ha sido agregado a 'Mis Reservaciones'",
-                              style: TextStyle(color: Colors.black),),
+          description: Text(
+            "El paquete ha sido agregado a 'Mis Reservaciones'",
+            style: TextStyle(color: Colors.black),
+          ),
           // toastDuration: const Duration(milliseconds: 5000),
           // animationDuration: const Duration(milliseconds: 700),
         ).show(context);
@@ -110,45 +115,52 @@ class RESTAPI {
         print(jsonResponse["message"].toString());
         ElegantNotification.error(
           // title:  Text("Exitoso"),
-          description:  Text("Ha ocurrido un error",
-                            style: TextStyle(color: Colors.black),),
+          description: Text(
+            "Ha ocurrido un error",
+            style: TextStyle(color: Colors.black),
+          ),
         ).show(context);
       }
     });
   }
 
-Future<dynamic> eliminarReservacion(data, context) async {
+  Future<dynamic> eliminarReservacion(data, context) async {
     var body = json.encode(data.toJson());
     var url = Uri.parse(urlDeleteBooking);
 
     http.put(url,
         body: body,
         headers: {'Content-Type': 'application/json'}).then((response) {
-        var jsonResponse = json.decode(response.body);
+      var jsonResponse = json.decode(response.body);
       if (response.statusCode == 200) {
         // resultado
         // print(jsonResponse["message"].toString());
         print(jsonResponse["message"].toString());
         ElegantNotification.success(
           // title:  Text("Exitoso"),
-          description:  Text("La reservación ha sido cancelada",
-                              style: TextStyle(color: Colors.black),),
+          description: Text(
+            "La reservación ha sido cancelada",
+            style: TextStyle(color: Colors.black),
+          ),
         ).show(context);
 
-          Navigator.pushNamed(context, "/reservaciones");
+        Navigator.pushNamed(context, "/reservaciones");
       } else {
         print(jsonResponse["message"].toString());
         ElegantNotification.error(
           // title:  Text("Exitoso"),
-          description:  Text(jsonResponse["message"].toString(),
-                            style: TextStyle(color: Colors.black),),
+          description: Text(
+            jsonResponse["message"].toString(),
+            style: TextStyle(color: Colors.black),
+          ),
         ).show(context);
       }
     });
   }
 
   Future<List<PlaceModel>> getPaquetesXPersona(persId) async {
-    final respuesta = await http.get(Uri.parse(urlUserPlaces + persId.toString()));
+    final respuesta =
+        await http.get(Uri.parse(urlUserPlaces + persId.toString()));
     if (respuesta.statusCode == 200) {
       final json = respuesta.body;
       final jsonMap = jsonDecode(json);

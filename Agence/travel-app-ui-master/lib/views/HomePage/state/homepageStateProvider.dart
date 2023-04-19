@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelappui/models/placesModel.dart';
+import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/utils/restAPI.dart';
 
 class HomePageStateProvider extends ChangeNotifier {
@@ -43,6 +44,10 @@ class HomePageStateProvider extends ChangeNotifier {
   Future<List<PlaceModel>> getPaquetesXPersona(persId) async {
     return await api.getPaquetesXPersona(persId);
   }
+
+  // Future<UsuarioModel> getInfoUsuarios() async {
+  //   return sacainfoUsuario();
+  // }
 
   Future<void> GetTopList() async {
     await Future.delayed(const Duration(milliseconds: 500), () {});
