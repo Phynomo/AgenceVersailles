@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,8 @@ import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/components/appbar.dart';
 import 'package:travelappui/components/featuredcard.dart';
 import 'package:travelappui/theme.dart';
+import 'dart:html';
+import 'dart:convert';
 // import 'package:';s
 
 class MisReservacionesPage extends StatefulWidget {
@@ -16,18 +19,11 @@ class MisReservacionesPage extends StatefulWidget {
   State<MisReservacionesPage> createState() => _MisReservacionesPageState();
 }
 
-Future<void> infoUsuarios() async {
-  // To retrieve a value from the session:
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String usuId = prefs.getString('usuNombreUsuario');
-}
-
 class _MisReservacionesPageState extends State<MisReservacionesPage> {
   ScrollController _mainScrollController = ScrollController();
 
   final double _bottomBarHeight = 90;
   HomepageSrollListner _model;
-
 
   @override
   void initState() {
@@ -36,13 +32,16 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
     _model = HomepageSrollListner.initialise(_mainScrollController);
   }
 
-  var infoUsuario = infoUsuarios();
-  
   @override
   Widget build(BuildContext context) {
     HomePageStateProvider homepagestate =
         Provider.of<HomePageStateProvider>(context);
     Size size = MediaQuery.of(context).size;
+
+    // Retrieve the JSON string from session storage
+    String usuarioJson = window.sessionStorage['usuario'];
+    // Convert the JSON string back to a UsuarioModel object
+    UsuarioModel usuario = UsuarioModel.fromJson(json.decode(usuarioJson));
 
     return Scaffold(
       backgroundColor: kPrimaryColor,
@@ -68,7 +67,8 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                   SizedBox(
                     height: size.height,
                     child: StreamBuilder(
-                      stream: homepagestate.getPaquetesXPersona(1).asStream(),
+                      stream:
+                          homepagestate.getPaquetesXPersona(usuario.persId).asStream(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

@@ -3,6 +3,7 @@ import 'package:travelappui/views/Charts/chartspage.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/HomePage/homepagetodo.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
+import 'package:travelappui/views/ProfilePage/profilepage.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:travelappui/views/ViewDetails/viewDetails.dart';
 import 'package:travelappui/views/ViewDetails/viewDetailsReservacion.dart';
@@ -25,6 +26,7 @@ class AppRoutes {
   static const String ROUTE_SingUp = "/signup";
   static const String ROUTE_Restaurar = "/recuperar";
   static const String ROUTE_Charts = "/charts";
+  static const String ROUTE_Profile = "/perfil";
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
 
@@ -68,6 +70,10 @@ class AppRoutes {
       case ROUTE_Charts:
           return MaterialPageRoute(
             settings: settings, builder: (_) => ChartsPage());
+      break;
+      case ROUTE_Profile:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => PerfilPage());
       break;
     }
   }

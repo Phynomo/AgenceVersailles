@@ -6,6 +6,7 @@ import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:html';
 
 String usuario = "";
 String password = "";
@@ -155,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                 // var body = json.encode(data); //Json encriptado
 
                 var url =
-                    'http://www.agenciaversalles.somee.com/api/Usuario/Login?usuario=$usuario&contrasena=$password'; //Url
+                    'https://localhost:44313/api/Usuario/Login?usuario=$usuario&contrasena=$password'; //Url
                 final response = await http.get(Uri.parse(url));
 
                 var jsonResponse = jsonDecode(response.body);
@@ -168,15 +169,9 @@ class _LoginPageState extends State<LoginPage> {
                   // resultado
 
                   if (data != null && data.toString().length > 2) {
-                    var usuarios = sacainfoUsuario(data);
-
-                    print(usuarios.usuaNombreUsuario.toString());
-                    // To save a value to the session:
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setString('usuId', data[0]['usua_Id'].toString());
-                    prefs.setString('usuNombreUsuario', data[0]['usua_NombreUsuario'].toString());
-
+                    var usuarioModel = sacainfoUsuario(data);
+                    String usuarioJson = jsonEncode(usuarioModel.toJson());
+                    window.sessionStorage['usuario'] = usuarioJson;
 
                     Navigator.push(
                       context,

@@ -32,11 +32,10 @@ namespace Agence.API.Controllers
             return Ok(list);
         }
 
-        [HttpPut("Login")]
-        public IActionResult Login(UsuarioViewModel usuario)
+        [HttpGet("Login")]
+        public IActionResult Login(string usuario, string contrasena)
         {
-            var item = _mapper.Map<tbUsuarios>(usuario);
-            var list = _seguridadServivce.Login(item);
+            var list = _seguridadServivce.Login(usuario, contrasena);
             return Ok(list);
         }
 
@@ -64,15 +63,15 @@ namespace Agence.API.Controllers
             var response = _seguridadServivce.InsertarPersonaCliente(item, item2);
             return Ok(response);
         }
-        
+
         [HttpGet("Existe")]
         public IActionResult Existe(string usuario)
         {
             var response = _seguridadServivce.Existe(usuario);
             return Ok(response);
         }
-        
-        
+
+
         [HttpGet("ExisteCorreo")]
         public IActionResult ExisteCorreo(string correo)
         {

@@ -1,9 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelappui/components/rating,.dart';
+import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/models/reservacionesModel.dart';
+import 'dart:html';
+import 'dart:convert';
 
 class ViewDetails extends StatefulWidget {
   @override
@@ -35,9 +39,12 @@ class _ViewDetailsState extends State<ViewDetails> {
     final argMap = arguments as Map<String, dynamic>;
     final paqueteObject = argMap['paqueteObject'];
 
-    // if (arguments == null) {
-    //   Navigator.pushNamed(context, "/Popular");
-    // }
+    
+    // Retrieve the JSON string from session storage
+    String usuarioJson = window.sessionStorage['usuario'];
+// Convert the JSON string back to a UsuarioModel object
+    UsuarioModel usuario = UsuarioModel.fromJson(json.decode(usuarioJson));
+
 
     Size size = MediaQuery.of(context).size;
     ThemeData appTheme = Theme.of(context);
@@ -210,7 +217,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                                     fontWeight: FontWeight.bold)),
                             onPressed: () {
                               ReservacionModel reservacion = ReservacionModel(
-                                  persId: 1,
+                                  persId: int.parse(usuario.persId),
                                   paquId: paqueteObject.paquId,
                                   reseId: 0);
                               homepagestate.insertReservacion(

@@ -9,14 +9,14 @@ import 'package:intl/intl.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 
 
-String urlAll = "http://www.agenciaversalles.somee.com/api/Paquete/Listado";
+String urlAll = "https://localhost:44313/api/Paquete/Listado";
 String urlFeatured =
-    "http://www.agenciaversalles.somee.com/api/Paquete/Listado5Caros";
+    "https://localhost:44313/api/Paquete/Listado5Caros";
 String urlRecommended =
-    "http://www.agenciaversalles.somee.com/api/Paquete/Listado10Baratos";
-String urlUserPlaces = "http://www.agenciaversalles.somee.com/api/Paquete/ListadoPorPersona?id=";
-String urlInsertBooking = "http://www.agenciaversalles.somee.com/api/Reservacion/Insertar";
-String urlDeleteBooking = "http://www.agenciaversalles.somee.com/api/Reservacion/Eliminar";
+    "https://localhost:44313/api/Paquete/Listado10Baratos";
+String urlUserPlaces = "https://localhost:44313/api/Paquete/ListadoPorPersona?id=";
+String urlInsertBooking = "https://localhost:44313/api/Reservacion/Insertar";
+String urlDeleteBooking = "https://localhost:44313/api/Reservacion/Eliminar";
 // String urlFind = "https://localhost:44313/api/Paquete/Find?id=";
 
 class RESTAPI {
