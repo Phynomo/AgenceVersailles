@@ -60,7 +60,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/image/
-    - assets/image/ImagenesPaquetes/
+    # - assets/image/ImagenesPaquetes/
     # - assets/packages/awesome_dialog/assets/rive/info.riv
   #  - images/a_dot_ham.jpeg
 

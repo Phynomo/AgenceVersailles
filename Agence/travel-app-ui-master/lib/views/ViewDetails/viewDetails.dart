@@ -82,7 +82,7 @@ class _ViewDetailsState extends State<ViewDetails> {
                     height: size.height * 0.7,
                     color: Colors.grey,
                     child: Image(
-                      image: AssetImage(paqueteObject.imgUrl),
+                      image: NetworkImage(paqueteObject.imgUrl),
                       fit: BoxFit.cover,
                     ),
                   ),

@@ -493,6 +493,7 @@ VALUES ('Vacaciones en la playa', 'https://drive.google.com/uc?id=1VK6cK5sm2CEVU
        ('Aventura en el desierto', 'https://drive.google.com/uc?id=1wxssPLJJz0lnS5AOAYDEeqFHvwhU2KZr', 1, 7, 4, 2800.00);
 
 
+
 --*******PROCEDIMIENTOS ALMACENADOS*******--
 
 --Vista tbUsuarios
@@ -504,8 +505,12 @@ AS
 		   T1.usua_Correo, 
 		   T1.usua_Contrasena, 
 		   T1.pers_Id, 
-		   (T2.pers_Nombres + ' ' + T2.pers_Apellidos) AS usua_PersonaNombreCompleto,
-		   T1.usua_EsAdmin, 
+		   (T2.pers_Nombres + ' ' + T2.pers_Apellidos) AS usua_PersonaNombreCompleto
+		   ,t2.pers_Celular
+		   ,T2.pers_FechaNacimiento
+		   ,T2.pers_Identidad
+		   ,T2.pers_Sexo
+		   ,T1.usua_EsAdmin, 
 		   T1.usua_UsuCreacion, 
 		   T3.usua_NombreUsuario AS usua_NombreUsuarioCreacion,
 		   T1.usua_FechaCreacion, 
@@ -1177,9 +1182,11 @@ GO
 
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbHabitaciones_List
+@hote_Id INT
 AS
 BEGIN
 	SELECT * FROM agen.VW_tbHabitaciones
+	WHERE hote_Id = @hote_Id
 END
 GO
 
@@ -1209,9 +1216,11 @@ SELECT [vuel_Id]
 
   GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbVuelos_List
+@pais_Id INT
 AS
 BEGIN
 	SELECT * FROM agen.VW_tbVuelos
+	WHERE pais_Id = @pais_Id
 END
 
 
@@ -1221,19 +1230,29 @@ GO
   as
 SELECT [hote_Id]
       ,[hote_Nombre]
-      ,[ciud_Id]
       ,[hote_DireccionExacta]
+      ,T1.[ciud_Id]
       ,[hote_Estellas]
-  FROM [agen].[tbHoteles]
+	  ,T2.ciud_Nombre
+	  ,T3.depa_Id
+	  ,T3.depa_Nombre
+	  ,T4.pais_Id
+	  ,T4.pais_Nombre
+  FROM [agen].[tbHoteles]T1 INNER JOIN [gral].[tbCiudades] T2
+  ON T1.ciud_Id =T2.ciud_Id INNER JOIN [gral].[tbDepartamentos] T3
+  ON T3.depa_Id = T2.depa_Id INNER JOIN [gral].[tbPaises] T4
+  ON T4.pais_Id = T3.pais_Id
 
 GO
 
 
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbHoteles_List
+@pais_Id INT
 AS
 BEGIN
 	SELECT * FROM agen.VW_tbHoteles
+	WHERE pais_Id = @pais_Id
 END
 GO
 
@@ -1251,6 +1270,7 @@ CREATE OR ALTER PROCEDURE gral.UDP_tbPaises_List
 AS
 BEGIN
 	SELECT * FROM gral.VW_tbPaises
+	ORDER BY pais_Nombre asc
 END
 
 

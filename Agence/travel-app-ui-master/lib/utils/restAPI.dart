@@ -34,7 +34,7 @@ class RESTAPI {
           description: "I'm mocking y'all",
           duration: 5,
           personas: element["paqu_Personas"].toString(),
-          imgUrl: "assets/image/ImagenesPaquetes/" + element["paqu_Imagen"],
+          imgUrl: element["paqu_Imagen"],
           locationShort: element["ciud_Nombre"] + ", " + element["pais_Nombre"],
           rateperpackage: element["paqu_Precio"],
           fechaSalida: DateFormat('dd/MM/yyyy').format(date),
