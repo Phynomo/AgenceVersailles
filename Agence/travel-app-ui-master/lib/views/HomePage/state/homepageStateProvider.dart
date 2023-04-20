@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelappui/models/placesModel.dart';
-import 'package:travelappui/models/usuarioModel.dart';
+// import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/utils/restAPI.dart';
 
 class HomePageStateProvider extends ChangeNotifier {

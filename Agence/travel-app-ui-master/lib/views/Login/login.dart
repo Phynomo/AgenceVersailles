@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import "package:flutter/material.dart";
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -5,8 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
-import 'package:travelappui/views/SplashScreen/splashscreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:travelappui/views/SplashScreen/splashscreen.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 // import 'dart:html';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -145,104 +147,118 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  Future<void> iniciarsesionlogin(String usuario, String password) async {
+    try {
+      var url =
+          'http://phynomo-001-site1.atempurl.com/api/Usuario/Login?usuario=$usuario&contrasena=$password';
+      final response = await http.get(Uri.parse(url));
+
+      var jsonResponse = jsonDecode(response.body);
+      var data = jsonResponse['data'];
+
+      if (response.statusCode == 200) {
+        if (data != null && data.toString().length > 2) {
+          var usuarioModel = sacainfoUsuario(data);
+          String usuarioJson = jsonEncode(usuarioModel.toJson());
+          await storage.write(key: 'usuario', value: usuarioJson);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        } else {
+          setState(() {
+            _showErrorMessage = true;
+          });
+        }
+      } else {
+        setState(() {
+          _showErrorConexion = true;
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+      setState(() {
+        _showErrorConexion = true;
+      });
+    }
+  }
+
   Widget _buttonLogin() {
+    final loginController = StreamController<bool>();
+
     return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Future<void> iniciarsesionlogin() async {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              // set the loginController's stream value to true to display the CircularProgressIndicator()
+              loginController.sink.add(true);
+
+              // the login function
               try {
-                // var data = {
-                //   'usua_NombreUsuario': usuario,
-                //   'usua_Correo': usuario,
-                //   'usua_Contrasena': password
-                // }; //datos xd
-
-                // var body = json.encode(data); //Json encriptado
-
-                var url =
-                    'http://phynomo-001-site1.atempurl.com/api/Usuario/Login?usuario=$usuario&contrasena=$password'; //Url
-                final response = await http.get(Uri.parse(url));
-
-                var jsonResponse = jsonDecode(response.body);
-                var data = jsonResponse['data'];
-
-                // print(data);
-
-                //Brujeria
-                if (response.statusCode == 200) {
-                  // resultado
-
-                  if (data != null && data.toString().length > 2) {
-                    var usuarioModel = sacainfoUsuario(data);
-                    String usuarioJson = jsonEncode(usuarioModel.toJson());
-                    await storage.write(key: 'usuario', value: usuarioJson);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  } else {
+                setState(() {
+                  _errorPassword = null;
+                  _errorUsuario = null;
+                  _showErrorMessage = false;
+                  _showErrorConexion = false;
+                });
+                if (usuario != "" && password != "") {
+                  await iniciarsesionlogin(usuario, password);
+                  // set the loginController's stream value to false to display the "Iniciar sesión" button again
+                  loginController.sink.add(false);
+                } else {
+                  if (usuario.isEmpty) {
                     setState(() {
-                      _showErrorMessage = true;
+                      _errorUsuario = 'Complete el campo';
                     });
                   }
+                  if (password.isEmpty) {
+                    setState(() {
+                      _errorPassword = 'Complete el campo';
+                    });
+                  }
+                }
+              } catch (e) {}
+            },
+            child: StreamBuilder<bool>(
+              stream: loginController.stream,
+              initialData: false,
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                if (snapshot.data == true) {
+                  return Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  );
                 } else {
-                  setState(() {
-                    _showErrorConexion = true;
-                  });
-                } //tqm, gracias por el carrito
-              } catch (e) {
-                print(e.toString());
-                setState(() {
-                  _showErrorConexion = true;
-                });
-              }
-            }
-
-            try {
-              setState(() {
-                _errorPassword = null;
-                _errorUsuario = null;
-                _showErrorMessage = false;
-                _showErrorConexion = false;
-              });
-              if (usuario != "" && password != "") {
-                iniciarsesionlogin();
-              } else {
-                if (usuario.isEmpty) {
-                  setState(() {
-                    _errorUsuario = 'Complete el campo';
-                  });
+                  return Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                    child: Text(
+                      "Iniciar sesión",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.bold),
+                    ),
+                  );
                 }
-                if (password.isEmpty) {
-                  setState(() {
-                    _errorPassword = 'Complete el campo';
-                  });
-                }
-              }
-            } catch (e) {}
-          },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-            child: Text(
-              "Iniciar sesión",
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              },
             ),
-          ),
-          style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(Colors.purple.shade900),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.purple.shade900),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget _buttonRecuperar() {

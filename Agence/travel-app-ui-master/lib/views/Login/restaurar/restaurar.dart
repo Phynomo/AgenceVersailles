@@ -1,11 +1,11 @@
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:travelappui/constants/colors.dart';
-import 'package:travelappui/routes/routes.dart';
-import 'package:travelappui/theme.dart';
+// import 'package:travelappui/routes/routes.dart';
+// import 'package:travelappui/theme.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:travelappui/views/HomePage/homepage.dart';
+// import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';

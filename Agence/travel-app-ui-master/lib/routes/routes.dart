@@ -77,7 +77,7 @@ class AppRoutes {
           return MaterialPageRoute(
             settings: settings, builder: (_) => PerfilPage());
       break;
-      case ROUTE_Profile:
+      case ROUTE_InsertPaquete:
           return MaterialPageRoute(
             settings: settings, builder: (_) => FormPaquetePage());
       break;

@@ -1,6 +1,6 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+// import 'package:flutter/src/foundation/key.dart';
+// import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/widgets/placeholder.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:travelappui/constants/colors.dart';
@@ -81,7 +81,9 @@ class _PerfilPageState extends State<PerfilPage> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Image(
-                                image: AssetImage("assets/image/user.png")),
+                                image: NetworkImage("https://drive.google.com/uc?id=1fSqRnemwhEbztyVhR6ER0ntyn1dMCYEW"),
+                                fit: BoxFit.cover,
+                                ),
                           ),
                         ),
                         SizedBox(
