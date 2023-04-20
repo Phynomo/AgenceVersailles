@@ -23,10 +23,10 @@ namespace Agence.API.Controllers
         }
 
 
-        [HttpGet("Listado")]
-        public IActionResult Index()
+        [HttpGet("ListadoXHotel")]
+        public IActionResult ListadoXHotel(int hotel)
         {
-            var list = _agenceService.ListadoHabitaciones();
+            var list = _agenceService.ListadoHabitaciones(hotel);
             return Ok(list);
         }
     }

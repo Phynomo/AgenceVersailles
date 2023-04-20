@@ -200,6 +200,22 @@ namespace Agence.DataAccess.Context
 
                 entity.ToView("VW_tbUsuarios", "acce");
 
+                entity.Property(e => e.pers_Celular)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.pers_FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.pers_Identidad)
+                    .IsRequired()
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.pers_Sexo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.usua_Contrasena).IsRequired();
 
                 entity.Property(e => e.usua_Correo)

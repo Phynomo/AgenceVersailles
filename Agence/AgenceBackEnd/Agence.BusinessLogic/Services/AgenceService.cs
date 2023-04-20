@@ -262,12 +262,12 @@ namespace Agence.BusinessLogic.Services
 
         //Habitaciones
 
-        public ServiceResult ListadoHabitaciones()
+        public ServiceResult ListadoHabitaciones(int hotel)
         {
             var result = new ServiceResult();
             try
             {
-                var list = _habitacionRepository.List();
+                var list = _habitacionRepository.ListXhotel(hotel);
                 return result.Ok(list);
             }
             catch (Exception e)
@@ -279,12 +279,12 @@ namespace Agence.BusinessLogic.Services
 
         //Vuelos
 
-        public ServiceResult ListadoVuelos()
+        public ServiceResult ListadoVuelos(int Id_Pais)
         {
             var result = new ServiceResult();
             try
             {
-                var list = _vueloRepository.List();
+                var list = _vueloRepository.ListXPais(Id_Pais);
                 return result.Ok(list);
             }
             catch (Exception e)

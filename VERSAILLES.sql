@@ -504,8 +504,12 @@ AS
 		   T1.usua_Correo, 
 		   T1.usua_Contrasena, 
 		   T1.pers_Id, 
-		   (T2.pers_Nombres + ' ' + T2.pers_Apellidos) AS usua_PersonaNombreCompleto,
-		   T1.usua_EsAdmin, 
+		   (T2.pers_Nombres + ' ' + T2.pers_Apellidos) AS usua_PersonaNombreCompleto
+		   ,t2.pers_Celular
+		   ,T2.pers_FechaNacimiento
+		   ,T2.pers_Identidad
+		   ,T2.pers_Sexo
+		   ,T1.usua_EsAdmin, 
 		   T1.usua_UsuCreacion, 
 		   T3.usua_NombreUsuario AS usua_NombreUsuarioCreacion,
 		   T1.usua_FechaCreacion, 
@@ -1177,9 +1181,11 @@ GO
 
 GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbHabitaciones_List
+@hote_Id INT
 AS
 BEGIN
 	SELECT * FROM agen.VW_tbHabitaciones
+	WHERE hote_Id = @hote_Id
 END
 GO
 
@@ -1209,9 +1215,11 @@ SELECT [vuel_Id]
 
   GO
 CREATE OR ALTER PROCEDURE agen.UDP_tbVuelos_List
+@pais_Id INT
 AS
 BEGIN
 	SELECT * FROM agen.VW_tbVuelos
+	WHERE pais_Id = @pais_Id
 END
 
 

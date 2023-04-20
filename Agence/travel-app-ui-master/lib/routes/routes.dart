@@ -10,6 +10,7 @@ import 'package:travelappui/views/ViewDetails/viewDetailsReservacion.dart';
 import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/MisReservacionesPage/misreservaciones.dart';
 import 'package:travelappui/views/Signup/signup.dart';
+import 'package:travelappui/views/ddl/pruebaddl.dart';
 
 class AppRoutes {
 
@@ -27,6 +28,7 @@ class AppRoutes {
   static const String ROUTE_Restaurar = "/recuperar";
   static const String ROUTE_Profile = "/perfil";
   static const String ROUTE_Admin = "/admin";
+  static const String ROUTE_Ddl = "/ddl";
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
 
@@ -74,6 +76,10 @@ class AppRoutes {
       case ROUTE_Profile:
           return MaterialPageRoute(
             settings: settings, builder: (_) => PerfilPage());
+      break;
+      case ROUTE_Ddl:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => Droplist());
       break;
     }
   }
