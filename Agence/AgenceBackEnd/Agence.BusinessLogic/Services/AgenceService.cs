@@ -84,6 +84,20 @@ namespace Agence.BusinessLogic.Services
                 return result.Error(e.Message);
             }
         }
+        
+        public ServiceResult ListadoPaquetesPorPais()
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _paqueteRepository.Toppaises();
+                return result.Ok(list);
+            }
+            catch (Exception e)
+            {
+                return result.Error(e.Message);
+            }
+        }
 
         public ServiceResult ListadoPaquetesCaros()
         {

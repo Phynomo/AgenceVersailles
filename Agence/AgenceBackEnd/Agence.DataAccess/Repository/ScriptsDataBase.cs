@@ -29,7 +29,7 @@ namespace Agence.DataAccess.Repository
         public static string UDP_Listar_PaquetesPorPersona = "agen.UDP_tbPaquetes_ListXPerson";
         public static string UDP_Encontrar_Paquetes = "agen.UDP_tbPaquetes_Find";
         public static string UDP_Insertar_Paquetes = "agen.UDP_tbPaquetes_Insert";
-        //public static string UDP_Editar_Usuarios = "acce.UDP_tbUsuarios_Edit";
+        public static string UDP_PaquetesPorPais = "agen.UDP_tbPaquetes_ListXPaises";
         //public static string UDP_Eliminar_Usuarios = "acce.UDP_tbUsuarios_Delete";
         //public static string UDP_Find_Usuarios = "acce.UDP_tbUsuarios_Find";
         #endregion

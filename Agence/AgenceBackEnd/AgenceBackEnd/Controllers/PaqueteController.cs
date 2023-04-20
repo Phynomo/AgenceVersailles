@@ -31,6 +31,13 @@ namespace Agence.API.Controllers
             return Ok(list);
         }
 
+        [HttpGet("PaquetesPorPais")]
+        public IActionResult toppais()
+        {
+            var list = _agenceService.ListadoPaquetesPorPais();
+            return Ok(list);
+        }
+
         [HttpGet("Listado5Caros")]
         public IActionResult caros5()
         {

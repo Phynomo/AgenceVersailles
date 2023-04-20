@@ -52,6 +52,13 @@ namespace Agence.DataAccess.Repository
             using var db = new SqlConnection(AgenceContext.ConnectionString);
             return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Listar_Paquetes, null, commandType: System.Data.CommandType.StoredProcedure);
         }
+        
+        
+        public IEnumerable<VW_tbPaquetes> Toppaises()
+        {
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+            return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_PaquetesPorPais, null, commandType: System.Data.CommandType.StoredProcedure);
+        }
 
         public IEnumerable<VW_tbPaquetes> ListCaros()
         {
