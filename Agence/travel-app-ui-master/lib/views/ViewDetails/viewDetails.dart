@@ -6,9 +6,7 @@ import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/models/reservacionesModel.dart';
-// import 'dart:html';
 import 'dart:convert';
-
 import 'package:travelappui/views/Login/login.dart';
 
 class ViewDetails extends StatefulWidget {

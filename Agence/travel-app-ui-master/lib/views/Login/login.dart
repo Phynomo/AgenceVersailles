@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
@@ -15,12 +16,15 @@ final storage = FlutterSecureStorage();
 
 UsuarioModel sacainfoUsuario(info) {
   UsuarioModel usuario = new UsuarioModel();
-
+  String dateStr = info[0]["pers_FechaNacimiento"].toString();
+  DateTime date = DateTime.parse(dateStr);
   usuario.usuaId = info[0]["usua_Id"].toString();
   usuario.usuaNombreUsuario = info[0]["usua_NombreUsuario"].toString();
   usuario.usuaCorreo = info[0]["usua_Correo"].toString();
   usuario.usuaContrasena = info[0]["usua_Contrasena"].toString();
   usuario.persId = info[0]["pers_Id"].toString();
+  usuario.persCelular = info[0]["pers_Celular"].toString();
+  usuario.persNacimiento = DateFormat('dd/MM/yyyy').format(date).toString();
   usuario.usuaPersonaNombreCompleto =
       info[0]["usua_PersonaNombreCompleto"].toString();
   usuario.usuaEsAdmin = info[0]["usua_EsAdmin"].toString();

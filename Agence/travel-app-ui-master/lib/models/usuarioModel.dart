@@ -4,6 +4,8 @@ class UsuarioModel {
   String usuaCorreo;
   String usuaContrasena;
   String persId;
+  String persCelular;
+  String persNacimiento;
   String usuaPersonaNombreCompleto;
   String usuaEsAdmin;
 
@@ -13,6 +15,8 @@ class UsuarioModel {
     this.usuaCorreo,
     this.usuaContrasena,
     this.persId,
+    this.persCelular,
+    this.persNacimiento,
     this.usuaPersonaNombreCompleto,
     this.usuaEsAdmin,
   });
@@ -24,6 +28,8 @@ class UsuarioModel {
       'usua_Correo': usuaCorreo,
       'usua_Contrasena': usuaContrasena,
       'pers_Id': persId,
+      'pers_Celular' : persCelular,
+      'pers_FechaNacimiento' : persNacimiento,
       'usua_PersonaNombreCompleto': usuaPersonaNombreCompleto,
       'usua_EsAdmin': usuaEsAdmin,
     };
@@ -36,6 +42,8 @@ class UsuarioModel {
       usuaCorreo: json['usua_Correo'],
       usuaContrasena: json['usua_Contrasena'],
       persId: json['pers_Id'],
+      persCelular: json['pers_Celular'],
+      persNacimiento: json['pers_FechaNacimiento'],
       usuaPersonaNombreCompleto: json['usua_PersonaNombreCompleto'],
       usuaEsAdmin: json['usua_EsAdmin'],
     );

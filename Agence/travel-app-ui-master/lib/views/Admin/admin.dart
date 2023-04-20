@@ -155,7 +155,9 @@ class _AdminPageState extends State<AdminPage> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/insertPaquete");
+                          },
                         ),
 
                         SizedBox(
