@@ -75,13 +75,23 @@ namespace Agence.DataAccess.Context
 
                 entity.ToView("VW_tbHoteles", "agen");
 
+                entity.Property(e => e.ciud_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.depa_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.hote_DireccionExacta)
                     .IsRequired()
                     .HasMaxLength(500);
 
-                entity.Property(e => e.hote_Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.hote_Nombre)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.pais_Nombre)
                     .IsRequired()
                     .HasMaxLength(100);
             });

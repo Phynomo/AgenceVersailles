@@ -2,6 +2,7 @@
 using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,16 @@ namespace Agence.DataAccess.Repository
         {
             using var db = new SqlConnection(AgenceContext.ConnectionString);
             return db.Query<VW_tbHoteles>(ScriptsDataBase.UDP_Listar_Hoteles, null, commandType: System.Data.CommandType.StoredProcedure);
+        }
+
+        public IEnumerable<VW_tbHoteles> ListPorPais(int id)
+        {
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
+
+            var parametros = new DynamicParameters();
+            parametros.Add("@pais_Id", id, DbType.Int32, ParameterDirection.Input);
+
+            return db.Query<VW_tbHoteles>(ScriptsDataBase.UDP_Listar_Hoteles, parametros, commandType: System.Data.CommandType.StoredProcedure);
         }
 
         public RequestStatus Update(tbHoteles item)

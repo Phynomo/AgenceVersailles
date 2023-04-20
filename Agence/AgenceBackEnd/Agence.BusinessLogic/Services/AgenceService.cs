@@ -245,12 +245,12 @@ namespace Agence.BusinessLogic.Services
 
         //Hoteles
 
-        public ServiceResult ListadoHoteles()
+        public ServiceResult ListadoHoteles(int id)
         {
             var result = new ServiceResult();
             try
             {
-                var list = _hotelRepository.List();
+                var list = _hotelRepository.ListPorPais(id);
                 return result.Ok(list);
             }
             catch (Exception e)
