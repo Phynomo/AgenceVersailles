@@ -36,20 +36,20 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
   File imageFile;
   // final _productController = TextEditingController();
 
-  pickAndUploadFile() async {
-    bool loading = true;
-    setState(() {});
+  // pickAndUploadFile() async {
+  //   bool loading = true;
+  //   setState(() {});
 
-    FilePickerResult result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
+  //   FilePickerResult result =
+  //       await FilePicker.platform.pickFiles(type: FileType.image);
 
-    if (result != null) {
-      File file = File(result.files.single.path);
-      await PhotoService().upload(file);
-      loading = false;
-      setState(() {});
-    }
-  }
+  //   if (result != null) {
+  //     File file = File(result.files.single.path);
+  //     await PhotoService().upload(file);
+  //     loading = false;
+  //     setState(() {});
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +122,7 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             Expanded(
                                 child: ElevatedButton(
                               onPressed: () {
-                                pickAndUploadFile();
+                                getImage(source: ImageSource.gallery);
                               },
                               child: Text(
                                 "Seleccionar",
@@ -152,6 +152,8 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Procesando info')));
                         }
+
+                        uploadImage(imageFile);
                       },
                     ),
                   ],
