@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:travelappui/views/Paquetes/models_ddl/modelsddl.dart';
 
 class Droplist extends StatefulWidget {
   const Droplist({Key key}) : super(key: key);
@@ -78,36 +79,39 @@ class _DroplistState extends State<Droplist> {
           height: 50.0,
         ),
         SizedBox(height: 20,),
-        DropdownButtonFormField(
-          value: null,
-          //value: _paises.isNotEmpty ? _paises[0].paisId : null,
-          items: _paises
-              .map((e) => DropdownMenuItem(
-                    child: Text(
-                      e.paisNombre,
-                      style: TextStyle(color: Colors.black),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    value: e.paisId,
-                  ))
-              .toList(),
-          onChanged: (val) {
-            _loadVuelos(val.toString());
-            _loadHoteles(val.toString());
-            _habitaciones.clear();
-          },
-          icon: Icon(
-            Icons.arrow_drop_down_circle,
-            color: Colors.deepPurple,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: DropdownButtonFormField(
+            value: null,
+            //value: _paises.isNotEmpty ? _paises[0].paisId : null,
+            items: _paises
+                .map((e) => DropdownMenuItem(
+                      child: Text(
+                        e.paisNombre,
+                        style: TextStyle(color: Colors.black),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      value: e.paisId,
+                    ))
+                .toList(),
+            onChanged: (val) {
+              _loadVuelos(val.toString());
+              _loadHoteles(val.toString());
+              _habitaciones.clear();
+            },
+            icon: Icon(
+              Icons.arrow_drop_down_circle,
+              color: Colors.deepPurple,
+            ),
+            //dropdownColor: Colors.deepPurple.shade100,
+            decoration: InputDecoration(
+                labelText: "Seleccione un pais",
+                prefixIcon: Icon(
+                  Icons.map_sharp,
+                  color: Colors.deepPurple,
+                ),
+                border: UnderlineInputBorder()),
           ),
-          //dropdownColor: Colors.deepPurple.shade100,
-          decoration: InputDecoration(
-              labelText: "Seleccione un pais",
-              prefixIcon: Icon(
-                Icons.map_sharp,
-                color: Colors.deepPurple,
-              ),
-              border: UnderlineInputBorder()),
         ),
         if (_paises.length == 0)
               Text(
@@ -115,36 +119,39 @@ class _DroplistState extends State<Droplist> {
                   style: TextStyle(color: Colors.red),
                 ),
         SizedBox(height: 20,),
-        DropdownButtonFormField(
-          value: null,
-          //value: _vuelos.isNotEmpty ? _vuelos[0].vuelId : null,
-          items: _vuelos
-              .map((e) => DropdownMenuItem(
-                    child: SizedBox(
-                      width:  MediaQuery.of(context).size.width * 0.80, // ajusta el ancho según tus necesidades
-                      child: Text(
-                        e.vuelInfo,
-                        style: TextStyle(color: Colors.black),
-                        overflow: TextOverflow.ellipsis,
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.0),
+          child: DropdownButtonFormField(
+            value: null,
+            //value: _vuelos.isNotEmpty ? _vuelos[0].vuelId : null,
+            items: _vuelos
+                .map((e) => DropdownMenuItem(
+                      child: SizedBox(
+                        width:  MediaQuery.of(context).size.width * 0.80, // ajusta el ancho según tus necesidades
+                        child: Text(
+                          e.vuelInfo,
+                          style: TextStyle(color: Colors.black),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                    value: e.vuelId,
-                  ))
-              .toList(),
-          onChanged: (val) {
-          },
-          icon: Icon(
-            Icons.arrow_drop_down_circle,
-            color: Colors.deepPurple,
+                      value: e.vuelId,
+                    ))
+                .toList(),
+            onChanged: (val) {
+            },
+            icon: Icon(
+              Icons.arrow_drop_down_circle,
+              color: Colors.deepPurple,
+            ),
+            decoration: 
+            InputDecoration(
+                labelText: "Seleccione un vuelos",
+                prefixIcon: Icon(
+                  Icons.airplanemode_active_rounded,
+                  color: Colors.deepPurple,
+                ),
+                border: UnderlineInputBorder()),
           ),
-          decoration: 
-          InputDecoration(
-              labelText: "Seleccione un vuelos",
-              prefixIcon: Icon(
-                Icons.airplanemode_active_rounded,
-                color: Colors.deepPurple,
-              ),
-              border: UnderlineInputBorder()),
         ),
          if (_vuelos.length == 0)
               Text(
@@ -152,33 +159,36 @@ class _DroplistState extends State<Droplist> {
                   style: TextStyle(color: Colors.red),
                 ),
         SizedBox(height: 20,),
-        DropdownButtonFormField(
-          value: null,
-          //value: _hoteles.isNotEmpty ? _hoteles[0].hoteId : null,
-          items: _hoteles
-              .map((e) => DropdownMenuItem(
-                    child: Text(
-                      e.hoteNombre,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    value: e.hoteId,
-                  ))
-              .toList(),
-          onChanged: (val) {
-            _loadhabitaciones(val.toString());
-          },
-          icon: Icon(
-            Icons.arrow_drop_down_circle,
-            color: Colors.deepPurple,
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.0),
+          child: DropdownButtonFormField(
+            value: null,
+            //value: _hoteles.isNotEmpty ? _hoteles[0].hoteId : null,
+            items: _hoteles
+                .map((e) => DropdownMenuItem(
+                      child: Text(
+                        e.hoteNombre,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      value: e.hoteId,
+                    ))
+                .toList(),
+            onChanged: (val) {
+              _loadhabitaciones(val.toString());
+            },
+            icon: Icon(
+              Icons.arrow_drop_down_circle,
+              color: Colors.deepPurple,
+            ),
+            //dropdownColor: Colors.deepPurple.shade100,
+            decoration: InputDecoration(
+                labelText: "Seleccione un hotel",
+                prefixIcon: Icon(
+                  Icons.maps_home_work,
+                  color: Colors.deepPurple,
+                ),
+                border: UnderlineInputBorder()),
           ),
-          //dropdownColor: Colors.deepPurple.shade100,
-          decoration: InputDecoration(
-              labelText: "Seleccione un hotel",
-              prefixIcon: Icon(
-                Icons.maps_home_work,
-                color: Colors.deepPurple,
-              ),
-              border: UnderlineInputBorder()),
         ),
         if (_hoteles.length == 0)
               Text(
@@ -186,31 +196,34 @@ class _DroplistState extends State<Droplist> {
                   style: TextStyle(color: Colors.red),
                 ),
         SizedBox(height: 20,),
-        DropdownButtonFormField(
-          value: null,
-          //value: _habitaciones.isNotEmpty ? _habitaciones[0].habiId : null,
-          items: _habitaciones
-              .map((e) => DropdownMenuItem(
-                    child: Text(
-                      e.habiNombre,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    value: e.habiId,
-                  ))
-              .toList(),
-          onChanged: (val) {},
-          icon: Icon(
-            Icons.arrow_drop_down_circle,
-            color: Colors.deepPurple,
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.0),
+          child: DropdownButtonFormField(
+            value: null,
+            //value: _habitaciones.isNotEmpty ? _habitaciones[0].habiId : null,
+            items: _habitaciones
+                .map((e) => DropdownMenuItem(
+                      child: Text(
+                        e.habiNombre,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      value: e.habiId,
+                    ))
+                .toList(),
+            onChanged: (val) {},
+            icon: Icon(
+              Icons.arrow_drop_down_circle,
+              color: Colors.deepPurple,
+            ),
+            //dropdownColor: Colors.deepPurple.shade100,
+            decoration: InputDecoration(
+                labelText: "Seleccione una habitacion",
+                prefixIcon: Icon(
+                  Icons.house_sharp,
+                  color: Colors.deepPurple,
+                ),
+                border: UnderlineInputBorder()),
           ),
-          //dropdownColor: Colors.deepPurple.shade100,
-          decoration: InputDecoration(
-              labelText: "Seleccione una habitacion",
-              prefixIcon: Icon(
-                Icons.house_sharp,
-                color: Colors.deepPurple,
-              ),
-              border: UnderlineInputBorder()),
         ),
         if (_habitaciones.length == 0)
               Text(
@@ -222,19 +235,7 @@ class _DroplistState extends State<Droplist> {
   }
 }
 
-class Hoteles {
-  String hoteNombre;
-  int hoteId;
 
-  Hoteles({this.hoteNombre, this.hoteId});
-
-  factory Hoteles.fromJson(Map<String, dynamic> json) {
-    return Hoteles(
-      hoteNombre: json['hote_Nombre'],
-      hoteId: json['hote_Id'],
-    );
-  }
-}
 
 Future<List<Hoteles>> fetchHoteles(String id) async {
   final response = await http.get(Uri.parse(
@@ -250,19 +251,7 @@ Future<List<Hoteles>> fetchHoteles(String id) async {
   }
 }
 
-class Habitaciones {
-  String habiNombre;
-  int habiId;
 
-  Habitaciones({this.habiNombre, this.habiId});
-
-  factory Habitaciones.fromJson(Map<String, dynamic> json) {
-    return Habitaciones(
-      habiNombre: json['habi_Nombre'],
-      habiId: json['habi_Id'],
-    );
-  }
-}
 
 Future<List<Habitaciones>> fetchHabitaciones(String id) async {
   final response = await http.get(Uri.parse(
@@ -278,19 +267,7 @@ Future<List<Habitaciones>> fetchHabitaciones(String id) async {
   }
 }
 
-class Paises {
-  String paisNombre;
-  int paisId;
 
-  Paises({this.paisNombre, this.paisId});
-
-  factory Paises.fromJson(Map<String, dynamic> json) {
-    return Paises(
-      paisNombre: json['pais_Nombre'],
-      paisId: json['pais_Id'],
-    );
-  }
-}
 
 Future<List<Paises>> fetchPaises() async {
   final response = await http
@@ -306,19 +283,7 @@ Future<List<Paises>> fetchPaises() async {
   }
 }
 
-class Vuelos {
-  String vuelInfo;
-  int vuelId;
 
-  Vuelos({this.vuelInfo, this.vuelId});
-
-  factory Vuelos.fromJson(Map<String, dynamic> json) {
-    return Vuelos(
-      vuelInfo: json['vuel_Info'],
-      vuelId: json['vuel_Id'],
-    );
-  }
-}
 
 Future<List<Vuelos>> fetchVuelos(String id) async {
   final response = await http.get(Uri.parse(
@@ -333,3 +298,9 @@ Future<List<Vuelos>> fetchVuelos(String id) async {
     throw Exception('Error al obtener los vuelos');
   }
 }
+
+
+  //Future<List<Hoteles>> _loadHoteles(String id) async {
+  //  var hoteles = await fetchHoteles(id);
+  //  return hoteles.toList();
+  //}
