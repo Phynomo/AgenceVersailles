@@ -11,6 +11,7 @@ namespace Agence.API.Models
         public string pers_Apellidos { get; set; }
         public string pers_Identidad { get; set; }
         public int estc_Id { get; set; }
+        public string usua_PerfilImage { get; set; }
         public DateTime pers_FechaNacimiento { get; set; }
         public string pers_Sexo { get; set; }
         public string pers_Celular { get; set; }

@@ -29,6 +29,7 @@ class AppRoutes {
   static const String ROUTE_Restaurar = "/recuperar";
   static const String ROUTE_Profile = "/perfil";
   static const String ROUTE_Admin = "/admin";
+  static const String ROUTE_Ddl = "/drop";
   static const String ROUTE_InsertPaquete = "/insertPaquete";
   
   static Route<dynamic> generateRoutes(RouteSettings settings) {

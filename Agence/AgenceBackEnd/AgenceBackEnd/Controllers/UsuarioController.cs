@@ -86,6 +86,14 @@ namespace Agence.API.Controllers
             var response = _seguridadServivce.RecuperarUsuarios(item);
             return Ok(response);
         }
+        
+        [HttpPut("EditarFoto")]
+        public IActionResult EditarFoto(UsuarioViewModel usuarios)
+        {
+            var item = _mapper.Map<tbUsuarios>(usuarios);
+            var response = _seguridadServivce.EditarFoto(item);
+            return Ok(response);
+        }
 
 
     }

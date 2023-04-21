@@ -12,6 +12,7 @@ namespace Agence.Entities.Entities
         public string usua_NombreUsuario { get; set; }
         public string usua_Correo { get; set; }
         public string usua_Contrasena { get; set; }
+        public string usua_PerfilImage { get; set; }
         public int pers_Id { get; set; }
         public string usua_PersonaNombreCompleto { get; set; }
         public string pers_Celular { get; set; }
