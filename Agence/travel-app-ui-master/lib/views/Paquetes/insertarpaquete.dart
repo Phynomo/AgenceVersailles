@@ -3,11 +3,13 @@
 // import 'package:flutter/src/widgets/placeholder.dart';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/components/appbar.dart';
 
 import "package:flutter/material.dart";
+import 'package:travelappui/services/photos_service.dart';
 import 'package:travelappui/views/HomePage/homepagetodo.dart';
 // import 'package:travelappui/views/HomePage/homepagetodo.dart';
 
@@ -33,6 +35,21 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
 
   File imageFile;
   // final _productController = TextEditingController();
+
+  pickAndUploadFile() async {
+    bool loading = true;
+    setState(() {});
+
+    FilePickerResult result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (result != null) {
+      File file = File(result.files.single.path);
+      await PhotoService().upload(file);
+      loading = false;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +84,7 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                     ),
                     Column(
                       children: [
-                        if(imageFile != null)
+                        if (imageFile != null)
                           Container(
                             width: 640,
                             height: 100,
@@ -78,7 +95,8 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                                   image: FileImage(imageFile),
                                   fit: BoxFit.cover,
                                 ),
-                                border: Border.all(width: 8, color: Colors.grey),
+                                border:
+                                    Border.all(width: 8, color: Colors.grey),
                                 borderRadius: BorderRadius.circular(12.0)),
                           )
                         else
@@ -88,7 +106,8 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: Colors.grey,
-                                border: Border.all(width: 8, color: Colors.grey),
+                                border:
+                                    Border.all(width: 8, color: Colors.grey),
                                 borderRadius: BorderRadius.circular(12.0)),
                             child: Text(
                               'Ingrese una imagen',
@@ -103,7 +122,7 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             Expanded(
                                 child: ElevatedButton(
                               onPressed: () {
-                                getImage(source: ImageSource.gallery);
+                                pickAndUploadFile();
                               },
                               child: Text(
                                 "Seleccionar",
@@ -136,17 +155,14 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                       },
                     ),
                   ],
-                )
-              ),
-          ]
-        ),
-      )
-    );
+                )),
+          ]),
+        ));
   }
 
-  void getImage({ImageSource source}) async{
+  void getImage({ImageSource source}) async {
     final file = await ImagePicker().pickImage(source: source);
-    if(file?.path != null){
+    if (file?.path != null) {
       setState(() {
         imageFile = File(file.path);
       });

@@ -81,7 +81,7 @@ class _PerfilPageState extends State<PerfilPage> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Image(
-                                image: NetworkImage("https://imgtr.ee/images/2023/04/20/0hdiU.png"),
+                                image: NetworkImage("https://photos.app.goo.gl/kBgoTEUj1bPBT5DRA"),
                                 fit: BoxFit.cover,
                                 ),
                           ),

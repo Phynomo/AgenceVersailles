@@ -1,0 +1,17 @@
+//Codigos terminal
+keytool -list -v -keystore
+
+keytool -list -v -keystore debug.keystore -alias androiddebugkey -storepass android -keypass android
+
+keytool -genkey -v -keystore mykeystore.keystore -alias myalias -keyalg RSA -keysize 2048 -validity 10000
+
+keytool -exportcert -keystore mykeystore.keystore -alias myalias -list -v
+
+keytool -keystore C:\Users\PC\.android\mykeystore.keystore -list -v
+
+keytool -list -v -keystore C:\Users\PC\.android\mykeystore.keystore
+
+SHA1 FB:06:69:B8:B1:02:3F:34:EA:ED:22:3D:5D:70:CA:5D:BE:27:3D:12
+
+//Google API
+ID proyecto: agence-versailles
