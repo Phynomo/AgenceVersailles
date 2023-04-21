@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travelappui/views/Admin/admin.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
+import 'package:travelappui/views/HomePage/homepagecontinente.dart';
 import 'package:travelappui/views/HomePage/homepagetodo.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 import 'package:travelappui/views/ProfilePage/profilepage.dart';
@@ -31,6 +32,7 @@ class AppRoutes {
   static const String ROUTE_Admin = "/admin";
   static const String ROUTE_Ddl = "/drop";
   static const String ROUTE_InsertPaquete = "/insertPaquete";
+  static const String ROUTE_HomeEuropa = "/Europa";
   
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     switch (settings.name) {
@@ -82,10 +84,10 @@ class AppRoutes {
           return MaterialPageRoute(
             settings: settings, builder: (_) => FormPaquetePage());
       break;
-      // case ROUTE_Ddl:
-      //     return MaterialPageRoute(
-      //       settings: settings, builder: (_) => Droplist());
-      // break;
+      case ROUTE_HomeEuropa:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => HomePageContinent());
+      break;
     }
   }
 }

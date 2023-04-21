@@ -11,12 +11,12 @@ import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
+class HomePageContinent extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageContinentState createState() => _HomePageContinentState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageContinentState extends State<HomePageContinent> {
   ScrollController _mainScrollController = ScrollController();
 
   final double _bottomBarHeight = 90;
@@ -47,11 +47,11 @@ class _HomePageState extends State<HomePage> {
               controller: _mainScrollController,
               child: Column(
                 children: [
-                  TopFeaturedList(nombrePag: 'Continente'),
+                  TopFeaturedList(nombrePag: 'Europa'),
                   Container(
                     margin: EdgeInsets.all(16),
                     child: StreamBuilder(
-                        stream: homepagestate.getRecomendedPlaces().asStream(),
+                        stream: homepagestate.getPaquetesXContinete('Europa').asStream(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData)
                             return Container(

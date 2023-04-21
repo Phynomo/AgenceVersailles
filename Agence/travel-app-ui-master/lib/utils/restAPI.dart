@@ -21,7 +21,7 @@ String urlInsertBooking =
 String urlDeleteBooking =
     "http://phynomo-001-site1.atempurl.com/api/Reservacion/Eliminar";
 String urlByContinent =
-    "https://localhost:44313/api/Paquete/ListadoPorContinente?contNombre=";
+    "http://phynomo-001-site1.atempurl.com/api/Paquete/ListadoPorContinente?contNombre=";
 // String urlFind = "http://phynomo-001-site1.atempurl.com/api/Paquete/Find?id=";
 
 class RESTAPI {
@@ -175,7 +175,7 @@ class RESTAPI {
 
   Future<List<PlaceModel>> getPaquetesXContinente(contNombre) async {
     final respuesta =
-        await http.get(Uri.parse(urlByContinent + contNombre.toString()));
+        await http.get(Uri.parse(urlByContinent + 'Europa'));
     if (respuesta.statusCode == 200) {
       final json = respuesta.body;
       final jsonMap = jsonDecode(json);
