@@ -11,6 +11,7 @@ import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/MisReservacionesPage/misreservaciones.dart';
 import 'package:travelappui/views/Signup/signup.dart';
 import 'package:travelappui/views/Paquetes/insertarpaquete.dart';
+import 'package:travelappui/views/ddl/pruebaddl.dart';
 
 class AppRoutes {
 
@@ -29,9 +30,8 @@ class AppRoutes {
   static const String ROUTE_Profile = "/perfil";
   static const String ROUTE_Admin = "/admin";
   static const String ROUTE_InsertPaquete = "/insertPaquete";
-
+  
   static Route<dynamic> generateRoutes(RouteSettings settings) {
-
     switch (settings.name) {
       case ROUTE_Home:
         return MaterialPageRoute(          
@@ -80,6 +80,10 @@ class AppRoutes {
       case ROUTE_InsertPaquete:
           return MaterialPageRoute(
             settings: settings, builder: (_) => FormPaquetePage());
+      break;
+      case ROUTE_Ddl:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => Droplist());
       break;
     }
   }

@@ -22,10 +22,10 @@ namespace Agence.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("Listado")]
-        public IActionResult Index()
+        [HttpGet("ListadoPorPais")]
+        public IActionResult VueloPorPais(int id_Pais)
         {
-            var list = _agenceService.ListadoVuelos();
+            var list = _agenceService.ListadoVuelos(id_Pais);
             return Ok(list);
         }
     }

@@ -14,6 +14,10 @@ namespace Agence.Entities.Entities
         public string usua_Contrasena { get; set; }
         public int pers_Id { get; set; }
         public string usua_PersonaNombreCompleto { get; set; }
+        public string pers_Celular { get; set; }
+        public DateTime pers_FechaNacimiento { get; set; }
+        public string pers_Identidad { get; set; }
+        public string pers_Sexo { get; set; }
         public bool usua_EsAdmin { get; set; }
         public int usua_UsuCreacion { get; set; }
         public string usua_NombreUsuarioCreacion { get; set; }
