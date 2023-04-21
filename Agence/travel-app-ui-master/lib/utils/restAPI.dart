@@ -20,6 +20,8 @@ String urlInsertBooking =
     "http://phynomo-001-site1.atempurl.com/api/Reservacion/Insertar";
 String urlDeleteBooking =
     "http://phynomo-001-site1.atempurl.com/api/Reservacion/Eliminar";
+String urlByContinent =
+    "https://localhost:44313/api/Paquete/ListadoPorContinente?contNombre=";
 // String urlFind = "http://phynomo-001-site1.atempurl.com/api/Paquete/Find?id=";
 
 class RESTAPI {
@@ -161,6 +163,19 @@ class RESTAPI {
   Future<List<PlaceModel>> getPaquetesXPersona(persId) async {
     final respuesta =
         await http.get(Uri.parse(urlUserPlaces + persId.toString()));
+    if (respuesta.statusCode == 200) {
+      final json = respuesta.body;
+      final jsonMap = jsonDecode(json);
+      return dummyPlaces(jsonMap["data"]);
+    } else {
+      print("Error en la respuesta");
+      throw Exception('Failed to load listado');
+    }
+  }
+
+  Future<List<PlaceModel>> getPaquetesXContinente(contNombre) async {
+    final respuesta =
+        await http.get(Uri.parse(urlByContinent + contNombre.toString()));
     if (respuesta.statusCode == 200) {
       final json = respuesta.body;
       final jsonMap = jsonDecode(json);

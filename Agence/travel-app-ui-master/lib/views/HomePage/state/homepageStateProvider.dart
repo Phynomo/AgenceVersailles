@@ -45,6 +45,10 @@ class HomePageStateProvider extends ChangeNotifier {
     return await api.getPaquetesXPersona(persId);
   }
 
+  Future<List<PlaceModel>> getPaquetesXContinete(contNombre) async {
+    return await api.getPaquetesXContinente(contNombre);
+  }
+
   // Future<UsuarioModel> getInfoUsuarios() async {
   //   return sacainfoUsuario();
   // }
