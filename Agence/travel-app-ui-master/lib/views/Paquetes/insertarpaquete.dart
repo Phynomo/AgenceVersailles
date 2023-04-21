@@ -78,7 +78,10 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: kPrimaryColor,
-        appBar: HomeAppBar,
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          title: Text("Ingresar paquetes",style: TextStyle(),),
+        ),
         body: Container(
           padding: const EdgeInsets.all(20.0),
           child: ListView(children: [

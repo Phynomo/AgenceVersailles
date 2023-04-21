@@ -1,4 +1,24 @@
-﻿CREATE DATABASE dbAgenceVersailles
+﻿
+--DROP TABLE [agen].[tbReservaciones];
+--DROP TABLE [acce].[tbUsuarios];
+--DROP TABLE [agen].[tbAeropuertos];
+--DROP TABLE [agen].[tbAgenciasVuelos];
+--DROP TABLE [agen].[tbBilletesAvion];
+--DROP TABLE [agen].[tbCategoriasHabitacional];
+--DROP TABLE [agen].[tbClasesVuelos];
+--DROP TABLE [agen].[tbPersonas];
+--DROP TABLE [agen].[tbHabitaciones];
+--DROP TABLE [agen].[tbHoteles];
+--DROP TABLE [agen].[tbPaquetes];
+--DROP TABLE [agen].[tbVuelos];
+--DROP TABLE [gral].[tbCiudades];
+--DROP TABLE [gral].[tbContinentes];
+--DROP TABLE [gral].[tbDepartamentos];
+--DROP TABLE [gral].[tbEstadosCiviles];
+--DROP TABLE [gral].[tbPaises];
+
+
+CREATE DATABASE dbAgenceVersailles
 GO
 use dbAgenceVersailles
 GO
@@ -16,6 +36,7 @@ CREATE TABLE acce.tbUsuarios(
 	usua_NombreUsuario		NVARCHAR(100) NOT NULL,
 	usua_Correo				NVARCHAR(200) NOT NULL,
 	usua_Contrasena			NVARCHAR(MAX) NOT NULL,
+	usua_PerfilImage		NVARCHAR(MAX),
 	pers_Id					INT NOT NULL,
 	usua_EsAdmin			BIT NOT NULL,    
 	usua_UsuCreacion		INT NOT NULL,
@@ -31,19 +52,20 @@ GO
 CREATE OR ALTER PROCEDURE acce.UDP_InsertUsuario
 	@usua_NombreUsuario		NVARCHAR(100),
 	@usua_Correo			NVARCHAR(200),	
-	@usua_Contrasena		NVARCHAR(200),
+	@usua_Contrasena		NVARCHAR(max),
+	@usua_PerfilImage		NVARCHAR(max),
 	@pers_Id				INT,
 	@usua_EsAdmin			BIT							
 AS
 BEGIN
 	DECLARE @password NVARCHAR(MAX)=(SELECT HASHBYTES('Sha2_512', @usua_Contrasena));
-	INSERT acce.tbUsuarios(usua_NombreUsuario, usua_Correo, usua_Contrasena, pers_Id, usua_EsAdmin, usua_UsuCreacion)
-	VALUES(@usua_NombreUsuario, @usua_Correo, @password, @pers_Id, @usua_EsAdmin, 1);
+	INSERT acce.tbUsuarios(usua_NombreUsuario, usua_Correo, usua_Contrasena, pers_Id, usua_EsAdmin, usua_UsuCreacion,usua_PerfilImage)
+	VALUES(@usua_NombreUsuario, @usua_Correo, @password, @pers_Id, @usua_EsAdmin, 1,@usua_PerfilImage);
 END;
 GO
 
 GO
-EXEC acce.UDP_InsertUsuario 'admin', 'defaultperson@aless.com', '123', 1, 1;
+EXEC acce.UDP_InsertUsuario 'admin', 'defaultperson@aless.com', '123','https://i.imgur.com/Z4GrHnF.jpg', 1, 1;
 
 --********* ALTERAR TABLA USUARIOS **************--
 --********* AGREGAR AUDITORIA**************--
@@ -493,37 +515,74 @@ VALUES ('2023-04-20 10:15:00', '2023-04-20 12:45:00', 2, 4, 1);
 --       ('Aventura en el desierto', '28.jpg', 1, 7, 4, 2800.00);
 --
 	   
+----Paquetes
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura', 'https://drive.google.com/uc?id=1L-4BfX7NHBeHQDos4Sd_g_sevdfLHyYj', 1, 1, 2, 3500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Familiar', 'https://drive.google.com/u/0/uc?id=17XKJm4_hle99gfXFypdr1y6kFjic1v4o', 2, 2, 4, 5500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Playa', 'https://drive.google.com/uc?export=download&id=1AoyerGovDkbuPgNY_cnAVUiqNUm9m03O', 3, 5, 2, 4200.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Romántico', 'https://drive.google.com/uc?id=1tGSSVt1N-4h4Jd3zj_zzKk1meE2agFeZ', 1, 8, 2, 6000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Extrema', 'https://drive.google.com/uc?export=view&id=1TgdFp6scZuGYuvlx9roHqjAbes5VPOD0', 3, 12, 1, 8500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax', 'https://drive.google.com/uc?id=1_4TC0l327R8CpOFHOzne9lIJ3xxgxR4W', 2, 14, 2, 4500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Diversión', 'https://drive.google.com/uc?id=1qzfLYLuas0MLl9GLKXk-i4gvfIPgbzQH', 1, 17, 3, 5500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Luna de Miel', 'https://drive.google.com/uc?id=1HDECezoWYb-ZIhxkpMD8_LEgbXPGW0M2', 2, 19, 2, 8000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Familiar', 'https://drive.google.com/uc?id=1W3RqMvaJnR4VbmPbKwj29Hx8UInVXcwx', 3, 4, 4, 7000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax Familiar', 'https://drive.google.com/uc?id=1BP76oeBy3fD0EmC2yidIPrYYk2l12Bh_', 1, 11, 4, 8000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Acapulco', 'https://drive.google.com/uc?id=1FaWDYFECBn3BcsSVBLNNK7jHOhuapEyU', 2, 12, 2, 2500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en la selva', 'https://drive.google.com/uc?export=view&id=12tlcd65ARSZZ0urYz8V-TffQ-7bv_KMk', 1, 7, 4, 4500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de lujo en Cancún', 'https://drive.google.com/uc?export=view&id=1jLyDxVl3ZVzoJne_IWi0UrN2guGmK_e8', 3, 18, 2, 8000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete cultural en Oaxaca', 'https://drive.google.com/uc?id=1nBenZx58h2BxVQeObjuG4caZLNox7dlN', 1, 3, 3, 4000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete romántico en San Miguel de Allende', 'https://drive.google.com/uc?id=1HliGZ4KcMAICMMJD88cSSOwoPoDMyYMt', 2, 8, 2, 5500.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ski en Aspen', 'https://drive.google.com/uc?id=14i1joiBjFsS3zF3MNYEtWHzYJx0QOO-i', 3, 15, 4, 12000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de relax en Tulum', 'https://drive.google.com/uc?export=view&id=128L400z4e2_NcF2uVIb8MLupvyPZyeyT', 2, 10, 2, 3000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en Baja California', 'https://drive.google.com/uc?id=1rX_PNJNWoMj-OgueF6TMiUoZ8PnQPCAu', 1, 6, 4, 5000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ciudad en Nueva York', 'https://drive.google.com/uc?export=view&id=1pEaViXi49wh2TflNgK0bb4SHx0wbhrLV', 3, 20, 2, 10000.00);
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Puerto Escondido', 'https://drive.google.com/uc?id=1ddzaHYecUVD41st7gaSQuI0xvZ7qVjZf', 2, 11, 2, 2000.00);
+--
+--INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio)
+--VALUES ('Vacaciones en la playa', 'https://drive.google.com/uc?id=1VK6cK5sm2CEVU0niHmocZUqB979Tswus', 2, 8, 2, 800.00),
+--       ('Fin de semana en la montaña', 'https://drive.google.com/uc?id=1HTTBfT5yKoNQOiR9JNXXdyJiF700Q-7N', 1, 15, 4, 1200.00),
+--       ('Tour por Europa', 'https://drive.google.com/uc?id=1oEthbTNtYjaxCzmkoXL9ukL3aS3g3jNK', 3, 19, 2, 5000.00),
+--       ('Luna de miel en la ciudad', 'https://drive.google.com/uc?id=1MW4YKlXXyaqvHNqTj4BeaUqErywuZlX3', 3, 1, 2, 1500.00),
+--       ('Excursión en la naturaleza', 'https://drive.google.com/uc?export=view&id=1dOlfOcZynyoWVlGdZLMzoWPF4y-dl9A4', 1, 18, 4, 2500.00),
+--       ('Viaje de aniversario', 'https://drive.google.com/uc?id=1_zibAawkb31dGa6W1TDjLXiwBGNZ6v4p', 2, 5, 2, 1200.00),
+--       ('Descanso en la isla', 'https://drive.google.com/uc?id=1C4XpLvMYk_Zr-LwWeAd4cktQuKXYSQsY', 3, 14, 3, 3500.00),
+--       ('Aventura en el desierto', 'https://drive.google.com/uc?id=1wxssPLJJz0lnS5AOAYDEeqFHvwhU2KZr', 1, 7, 4, 2800.00);
+--
+
+	   
 --Paquetes
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura', 'https://drive.google.com/uc?id=1L-4BfX7NHBeHQDos4Sd_g_sevdfLHyYj', 1, 1, 2, 3500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Familiar', 'https://drive.google.com/u/0/uc?id=17XKJm4_hle99gfXFypdr1y6kFjic1v4o', 2, 2, 4, 5500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Playa', 'https://drive.google.com/uc?export=download&id=1AoyerGovDkbuPgNY_cnAVUiqNUm9m03O', 3, 5, 2, 4200.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Romántico', 'https://drive.google.com/uc?id=1tGSSVt1N-4h4Jd3zj_zzKk1meE2agFeZ', 1, 8, 2, 6000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Extrema', 'https://drive.google.com/uc?export=view&id=1TgdFp6scZuGYuvlx9roHqjAbes5VPOD0', 3, 12, 1, 8500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax', 'https://drive.google.com/uc?id=1_4TC0l327R8CpOFHOzne9lIJ3xxgxR4W', 2, 14, 2, 4500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Diversión', 'https://drive.google.com/uc?id=1qzfLYLuas0MLl9GLKXk-i4gvfIPgbzQH', 1, 17, 3, 5500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Luna de Miel', 'https://drive.google.com/uc?id=1HDECezoWYb-ZIhxkpMD8_LEgbXPGW0M2', 2, 19, 2, 8000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Familiar', 'https://drive.google.com/uc?id=1W3RqMvaJnR4VbmPbKwj29Hx8UInVXcwx', 3, 4, 4, 7000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax Familiar', 'https://drive.google.com/uc?id=1BP76oeBy3fD0EmC2yidIPrYYk2l12Bh_', 1, 11, 4, 8000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Acapulco', 'https://drive.google.com/uc?id=1FaWDYFECBn3BcsSVBLNNK7jHOhuapEyU', 2, 12, 2, 2500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en la selva', 'https://drive.google.com/uc?export=view&id=12tlcd65ARSZZ0urYz8V-TffQ-7bv_KMk', 1, 7, 4, 4500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de lujo en Cancún', 'https://drive.google.com/uc?export=view&id=1jLyDxVl3ZVzoJne_IWi0UrN2guGmK_e8', 3, 18, 2, 8000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete cultural en Oaxaca', 'https://drive.google.com/uc?id=1nBenZx58h2BxVQeObjuG4caZLNox7dlN', 1, 3, 3, 4000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete romántico en San Miguel de Allende', 'https://drive.google.com/uc?id=1HliGZ4KcMAICMMJD88cSSOwoPoDMyYMt', 2, 8, 2, 5500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ski en Aspen', 'https://drive.google.com/uc?id=14i1joiBjFsS3zF3MNYEtWHzYJx0QOO-i', 3, 15, 4, 12000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de relax en Tulum', 'https://drive.google.com/uc?export=view&id=128L400z4e2_NcF2uVIb8MLupvyPZyeyT', 2, 10, 2, 3000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en Baja California', 'https://drive.google.com/uc?id=1rX_PNJNWoMj-OgueF6TMiUoZ8PnQPCAu', 1, 6, 4, 5000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ciudad en Nueva York', 'https://drive.google.com/uc?export=view&id=1pEaViXi49wh2TflNgK0bb4SHx0wbhrLV', 3, 20, 2, 10000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Puerto Escondido', 'https://drive.google.com/uc?id=1ddzaHYecUVD41st7gaSQuI0xvZ7qVjZf', 2, 11, 2, 2000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura', 'https://i.ibb.co/9mDDP5g/1.jpg', 1, 1, 2, 3500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Familiar', 'https://i.ibb.co/4ZcQJ4n/2.jpg', 2, 2, 4, 5500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Playa', 'https://i.ibb.co/RcC9N2J/3.jpg', 3, 5, 2, 4200.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete Romántico', 'https://i.ibb.co/NjRKv4c/4.jpg', 1, 8, 2, 6000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Extrema', 'https://i.ibb.co/J7d9vs3/5.jpg', 3, 12, 1, 8500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax', 'https://i.ibb.co/pbTR1cN/6.jpg', 2, 14, 2, 4500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Diversión', 'https://i.ibb.co/VC6CqjW/7.jpg', 1, 17, 3, 5500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Luna de Miel', 'https://i.ibb.co/kxPXVB5/8.jpg', 2, 19, 2, 8000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura Familiar', 'https://i.ibb.co/8Nx7kZP/9.jpg', 3, 4, 4, 7000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax Familiar', 'https://i.ibb.co/Ns3dbSj/10.jpg', 1, 11, 4, 8000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Acapulco', 'https://i.ibb.co/mhxnDYN/11.webp', 2, 12, 2, 2500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en la selva', 'https://i.ibb.co/hLbRt5h/12.jpg', 1, 7, 4, 4500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de lujo en Cancún', 'https://i.ibb.co/WVhXckj/13.webpv', 3, 18, 2, 8000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete cultural en Oaxaca', 'https://i.ibb.co/jZm7Q0N/14.jpglN', 1, 3, 3, 4000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete romántico en San Miguel de Allende', 'https://i.ibb.co/TKJrRHY/15.jpg', 2, 8, 2, 5500.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ski en Aspen', 'https://i.ibb.co/qdxhfKn/16.webp', 3, 15, 4, 12000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de relax en Tulum', 'https://i.ibb.co/FW2rTX6/17.jpg', 2, 10, 2, 3000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en Baja California', 'https://i.ibb.co/BsCnkqq/18.jpg', 1, 6, 4, 5000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ciudad en Nueva York', 'https://i.ibb.co/58DZqZx/19.jpg', 3, 20, 2, 10000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Puerto Escondido', 'https://i.ibb.co/Hrq6p1L/20.webp', 2, 11, 2, 2000.00);
 
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio)
-VALUES ('Vacaciones en la playa', 'https://drive.google.com/uc?id=1VK6cK5sm2CEVU0niHmocZUqB979Tswus', 2, 8, 2, 800.00),
-       ('Fin de semana en la montaña', 'https://drive.google.com/uc?id=1HTTBfT5yKoNQOiR9JNXXdyJiF700Q-7N', 1, 15, 4, 1200.00),
-       ('Tour por Europa', 'https://drive.google.com/uc?id=1oEthbTNtYjaxCzmkoXL9ukL3aS3g3jNK', 3, 19, 2, 5000.00),
-       ('Luna de miel en la ciudad', 'https://drive.google.com/uc?id=1MW4YKlXXyaqvHNqTj4BeaUqErywuZlX3', 3, 1, 2, 1500.00),
-       ('Excursión en la naturaleza', 'https://drive.google.com/uc?export=view&id=1dOlfOcZynyoWVlGdZLMzoWPF4y-dl9A4', 1, 18, 4, 2500.00),
-       ('Viaje de aniversario', 'https://drive.google.com/uc?id=1_zibAawkb31dGa6W1TDjLXiwBGNZ6v4p', 2, 5, 2, 1200.00),
-       ('Descanso en la isla', 'https://drive.google.com/uc?id=1C4XpLvMYk_Zr-LwWeAd4cktQuKXYSQsY', 3, 14, 3, 3500.00),
-       ('Aventura en el desierto', 'https://drive.google.com/uc?id=1wxssPLJJz0lnS5AOAYDEeqFHvwhU2KZr', 1, 7, 4, 2800.00);
+VALUES ('Vacaciones en la playa', 'https://i.ibb.co/jyLBN7V/21.jpg', 2, 8, 2, 800.00),
+       ('Fin de semana en la montaña', 'https://i.ibb.co/tMP0Vs0/22.jpg', 1, 15, 4, 1200.00),
+       ('Tour por Europa', 'https://i.ibb.co/KzwK4L9/23.jpg', 3, 19, 2, 5000.00),
+       ('Luna de miel en la ciudad', 'https://i.ibb.co/6m5PYG6/24.jpg', 3, 1, 2, 1500.00),
+       ('Excursión en la naturaleza', 'https://i.ibb.co/3zL4mmg/25.jpg', 1, 18, 4, 2500.00),
+       ('Viaje de aniversario', 'https://i.ibb.co/jZ24PQd/26.jpg', 2, 5, 2, 1200.00),
+       ('Descanso en la isla', 'https://i.ibb.co/nc4vRYP/27.jpg', 3, 14, 3, 3500.00),
+       ('Aventura en el desierto', 'https://i.ibb.co/gSyMs4s/28.jpg', 1, 7, 4, 2800.00);
+
+
+
 
 
 
@@ -537,6 +596,7 @@ AS
 		   T1.usua_NombreUsuario, 
 		   T1.usua_Correo, 
 		   T1.usua_Contrasena, 
+		   T1.usua_PerfilImage,
 		   T1.pers_Id, 
 		   (T2.pers_Nombres + ' ' + T2.pers_Apellidos) AS usua_PersonaNombreCompleto
 		   ,t2.pers_Celular
@@ -585,6 +645,7 @@ CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Insert
 	@usua_NombreUsuario		NVARCHAR(100),
 	@usua_Correo			NVARCHAR(200),	
 	@usua_Contrasena		NVARCHAR(Max),
+	@usua_PerfilImage		NVARCHAR(MAX),
 	@pers_Id				INT,
 	@usua_UsuCreacion		INT
 AS
@@ -607,10 +668,11 @@ BEGIN
 				INSERT INTO [acce].[tbUsuarios](usua_NombreUsuario, 
 												usua_Correo, 
 												usua_Contrasena, 
+												usua_PerfilImage,
 												pers_Id, 
 												usua_EsAdmin, 
 												usua_UsuCreacion)
-				VALUES (@usua_NombreUsuario, @usua_Correo, @contraEncript, @pers_Id, @usua_EsAdmin, @usua_UsuCreacion)
+				VALUES (@usua_NombreUsuario, @usua_Correo, @contraEncript,@usua_PerfilImage, @pers_Id, @usua_EsAdmin, @usua_UsuCreacion)
 
 				SELECT 'El registro se ha insertado con éxito'
 			END
@@ -623,6 +685,7 @@ BEGIN
 				SET usua_Estado = 1,
 					usua_Correo = @usua_Correo,
 					usua_Contrasena = @contraEncript,
+					usua_PerfilImage = @usua_PerfilImage,
 					usua_EsAdmin = @usua_EsAdmin,
 					pers_Id = @pers_Id,
 					usua_UsuCreacion = @usua_UsuCreacion
@@ -644,7 +707,8 @@ CREATE OR ALTER PROCEDURE acce.UDP_tbUsuarios_Edit
 	@usua_Id					INT,
 	@usua_NombreUsuario			NVARCHAR(100),
 	@usua_Correo				NVARCHAR(200),	
-	@usua_Contrasena			NVARCHAR(200),
+	@usua_Contrasena			NVARCHAR(MAX),
+	@usua_PerfilImage		NVARCHAR(MAX),
 	@pers_Id					INT,
 	@usua_UsuModificacion		INT
 AS
@@ -673,6 +737,7 @@ BEGIN
 						SET usua_NombreUsuario = @usua_NombreUsuario,
 							usua_Correo = @usua_Correo,
 							pers_Id = @pers_Id,
+							usua_PerfilImage = @usua_PerfilImage,
 							usua_EsAdmin = @usua_EsAdmin,
 							usua_UsuModificacion = @usua_UsuModificacion,
 							usua_FechaModificacion = GETDATE()
@@ -688,6 +753,7 @@ BEGIN
 						UPDATE [acce].[tbUsuarios] 
 						SET usua_Estado = 1,
 							usua_Correo = @usua_Correo,
+							usua_PerfilImage = @usua_PerfilImage,
 							pers_Id = @pers_Id,
 							usua_EsAdmin = @usua_EsAdmin
 						WHERE usua_NombreUsuario = @usua_NombreUsuario
@@ -1041,6 +1107,7 @@ CREATE OR ALTER PROCEDURE agen.UDP_InsertarCliente
 		@usua_NombreUsuario		NVARCHAR(100),
 		@usua_Correo			NVARCHAR(200),	
 		@usua_Contrasena		NVARCHAR(Max),
+		@usua_PerfilImage		NVARCHAR(MAX),
 		@usua_UsuCreacion		INT
 AS
 BEGIN
@@ -1084,10 +1151,11 @@ BEGIN TRY
 				INSERT INTO [acce].[tbUsuarios](usua_NombreUsuario, 
 												usua_Correo, 
 												usua_Contrasena, 
+												usua_PerfilImage,
 												pers_Id, 
 												usua_EsAdmin, 
 												usua_UsuCreacion)
-				VALUES (@usua_NombreUsuario, @usua_Correo, @contraEncript, @pers_Id, @usua_EsAdmin, @usua_UsuCreacion)
+				VALUES (@usua_NombreUsuario, @usua_Correo, @contraEncript,@usua_PerfilImage, @pers_Id, @usua_EsAdmin, @usua_UsuCreacion)
 
 				SELECT 'El registro se ha insertado con éxito'
 			END
@@ -1100,6 +1168,7 @@ BEGIN TRY
 				SET usua_Estado = 1,
 					usua_Correo = @usua_Correo,
 					usua_Contrasena = @contraEncript,
+					usua_PerfilImage = @usua_PerfilImage,
 					usua_EsAdmin = @usua_EsAdmin,
 					pers_Id = @pers_Id,
 					usua_UsuCreacion = @usua_UsuCreacion
@@ -1305,6 +1374,26 @@ BEGIN
 	SELECT * FROM gral.VW_tbPaises
 	ORDER BY pais_Nombre asc
 END
+
+GO
+CREATE OR ALTER PROCEDURE agen.UDP_tbUsuarios_EditPerfil
+@usua_PerfilImage NVARCHAR(MAX),
+@usua_Id INT
+AS
+BEGIN
+	BEGIN TRY
+		
+		UPDATE [acce].[tbUsuarios] 
+		SET usua_PerfilImage = @usua_PerfilImage
+			WHERE usua_Id = @usua_Id
+			
+				SELECT 'El registro se ha insertado con éxito'
+	END TRY
+	BEGIN CATCH
+		SELECT 'Ha ocurrido un error'
+	END CATCH
+END
+
 
 
 

@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: kHomePageTitle,
         theme: kAppTheme,
-        initialRoute: AppRoutes.ROUTE_InsertPaquete,
+        initialRoute: AppRoutes.ROUTE_Initial,
         onGenerateRoute: AppRoutes.generateRoutes,
       ),
     );

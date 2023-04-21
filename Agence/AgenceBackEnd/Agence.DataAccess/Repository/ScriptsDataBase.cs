@@ -38,6 +38,7 @@ namespace Agence.DataAccess.Repository
         public static string UDP_Listar_Personas = "agen.UDP_tbPersonas_List";
         public static string UDP_Insertar_Personas = "agen.UDP_tbPersonas_Insert";
         public static string UDP_Insertar_Cliente = "agen.UDP_InsertarCliente";
+        public static string UDP_ActualizarFoto = "agen.UDP_tbUsuarios_EditPerfil";
         //public static string UDP_Editar_Usuarios = "acce.UDP_tbUsuarios_Edit";
         //public static string UDP_Eliminar_Usuarios = "acce.UDP_tbUsuarios_Delete";
         //public static string UDP_Find_Usuarios = "acce.UDP_tbUsuarios_Find";
