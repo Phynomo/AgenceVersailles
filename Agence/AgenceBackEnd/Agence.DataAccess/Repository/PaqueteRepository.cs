@@ -82,7 +82,15 @@ namespace Agence.DataAccess.Repository
             return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Listar_PaquetesPorPersona, parametros, commandType: System.Data.CommandType.StoredProcedure);
         }
 
+        public IEnumerable<VW_tbPaquetes> ListXContinentes(string contNombre)
+        {
+            using var db = new SqlConnection(AgenceContext.ConnectionString);
 
+            var parametros = new DynamicParameters();
+            parametros.Add("@cont_Nombre", contNombre, DbType.String, ParameterDirection.Input);
+
+            return db.Query<VW_tbPaquetes>(ScriptsDataBase.UDP_Encontrar_PaquetesXContinente, parametros, commandType: System.Data.CommandType.StoredProcedure);
+        }
         public RequestStatus Update(tbPaquetes item)
         {
             throw new NotImplementedException();

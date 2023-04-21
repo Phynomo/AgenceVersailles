@@ -59,6 +59,14 @@ namespace Agence.API.Controllers
             return Ok(list);
         }
 
+        [HttpGet("ListadoPorContinente")]
+        public IActionResult listXContinente(string contNombre)
+        {
+            var list = _agenceService.ListadoPorContinente(contNombre);
+            return Ok(list);
+        }
+
+
         [HttpGet("Find")]
         public IActionResult Find(int id)
         {

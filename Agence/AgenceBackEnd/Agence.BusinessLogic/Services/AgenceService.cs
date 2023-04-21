@@ -99,6 +99,20 @@ namespace Agence.BusinessLogic.Services
             }
         }
 
+        public ServiceResult ListadoPorContinente(string contNombre)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var list = _paqueteRepository.ListXContinentes(contNombre);
+                return result.Ok(list);
+            }
+            catch (Exception e)
+            {
+                return result.Error(e.Message);
+            }
+        }
+
         public ServiceResult ListadoPaquetesCaros()
         {
             var result = new ServiceResult();
