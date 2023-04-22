@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:travelappui/constants/colors.dart';
+import 'package:travelappui/services/photos_service.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -27,6 +31,7 @@ String _estadocivil = "";
 String _usuario = "";
 String _celular = "";
 String _contrasena = "";
+File _imagePerfil;
 
 int generateRandomNumber() {
   var rng = new Random();
@@ -158,89 +163,6 @@ class _SignupscreenState extends State<Signupscreen> {
                           ),
                         ),
                       ),
-
-                      // Row(
-                      //   children: [
-                      //     // SizedBox(
-                      //     //   width: 50.0,
-                      //     //   height: 50.0,
-                      //     //   child: FloatingActionButton(
-                      //     //     backgroundColor: Colors.white,
-                      //     //     foregroundColor: Colors.purple.shade900,
-                      //     //     elevation: 0,
-                      //     //     child: Icon(Icons.arrow_back),
-                      //     //     onPressed: () {
-                      //     //       Navigator.push(
-                      //     //         context,
-                      //     //         MaterialPageRoute(
-                      //     //             builder: (context) => SplashScreen()),
-                      //     //       );
-                      //     //     },
-                      //     //   ),
-                      //     // ),
-                      //     SizedBox(width: 10.0),
-                      //     SizedBox(
-                      //       width: MediaQuery.of(context).size.width * 0.65,
-                      //       child: ElevatedButton(
-                      //         onPressed: () {
-                      //           Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //               builder: (context) => SignUpNombres(),
-                      //             ),
-                      //           );
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //           primary: Colors.purple.shade900,
-                      //           shape: RoundedRectangleBorder(
-                      //             borderRadius: BorderRadius.circular(30),
-                      //           ),
-                      //           elevation: 0,
-                      //           textStyle: TextStyle(
-                      //             fontSize: 18,
-                      //             fontFamily: 'PlayFair',
-                      //             fontWeight: FontWeight.bold,
-                      //           ),
-                      //         ),
-                      //         child: Padding(
-                      //           padding: const EdgeInsets.all(12.0),
-                      //           child: Text("¡Iniciemos tu viaje!"),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-
-                      // SizedBox(height: 10.0,),
-                      //    SizedBox(
-                      //   width: MediaQuery.of(context).size.width * 0.65,
-                      //   child: ElevatedButton(
-                      //     onPressed: () {
-                      //       Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //           builder: (context) => SplashScreen(),
-                      //         ),
-                      //       );
-                      //     },
-                      //     style: ElevatedButton.styleFrom(
-                      //       primary: Colors.red.shade600,
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(30),
-                      //       ),
-                      //       elevation: 0,
-                      //       textStyle: TextStyle(
-                      //         fontSize: 18,
-                      //         fontFamily: 'PlayFair',
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //     ),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(12.0),
-                      //       child: Text("Regresar"),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -382,16 +304,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -562,7 +475,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                             }
                           }
                         },
-                        child:  Icon(Icons.arrow_forward_outlined),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -579,16 +492,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -752,7 +656,7 @@ class _SignUpSexoState extends State<SignUpSexo> {
                             });
                           }
                         },
-                        child:  Icon(Icons.arrow_forward_outlined),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.purple.shade900,
                           // Define el color de fondo
@@ -769,16 +673,7 @@ class _SignUpSexoState extends State<SignUpSexo> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -805,6 +700,8 @@ class _SignUpSexoState extends State<SignUpSexo> {
   }
 }
 
+  DateTime _selectedDate = null;
+
 class SignUpFechaNacimiento extends StatefulWidget {
   const SignUpFechaNacimiento({Key key}) : super(key: key);
 
@@ -814,7 +711,6 @@ class SignUpFechaNacimiento extends StatefulWidget {
 
 class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
   String _fechanacimientoerror;
-  DateTime _selectedDate = null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -962,7 +858,7 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                             }
                           }
                         },
-                        child:  Icon(Icons.arrow_forward_outlined),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -979,16 +875,7 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -1068,38 +955,6 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                     'Selecciona un estado civil',
                     style: TextStyle(color: Colors.red),
                   ),
-// DropdownButton<String>(
-//   value: dropdownValue,
-//   icon: const Icon(Icons.arrow_downward),
-//   iconSize: 24,
-//   elevation: 16,
-//   style: const TextStyle(color: Colors.deepPurple),
-//   underline: Container(
-//     height: 2,
-//     color: Colors.deepPurpleAccent,
-//   ),
-//   onChanged: (String newValue) {
-//     setState(() {
-//       dropdownValue = newValue;
-//     });
-//   },
-//   items: <String>['Option 1', 'Option 2', 'Option 3', 'Option 4']
-//       .map<DropdownMenuItem<String>>((String value) {
-//     return DropdownMenuItem<String>(
-//       value: value,
-//       child: Text(value),
-//     );
-//   }).toList(),
-// ),
-                // TextFormField(
-                //   decoration: InputDecoration(
-                //       labelText: 'Estado civil', errorText: _estadocivilerror),
-                //   style: TextStyle(color: Colors.black),
-                //   initialValue: _estadocivil,
-                //   onChanged: (value) {
-                //     _estadocivil = value;
-                //   },
-                // ),
                 SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1135,7 +990,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                             });
                           }
                         },
-                        child:  Icon(Icons.arrow_forward_outlined),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1152,16 +1007,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -1279,7 +1125,7 @@ class _SignUpCelularState extends State<SignUpCelular> {
                             });
                           }
                         },
-                        child:  Icon(Icons.arrow_forward_outlined),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1296,16 +1142,7 @@ class _SignUpCelularState extends State<SignUpCelular> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -1517,17 +1354,25 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                           if (_usuario != "" &&
                               _email != "" &&
                               regex.hasMatch(_email)) {
-                            verificarUsuario();
-                            verificarCorreo();
-
-                            if (puedepasar) {
-                              sendingmail(_email);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpCodigo()),
-                              );
+                            Future<void> verificarPaso() async {
+                              if (puedepasar) {
+                                sendingmail(_email);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUpCodigo()),
+                                );
+                              }
                             }
+
+                            Future<void>
+                                sincronizadorDeIdentificadores() async {
+                              await verificarUsuario();
+                              await verificarCorreo();
+                              await verificarPaso();
+                            }
+
+                            sincronizadorDeIdentificadores();
                           } else {
                             if (_usuario == "") {
                               setState(() {
@@ -1564,16 +1409,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -1697,7 +1533,7 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUpContrasena()),
+                                    builder: (context) => SignUpIMGPerfil()),
                               );
                             } else {
                               setState(() {
@@ -1732,16 +1568,7 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -1861,68 +1688,26 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                             _contrasenaerror = null;
                           });
                           if (_contrasena != "") {
-                            // Map<String, dynamic> data = {
-                            //   'pers_Nombres': "_nombre",
-                            //   'pers_Apellidos': _apellido,
-                            //   'pers_Identidad': _identidad,
-                            //   'estc_Id': _estadocivil,
-                            //   'pers_FechaNacimiento': _fechanacimiento,
-                            //   'pers_Sexo': _sexo,
-                            //   'pers_Celular': _celular,
-                            //   'pers_EsEmpleado': "false",
-                            //   'usua_NombreUsuario': _usuario,
-                            //   'usua_Correo': _email,
-                            //   'usua_Contrasena': _contrasena,
-                            //   'usua_UsuCreacion': "1"
-                            // };
-
-//  Map<String, dynamic> data2 = {
-//                               'pers_Nombres': "_nombre",
-//                               'pers_Apellidos': "_apellido",
-//                               'pers_Identidad': "_identidad",
-//                               'estc_Id': "1",
-//                               'pers_FechaNacimiento': "2000-10-10",
-//                               'pers_Sexo': "M",
-//                               'pers_Celular': "98989862",
-//                               'pers_EsEmpleado': "false",
-//                               'usua_NombreUsuario': "_usuario",
-//                               'usua_Correo': "_email",
-//                               'usua_Contrasena': "_contrasena",
-//                               'usua_UsuCreacion': "1"
-//                             };
-
-                            // void enviarJson() async {
-                            //   final Map<String, dynamic> datos = {
-                            //     'nombre': 'Juan',
-                            //     'edad': 25,
-                            //     'email': 'juan@example.com'
-                            //   };
-                            //   final url =
-                            //       Uri.parse('https://miapi.com/endpoint');
-                            //   final respuesta = await http.post(
-                            //     url,
-                            //     headers: {'Content-Type': 'application/json'},
-                            //     body: json.encode(datos),
-                            //   );
-                            //   print(respuesta.body);
-                            // }
-                            var data = {
-                              'pers_Nombres': _nombre,
-                              'pers_Apellidos': _apellido,
-                              'pers_Identidad': _identidad,
-                              'estc_Id': int.parse(_estadocivil),
-                              "pers_FechaNacimiento": _fechanacimiento
-                                  .replaceFirst(" 00:00:00.000", ""),
-                              'pers_Sexo': _sexo,
-                              'pers_Celular': _celular,
-                              'pers_EsEmpleado': false,
-                              'usua_NombreUsuario': _usuario,
-                              'usua_Correo': _email,
-                              'usua_Contrasena': _contrasena,
-                              'usua_UsuCreacion': 1
-                            }; //datos xd
+                            var urlImagePerfile = "";
 
                             Future<void> enviarJson() async {
+                              var data = {
+                                'pers_Nombres': _nombre,
+                                'pers_Apellidos': _apellido,
+                                'pers_Identidad': _identidad,
+                                'estc_Id': int.parse(_estadocivil),
+                                'usua_PerfilImage': urlImagePerfile.toString(),
+                                "pers_FechaNacimiento": _fechanacimiento
+                                    .replaceFirst(" 00:00:00.000", ""),
+                                'pers_Sexo': _sexo,
+                                'pers_Celular': _celular,
+                                'pers_EsEmpleado': false,
+                                'usua_NombreUsuario': _usuario,
+                                'usua_Correo': _email,
+                                'usua_Contrasena': _contrasena,
+                                'usua_UsuCreacion': 1
+                              };
+
                               var jsonBody = jsonEncode(data);
                               final url = Uri.parse(
                                   'http://phynomo-001-site1.atempurl.com/api/Usuario/Registrarse');
@@ -1939,6 +1724,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                                 var message = jsonResponse['message'];
                                 if (message ==
                                     "El registro se ha insertado con éxito") {
+                                      vaciarDatos();
                                   ElegantNotification.success(
                                     // title:  Text("Exitoso"),
                                     description: Text(
@@ -1971,10 +1757,26 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                             }
 
                             // enviarJson();
-                            enviarJson();
+
+                            Future<void> terminarRegistro() async {
+                              if (_imagePerfil != null) {
+                                var urlobtenida =
+                                    await uploadImage(_imagePerfil);
+                                setState(() {
+                                  urlImagePerfile = urlobtenida.toString();
+                                });
+                              }
+                              await enviarJson();
+                            }
+
+                            terminarRegistro();
+                          } else {
+                            setState(() {
+                              _contrasenaerror = "Ingrese una contraseña";
+                            });
                           }
                         },
-                        child:  Icon(Icons.arrow_forward_outlined),
+                        child: Icon(Icons.arrow_forward_outlined),
                         style: ElevatedButton.styleFrom(
                           primary: Colors
                               .purple.shade900, // Define el color de fondo
@@ -1991,16 +1793,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () {
-                          _nombre = "";
-                          _email = "";
-                          _apellido = "";
-                          _identidad = "";
-                          _sexo = "";
-                          _fechanacimiento = "";
-                          _estadocivil = "";
-                          _usuario = "";
-                          _celular = "";
-                          _contrasena = "";
+                         vaciarDatos();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -2100,4 +1893,240 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
       ],
     );
   }
+}
+
+class SignUpIMGPerfil extends StatefulWidget {
+  const SignUpIMGPerfil({Key key}) : super(key: key);
+
+  @override
+  State<SignUpIMGPerfil> createState() => _SignUpIMGPerfilState();
+}
+
+class _SignUpIMGPerfilState extends State<SignUpIMGPerfil> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(children: [
+        Container(
+          height: MediaQuery.of(context).size.height *
+              1, // ajustar la altura del modal
+          padding: EdgeInsets.all(16.0), // agregar un padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // SizedBox(height: 10.0),
+              Row(
+                children: [
+                  FloatingActionButton(
+                    backgroundColor: Color.fromRGBO(250, 250, 250, 1),
+                    foregroundColor: Colors.purple.shade900,
+                    elevation: 0,
+                    child: Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(
+                    'Registro / Foto de Perfil',
+                    style: TextStyle(
+                      fontSize: 21.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Ahora ingresa tu foto de perfil',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(height: 10.0),
+              Column(children: [
+                if (_imagePerfil != null)
+                  Center(
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 228, 228, 228),
+                          image: DecorationImage(
+                            image: FileImage(_imagePerfil),
+                            fit: BoxFit.cover,
+                          ),
+                          border: Border.all(
+                              width: 2, color: kAccentColor.withOpacity(0.7)),
+                          borderRadius: BorderRadius.circular(300.0)),
+                    ),
+                  )
+                else
+                  Center(
+                    child: Container(
+                        width: 200,
+                        height: 200,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 228, 228, 228),
+                            border: Border.all(
+                                width: 2, color: kAccentColor.withOpacity(0.7)),
+                            borderRadius: BorderRadius.circular(300.0)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.person,
+                              size: 80.0,
+                              color: Colors.white,
+                            ),
+                          ],
+                        )),
+                  ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(children: [
+                  Expanded(
+                      child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: Size(200, 38),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      side: BorderSide(
+                        width: 1,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    ),
+                    onPressed: () {
+                      getImage(source: ImageSource.gallery);
+                    },
+                    child: Text(
+                      "Seleccionar",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    ),
+                  )),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                      child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: Size(200, 38),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      side: BorderSide(
+                        width: 1,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    ),
+                    onPressed: () {
+                      getImage(source: ImageSource.camera);
+                    },
+                    child: Text(
+                      "Cámara",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                    ),
+                  )),
+                ]),
+              ]),
+              SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Icon(Icons.arrow_back),
+                      style: ElevatedButton.styleFrom(
+                        primary:
+                            Colors.purple.shade900, // Define el color de fondo
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpContrasena()),
+                        );
+                      },
+                      child: Icon(Icons.arrow_forward_outlined),
+                      style: ElevatedButton.styleFrom(
+                        primary:
+                            Colors.purple.shade900, // Define el color de fondo
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: TextButton(
+                      onPressed: () {
+                        vaciarDatos();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Signupscreen()),
+                        );
+                      },
+                      child: Text(
+                        '¿Ya tienes cuenta?',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ]),
+    );
+  }
+
+  void getImage({ImageSource source}) async {
+    final file = await ImagePicker().pickImage(source: source);
+    if (file?.path != null) {
+      setState(() {
+        _imagePerfil = File(file.path);
+      });
+    }
+  }
+}
+
+
+Future<void> vaciarDatos() {
+                        _nombre = "";
+                        _email = "";
+                        _apellido = "";
+                        _identidad = "";
+                        _sexo = "";
+                        _fechanacimiento = "";
+                        _estadocivil = "";
+                        _usuario = "";
+                        _celular = "";
+                        _contrasena = "";
+                        _imagePerfil = null;
+                        _selectedDate = null;
 }
