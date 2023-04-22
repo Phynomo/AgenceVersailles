@@ -22,6 +22,7 @@ UsuarioModel sacainfoUsuario(info) {
   DateTime date = DateTime.parse(dateStr);
   usuario.usuaId = info[0]["usua_Id"].toString();
   usuario.usuaNombreUsuario = info[0]["usua_NombreUsuario"].toString();
+  usuario.usuaImgUrl = info[0]["usua_PerfilImage"].toString();
   usuario.usuaCorreo = info[0]["usua_Correo"].toString();
   usuario.usuaContrasena = info[0]["usua_Contrasena"].toString();
   usuario.persId = info[0]["pers_Id"].toString();

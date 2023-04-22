@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:travelappui/views/Admin/admin.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
-import 'package:travelappui/views/HomePage/homepagecontinente.dart';
+import 'package:travelappui/views/HomePage/homepageamerica.dart';
+import 'package:travelappui/views/HomePage/homepageasia.dart';
+import 'package:travelappui/views/HomePage/homepageeuropa.dart';
+import 'package:travelappui/views/HomePage/homepagemaseconomico.dart';
 import 'package:travelappui/views/HomePage/homepagetodo.dart';
 import 'package:travelappui/views/Login/restaurar/restaurar.dart';
+import 'package:travelappui/views/MisReservacionesPage/pruebareservaciones.dart';
 import 'package:travelappui/views/ProfilePage/profilepage.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:travelappui/views/ViewDetails/viewDetails.dart';
@@ -12,7 +16,6 @@ import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/MisReservacionesPage/misreservaciones.dart';
 import 'package:travelappui/views/Signup/signup.dart';
 import 'package:travelappui/views/Paquetes/insertarpaquete.dart';
-import 'package:travelappui/views/ddl/pruebaddl.dart';
 
 class AppRoutes {
 
@@ -33,6 +36,10 @@ class AppRoutes {
   static const String ROUTE_Ddl = "/drop";
   static const String ROUTE_InsertPaquete = "/insertPaquete";
   static const String ROUTE_HomeEuropa = "/Europa";
+  static const String ROUTE_HomeAmerica = "/América";
+  static const String ROUTE_HomeAsia = "/Asia";
+  static const String ROUTE_Economico = "/Más económico";
+  static const String prueba = "/prueba";
   
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     switch (settings.name) {
@@ -86,7 +93,23 @@ class AppRoutes {
       break;
       case ROUTE_HomeEuropa:
           return MaterialPageRoute(
-            settings: settings, builder: (_) => HomePageContinent());
+            settings: settings, builder: (_) => HomePageEuropa());
+      break;
+      case ROUTE_HomeAmerica:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => HomePageAmerica());
+      break;
+      case ROUTE_HomeAsia:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => HomePageAsia());
+      break;
+      case ROUTE_Economico:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => HomePageEconomico());
+      break;
+      case prueba:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => Prueba());
       break;
     }
   }

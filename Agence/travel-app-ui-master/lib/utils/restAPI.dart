@@ -175,7 +175,7 @@ class RESTAPI {
 
   Future<List<PlaceModel>> getPaquetesXContinente(contNombre) async {
     final respuesta =
-        await http.get(Uri.parse(urlByContinent + 'Europa'));
+        await http.get(Uri.parse(urlByContinent + contNombre));
     if (respuesta.statusCode == 200) {
       final json = respuesta.body;
       final jsonMap = jsonDecode(json);

@@ -1,6 +1,7 @@
 class UsuarioModel {
   String usuaId;
   String usuaNombreUsuario;
+  String usuaImgUrl;
   String usuaCorreo;
   String usuaContrasena;
   String persId;
@@ -12,6 +13,7 @@ class UsuarioModel {
   UsuarioModel({
     this.usuaId,
     this.usuaNombreUsuario,
+    this.usuaImgUrl,
     this.usuaCorreo,
     this.usuaContrasena,
     this.persId,
@@ -25,6 +27,7 @@ class UsuarioModel {
     return {
       'usua_Id': usuaId,
       'usua_NombreUsuario': usuaNombreUsuario,
+      'usua_PerfilImage' : usuaImgUrl,
       'usua_Correo': usuaCorreo,
       'usua_Contrasena': usuaContrasena,
       'pers_Id': persId,
@@ -39,6 +42,7 @@ class UsuarioModel {
     return UsuarioModel(
       usuaId: json['usua_Id'],
       usuaNombreUsuario: json['usua_NombreUsuario'],
+      usuaImgUrl: json['usua_PerfilImage'],
       usuaCorreo: json['usua_Correo'],
       usuaContrasena: json['usua_Contrasena'],
       persId: json['pers_Id'],

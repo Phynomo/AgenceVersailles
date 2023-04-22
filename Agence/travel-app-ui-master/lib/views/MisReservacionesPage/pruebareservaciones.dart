@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travelappui/components/travelplacedart.dart';
 import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
@@ -8,30 +9,25 @@ import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/components/appbar.dart';
 import 'package:travelappui/components/featuredcard.dart';
 import 'package:travelappui/theme.dart';
-// import 'dart:html';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../Login/login.dart';
-// import 'package:';s
 
-class MisReservacionesPage extends StatefulWidget {
-  const MisReservacionesPage({Key key}) : super(key: key);
+class Prueba extends StatefulWidget {
+  const Prueba({Key key}) : super(key: key);
 
   @override
-  State<MisReservacionesPage> createState() => _MisReservacionesPageState();
+  State<Prueba> createState() => _PruebaState();
 }
 
-class _MisReservacionesPageState extends State<MisReservacionesPage> {
+class _PruebaState extends State<Prueba> {
   ScrollController _mainScrollController = ScrollController();
-
   final double _bottomBarHeight = 90;
   HomepageSrollListner _model;
   UsuarioModel usuarioModel;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _model = HomepageSrollListner.initialise(_mainScrollController);
     infoPersona();
@@ -72,7 +68,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                           margin: EdgeInsets.all(2),
                           child: StreamBuilder(
                               stream: homepagestate
-                                  .getPaquetesXPersona(usuarioModel.persId)
+                                  .getPaquetesXPersona(1)
                                   .asStream(),
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData)
@@ -93,11 +89,16 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                     itemCount: snapshot.data.length,
                                     shrinkWrap: true,
                                     primary: false,
+                                    // gridDelegate:
+                                    //     SliverGridDelegateWithFixedCrossAxisCount(
+                                    //         mainAxisSpacing: 16,
+                                    //         crossAxisSpacing: 16,
+                                    //         crossAxisCount: 1),
                                     itemBuilder: (context, index) {
                                       return GestureDetector(
                                           onTap: () {
                                             Navigator.pushNamed(
-                                                context, "/viewReservacion", arguments: {
+                                                context, "/view", arguments: {
                                               "paqueteObject":
                                                   snapshot.data[index]
                                             });
@@ -139,16 +140,13 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                     IconButton(
                                         icon: Icon(Icons.home_rounded,
                                             size: 36,
-                                            color: kAppTheme.accentColor
-                                            .withOpacity(0.35)),
-                                        onPressed: () {
-                                          Navigator.pushNamed(
-                                              context, "/Popular");
-                                        }),
+                                            color: kAppTheme.accentColor),
+                                        onPressed: () {}),
                                     IconButton(
                                         icon: Icon(Icons.calendar_today_rounded,
                                             size: 36,
-                                            color: kAppTheme.accentColor),
+                                            color: kAppTheme.accentColor
+                                                .withOpacity(0.35)),
                                         onPressed: () {
                                           Navigator.pushNamed(
                                               context, "/reservaciones");

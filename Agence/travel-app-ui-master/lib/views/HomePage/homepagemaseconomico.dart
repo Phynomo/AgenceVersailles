@@ -11,16 +11,14 @@ import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:http/http.dart' as http;
 
-class HomePageContinent extends StatefulWidget {
-  final String continenteNombre;
+class HomePageEconomico extends StatefulWidget {
 
-  HomePageContinent({this.continenteNombre});
 
   @override
-  _HomePageContinentState createState() => _HomePageContinentState();
+  _HomePageEconomicoState createState() => _HomePageEconomicoState();
 }
 
-class _HomePageContinentState extends State<HomePageContinent> {
+class _HomePageEconomicoState extends State<HomePageEconomico> {
   ScrollController _mainScrollController = ScrollController();
 
   final double _bottomBarHeight = 90;
@@ -37,7 +35,6 @@ class _HomePageContinentState extends State<HomePageContinent> {
     HomePageStateProvider homepagestate =
         Provider.of<HomePageStateProvider>(context);
     Size size = MediaQuery.of(context).size;
-    print(widget.continenteNombre);
     return Scaffold(  
       backgroundColor: kPrimaryColor,
       appBar: HomeAppBar,
@@ -50,11 +47,11 @@ class _HomePageContinentState extends State<HomePageContinent> {
               controller: _mainScrollController,
               child: Column(
                 children: [
-                  TopFeaturedList(nombrePag: widget.continenteNombre),
+                  TopFeaturedList(nombrePag: 'Más económico'),
                   Container(
                     margin: EdgeInsets.all(16),
                     child: StreamBuilder(
-                        stream: homepagestate.getPaquetesXContinete(widget.continenteNombre).asStream(),
+                        stream: homepagestate.getRecomendedPlaces().asStream(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData)
                             return Container(
