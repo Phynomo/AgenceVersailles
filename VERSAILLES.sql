@@ -18,16 +18,16 @@
 --DROP TABLE [gral].[tbPaises];
 
 
-CREATE DATABASE dbAgenceVersailles
+--CREATE DATABASE dbAgenceVersailles
 GO
-use dbAgenceVersailles
+--use dbAgenceVersailles
 GO
 --Creacion de Esquemas
-CREATE SCHEMA gral
+--CREATE SCHEMA gral
 GO
-CREATE SCHEMA acce
+--CREATE SCHEMA acce
 GO
-CREATE SCHEMA [agen]
+--CREATE SCHEMA [agen]
 
 GO 
 --Creacion de la tabla de usuarios
@@ -547,7 +547,6 @@ VALUES ('2023-04-20 10:15:00', '2023-04-20 12:45:00', 2, 4, 1);
 --       ('Descanso en la isla', 'https://drive.google.com/uc?id=1C4XpLvMYk_Zr-LwWeAd4cktQuKXYSQsY', 3, 14, 3, 3500.00),
 --       ('Aventura en el desierto', 'https://drive.google.com/uc?id=1wxssPLJJz0lnS5AOAYDEeqFHvwhU2KZr', 1, 7, 4, 2800.00);
 --
-
 	   
 --Paquetes
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Aventura', 'https://i.ibb.co/9mDDP5g/1.jpg', 1, 1, 2, 3500.00);
@@ -562,7 +561,7 @@ INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Pe
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de Relax Familiar', 'https://i.ibb.co/Ns3dbSj/10.jpg', 1, 11, 4, 8000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Acapulco', 'https://i.ibb.co/mhxnDYN/11.webp', 2, 12, 2, 2500.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en la selva', 'https://i.ibb.co/hLbRt5h/12.jpg', 1, 7, 4, 4500.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de lujo en Cancún', 'https://i.ibb.co/WVhXckj/13.webpv', 3, 18, 2, 8000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de lujo en Cancún', 'https://i.ibb.co/WVhXckj/13.webp', 3, 18, 2, 8000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete cultural en Oaxaca', 'https://i.ibb.co/jZm7Q0N/14.jpglN', 1, 3, 3, 4000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete romántico en San Miguel de Allende', 'https://i.ibb.co/TKJrRHY/15.jpg', 2, 8, 2, 5500.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ski en Aspen', 'https://i.ibb.co/qdxhfKn/16.webp', 3, 15, 4, 12000.00);

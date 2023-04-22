@@ -86,7 +86,7 @@ Future<String> uploadImage(File file) async {
     final responseData = await response.stream.toBytes();
     final responseString = String.fromCharCodes(responseData);
     final jsonResponse = json.decode(responseString);
-    final imageUrl = jsonResponse['data']['url'];
+    String imageUrl = jsonResponse['data']['url'];
     print('Image uploaded successfully!'+ imageUrl.toString());
     return imageUrl.toString();
   } else {
