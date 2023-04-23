@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/services/photos_service.dart';
 import 'package:travelappui/views/HomePage/homepage.dart';
+import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -308,7 +309,7 @@ class _SignUpNombresState extends State<SignUpNombres> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -496,7 +497,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -677,7 +678,7 @@ class _SignUpSexoState extends State<SignUpSexo> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -879,7 +880,7 @@ class _SignUpFechaNacimientoState extends State<SignUpFechaNacimiento> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -1011,7 +1012,7 @@ class _SignUpEstadoCivilState extends State<SignUpEstadoCivil> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -1146,7 +1147,7 @@ class _SignUpCelularState extends State<SignUpCelular> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -1413,7 +1414,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -1572,7 +1573,7 @@ class _SignUpCodigoState extends State<SignUpCodigo> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -1797,7 +1798,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Signupscreen()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text(
@@ -2084,7 +2085,7 @@ class _SignUpIMGPerfilState extends State<SignUpIMGPerfil> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Signupscreen()),
+                              builder: (context) => LoginPage()),
                         );
                       },
                       child: Text(
@@ -2116,7 +2117,7 @@ class _SignUpIMGPerfilState extends State<SignUpIMGPerfil> {
 }
 
 
-Future<void> vaciarDatos() {
+void vaciarDatos() {
                         _nombre = "";
                         _email = "";
                         _apellido = "";

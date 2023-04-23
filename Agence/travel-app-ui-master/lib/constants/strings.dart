@@ -1,2 +1,2 @@
 
-List<String> kAppBarMenuOptions = ["Option1","Option2","Option3"];
+List<String> kAppBarMenuOptions = ["Chat GPT","Aless","Phynomo"];

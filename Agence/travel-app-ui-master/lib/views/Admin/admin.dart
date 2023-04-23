@@ -165,10 +165,27 @@ class _AdminPageState extends State<AdminPage> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
+             Positioned(
+            left: 0,
+            //right: 0,
+            top: 0,
+            child: SafeArea(
+               child: Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: FloatingActionButton(
+                          backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                          foregroundColor: Colors.purple.shade900,
+                          elevation: 0,
+                          child: Icon(Icons.arrow_back),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+               ),
+             ),
+          ),
           ],
         ),
       ),

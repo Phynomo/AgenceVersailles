@@ -12,6 +12,8 @@ import 'package:travelappui/views/Login/restaurar/restaurar.dart';
 // import 'dart:html';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../Signup/signup.dart';
+
 String usuario = "";
 String password = "";
 final storage = FlutterSecureStorage();
@@ -96,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 10.0),
             _buttonRecuperar(),
+            _buttonRegistrarse(),
           ],
         ),
       ),
@@ -107,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         child: TextField(
+          controller: _controllerUsuario,
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -130,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         child: TextField(
+          controller: _controllerPassword,
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
           obscureText: true,
@@ -284,4 +289,33 @@ class _LoginPageState extends State<LoginPage> {
       );
     });
   }
+Widget _buttonRegistrarse() {
+    return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return TextButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Signupscreen(),
+            ),
+          );
+        },
+        child: Text(
+          'Crear cuenta',
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 16,
+          ),
+        ),
+      );
+    });
+  }
+
 }
+  
+
+
+
+TextEditingController _controllerUsuario = TextEditingController(text: usuario);
+TextEditingController _controllerPassword = TextEditingController(text: password);

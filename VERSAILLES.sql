@@ -562,7 +562,7 @@ INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Pe
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de playa en Acapulco', 'https://i.ibb.co/mhxnDYN/11.webp', 2, 12, 2, 2500.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de aventura en la selva', 'https://i.ibb.co/hLbRt5h/12.jpg', 1, 7, 4, 4500.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de lujo en Cancún', 'https://i.ibb.co/WVhXckj/13.webp', 3, 18, 2, 8000.00);
-INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete cultural en Oaxaca', 'https://i.ibb.co/jZm7Q0N/14.jpglN', 1, 3, 3, 4000.00);
+INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete cultural en Oaxaca', 'https://i.ibb.co/jZm7Q0N/14.jpg', 1, 3, 3, 4000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete romántico en San Miguel de Allende', 'https://i.ibb.co/TKJrRHY/15.jpg', 2, 8, 2, 5500.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de ski en Aspen', 'https://i.ibb.co/qdxhfKn/16.webp', 3, 15, 4, 12000.00);
 INSERT INTO agen.tbPaquetes (paqu_Nombre, paqu_Imagen, vuel_Id, habi_Id, paqu_Personas, paqu_Precio) VALUES ('Paquete de relax en Tulum', 'https://i.ibb.co/FW2rTX6/17.jpg', 2, 10, 2, 3000.00);

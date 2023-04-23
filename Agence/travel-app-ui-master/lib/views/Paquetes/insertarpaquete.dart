@@ -3,13 +3,17 @@
 // import 'package:flutter/src/widgets/placeholder.dart';
 import 'dart:io';
 
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/components/appbar.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import "package:flutter/material.dart";
 import 'package:travelappui/services/photos_service.dart';
+import 'package:travelappui/views/Admin/admin.dart';
 import 'package:travelappui/views/HomePage/homepagetodo.dart';
 import 'package:travelappui/views/Paquetes/cargardatos/datos.dart';
 import 'package:travelappui/views/Paquetes/models_ddl/modelsddl.dart';
@@ -17,49 +21,168 @@ import 'package:travelappui/views/Paquetes/models_ddl/modelsddl.dart';
 
 import '../HomePage/state/homepageScrollListner.dart';
 
+
 class FormPaquetePage extends StatefulWidget {
   @override
   _FormPaquetePageState createState() => _FormPaquetePageState();
 }
 
-final _formKey = GlobalKey<FormState>();
 
 class _FormPaquetePageState extends State<FormPaquetePage> {
   List<Hoteles> _hoteles = [];
   List<Habitaciones> _habitaciones = [];
   List<Vuelos> _vuelos = [];
   List<Paises> _paises = [];
+TextEditingController controllerNombrePaquete = TextEditingController();
+TextEditingController controllerPrecio = TextEditingController();
+TextEditingController controllerPersonas = TextEditingController();
+int habitacionId = 0;
+int vueloId = 0;
+int hotelId = 0;
+int paisId = 0;
+
+final _formKey = GlobalKey<FormState>();
+  void _loadAll(String id) async {
+    try {
+      _loadVuelos(id);
+    await _loadHoteles(id);
+    if (_hoteles.length > 0) {
+      await _loadhabitaciones(_hoteles[0].hoteId.toString());
+    } else {
+      setState(() {
+        _habitaciones.clear();
+      });
+      if (_habitaciones.length > 0) {
+        setState(() {
+          habitacionId = _habitaciones[0].habiId;
+        });
+      } else {
+        setState(() {
+          habitacionId = 0;
+        });
+      }
+      if (_vuelos.length > 0) {
+        setState(() {
+          vueloId = _vuelos[0].vuelId;
+        });
+      } else {
+        setState(() {
+          vueloId = 0;
+        });
+      }
+      if (_hoteles.length > 0) {
+        setState(() {
+          hotelId = _hoteles[0].hoteId;
+        });
+      } else {
+        setState(() {
+          hotelId = 0;
+        });
+      }
+    }
+    } catch (e) {
+      setState(() {
+          vueloId = 0;
+          habitacionId = 0;
+          hotelId = 0;
+        });
+    }
+    
+  }
 
   void _loadPaises() async {
-    final paises = await fetchPaises();
+    try {
+      final paises = await fetchPaises();
     setState(() {
       _paises.clear();
       _paises = paises;
     });
+    if (_paises.length > 0) {
+        setState(() {
+          paisId = _paises[0].paisId;
+        });
+      } else {
+        setState(() {
+          paisId = 0;
+        });
+      }
+    } catch (e) {
+       setState(() {
+          paisId = 0;
+        });
+    }
+    
   }
 
   void _loadVuelos(String id) async {
-    final vuelos = await fetchVuelos(id);
+    try {
+      final vuelos = await fetchVuelos(id);
     setState(() {
       _vuelos.clear();
       _vuelos = vuelos;
     });
+    if (_vuelos.length > 0) {
+      setState(() {
+        vueloId = _vuelos[0].vuelId;
+      });
+    } else {
+      setState(() {
+        vueloId = 0;
+      });
+    }
+    } catch (e) {
+      setState(() {
+        vueloId = 0;
+      });
+    }
   }
 
   void _loadHoteles(String id) async {
-    final hoteles = await fetchHoteles(id);
+    try {
+      final hoteles = await fetchHoteles(id);
     setState(() {
       _hoteles.clear();
       _hoteles = hoteles;
     });
+    if (_hoteles.length > 0) {
+        setState(() {
+          hotelId = _hoteles[0].hoteId;
+        });
+      } else {
+        setState(() {
+          hotelId = 0;
+        });
+      }
+    } catch (e) {
+      setState(() {
+          hotelId = 0;
+        });
+    }
+    
   }
 
   void _loadhabitaciones(String id) async {
-    final habitaciones = await fetchHabitaciones(id);
+    
+    try {
+      final habitaciones = await fetchHabitaciones(id);
     setState(() {
       _habitaciones.clear();
       _habitaciones = habitaciones;
     });
+    if (_habitaciones.length > 0) {
+      setState(() {
+        habitacionId = _habitaciones[0].habiId;
+      });
+    } else {
+      setState(() {
+        habitacionId = 0;
+      });
+    }
+    } catch (e) {
+      setState(() {
+        habitacionId = 0;
+      });
+    }
   }
 
   ScrollController _mainScrollController = ScrollController();
@@ -90,14 +213,21 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
   //     setState(() {});
   //   }
   // }
-
+  bool seleccioneVuelo = false;
+  bool seleccioneImagen = false;
+  bool seleccioneHabitacion = false;
+  bool seleccionePais = false;
+  bool seleccioneHotel = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: kPrimaryColor,
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
-          title: Text("Ingresar paquetes",style: TextStyle(),),
+          backgroundColor: Color.fromRGBO(63, 63, 156, 1),
+          title: Text(
+            "Ingresar paquetes",
+            style: TextStyle(),
+          ),
         ),
         body: Container(
           padding: const EdgeInsets.all(20.0),
@@ -108,7 +238,7 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                 child: Column(
                   children: [
                     MyTextField(
-                      myController: controller,
+                      myController: controllerNombrePaquete,
                       fieldName: 'Nombre del paquete',
                       myIcon: Icons.text_fields_rounded,
                       prefixColor: kAccentColor.withOpacity(0.7),
@@ -117,7 +247,16 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                       height: 20.0,
                     ),
                     MyTextField(
-                      myController: controller,
+                      myController: controllerPersonas,
+                      fieldName: 'Cantidad de personas',
+                      myIcon: Icons.people_alt,
+                      prefixColor: kAccentColor.withOpacity(0.7),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    MyTextField(
+                      myController: controllerPrecio,
                       fieldName: 'Precio',
                       myIcon: Icons.monetization_on_outlined,
                       prefixColor: kAccentColor.withOpacity(0.7),
@@ -141,9 +280,10 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                                 ))
                             .toList(),
                         onChanged: (val) {
-                          _loadVuelos(val.toString());
-                          _loadHoteles(val.toString());
-                          _habitaciones.clear();
+                          _loadAll(val.toString());
+                          setState(() {
+                            paisId = val;
+                          });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -159,10 +299,15 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             border: UnderlineInputBorder()),
                       ),
                     ),
-                    if (_paises.length == 0)
+                    if (_paises.length == 0 && seleccionePais == false)
                       Text(
                         'sin paises disponibles',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: Colors.red.shade800),
+                      ), 
+                      if (seleccionePais == true)
+                      Text(
+                        'Seleccione un pais',
+                        style: TextStyle(color: Colors.red.shade800, fontWeight: FontWeight.bold),
                       ),
                     SizedBox(
                       height: 20,
@@ -170,8 +315,8 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: DropdownButtonFormField(
-                        value: null,
-                        //value: _vuelos.isNotEmpty ? _vuelos[0].vuelId : null,
+                        //value: null,
+                        value: _vuelos.isNotEmpty ? _vuelos[0].vuelId : null,
                         items: _vuelos
                             .map((e) => DropdownMenuItem(
                                   child: SizedBox(
@@ -186,7 +331,11 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                                   value: e.vuelId,
                                 ))
                             .toList(),
-                        onChanged: (val) {},
+                        onChanged: (val) {
+                          setState(() {
+                            vueloId = val;
+                          });
+                        },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
                           color: kAccentColor.withOpacity(0.7),
@@ -200,10 +349,15 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             border: UnderlineInputBorder()),
                       ),
                     ),
-                    if (_vuelos.length == 0)
+                    if (_vuelos.length == 0 && seleccioneVuelo == false)
                       Text(
                         'sin vuelos disponibles',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: Colors.red.shade800),
+                      ),
+                    if (seleccioneVuelo == true)
+                      Text(
+                        'Seleccione un vuelo',
+                        style: TextStyle(color: Colors.red.shade800, fontWeight: FontWeight.bold),
                       ),
                     SizedBox(
                       height: 20,
@@ -211,8 +365,8 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: DropdownButtonFormField(
-                        value: null,
-                        //value: _hoteles.isNotEmpty ? _hoteles[0].hoteId : null,
+                        //value: null,
+                        value: _hoteles.isNotEmpty ? _hoteles[0].hoteId : null,
                         items: _hoteles
                             .map((e) => DropdownMenuItem(
                                   child: Text(
@@ -224,6 +378,9 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             .toList(),
                         onChanged: (val) {
                           _loadhabitaciones(val.toString());
+                          setState(() {
+                            hotelId = val;
+                          });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -239,10 +396,15 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             border: UnderlineInputBorder()),
                       ),
                     ),
-                    if (_hoteles.length == 0)
+                    if (_hoteles.length == 0 && seleccioneHotel == false)
                       Text(
                         'sin hoteles disponibles',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: Colors.red.shade800),
+                      ),
+                       if (seleccioneHotel == true)
+                      Text(
+                        'Seleccione un hotel',
+                        style: TextStyle(color: Colors.red.shade800, fontWeight: FontWeight.bold),
                       ),
                     SizedBox(
                       height: 20,
@@ -250,8 +412,10 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: DropdownButtonFormField(
-                        value: null,
-                        //value: _habitaciones.isNotEmpty ? _habitaciones[0].habiId : null,
+                        //value: null,
+                        value: _habitaciones.isNotEmpty
+                            ? _habitaciones[0].habiId
+                            : null,
                         items: _habitaciones
                             .map((e) => DropdownMenuItem(
                                   child: Text(
@@ -261,7 +425,11 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                                   value: e.habiId,
                                 ))
                             .toList(),
-                        onChanged: (val) {},
+                        onChanged: (val) {
+                          setState(() {
+                            habitacionId = val;
+                          });
+                        },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
                           color: kAccentColor.withOpacity(0.7),
@@ -276,10 +444,15 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                             border: UnderlineInputBorder()),
                       ),
                     ),
-                    if (_habitaciones.length == 0)
+                    if (_habitaciones.length == 0 && seleccioneHabitacion == false)
                       Text(
                         'sin habitaciones disponibles',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: Colors.red.shade800),
+                      ),
+                      if (seleccioneHabitacion == true)
+                      Text(
+                        'Seleccione una habitacion',
+                        style: TextStyle(color: Colors.red.shade800, fontWeight: FontWeight.bold),
                       ),
                     SizedBox(
                       height: 30.0,
@@ -331,6 +504,11 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                                   //  ),
                                 ],
                               )),
+                               if (seleccioneImagen == true)
+                      Text(
+                        'Seleccione una imagen',
+                        style: TextStyle(color: Colors.red.shade800, fontWeight: FontWeight.bold),
+                      ),
                         SizedBox(
                           height: 10,
                         ),
@@ -375,7 +553,7 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                                   color: Colors.deepPurpleAccent,
                                 ),
                               ),
-                               onPressed: () {
+                              onPressed: () {
                                 getImage(source: ImageSource.camera);
                               },
                               child: Text(
@@ -393,12 +571,139 @@ class _FormPaquetePageState extends State<FormPaquetePage> {
                     ),
                     MyButton(
                       onPress: () {
-                        if (_formKey.currentState.validate()) {
+                        String urlimage = "";
+                        setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            });
+                        if (_formKey.currentState.validate() && vueloId != 0 && habitacionId != 0 && imageFile != null && isNumeric(controllerPrecio.text) && isNumeric(controllerPersonas.text)) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Procesando info')));
+
+                              Future<void> enviarJson() async {
+                              var data = {
+                                'paqu_Nombre': controllerNombrePaquete.text,
+                                'paqu_Imagen': urlimage,
+                                'vuel_Id': vueloId,
+                                'habi_Id': habitacionId,
+                                'paqu_Personas': controllerPersonas.text,
+                                "paqu_Precio": controllerPrecio.text,
+                              };
+
+                              var jsonBody = jsonEncode(data);
+                              final url = Uri.parse(
+                                  'http://phynomo-001-site1.atempurl.com/api/Paquete/Insertar');
+                              final response = await http.post(
+                                url,
+                                body: jsonBody,
+                                headers: <String, String>{
+                                  'Content-Type':
+                                      'application/json; charset=UTF-8',
+                                },
+                              );
+                              if (response.statusCode == 200) {
+                                var jsonResponse = jsonDecode(response.body);
+                                var message = jsonResponse['message'];
+                                if (message ==
+                                    "El registro ha sido insertado con éxito") {
+                                      
+                                  ElegantNotification.success(
+                                    // title:  Text("Exitoso"),
+                                    description: Text(
+                                      "Paquete creado correctamente",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    toastDuration:
+                                        const Duration(milliseconds: 5000),
+                                    animationDuration:
+                                        const Duration(milliseconds: 700),
+                                  ).show(context);
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AdminPage()),
+                                  );
+                                } else {
+                                  ElegantNotification.error(
+                                    // title:  Text("Exitoso"),
+                                    description: Text(
+                                      "Solicitud denegada",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    toastDuration:
+                                        const Duration(milliseconds: 5000),
+                                    animationDuration:
+                                        const Duration(milliseconds: 700),
+                                  ).show(context);
+                                }
+                              } else {
+                               ElegantNotification.error(
+                                    // title:  Text("Exitoso"),
+                                    description: Text(
+                                      "Conexion incorrecta",
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    toastDuration:
+                                        const Duration(milliseconds: 5000),
+                                    animationDuration:
+                                        const Duration(milliseconds: 700),
+                                  ).show(context);
+
+                              }
+                            }
+
+
+                              Future<void> terminarRegistro() async {
+                                var urlobtenida = await uploadImage(imageFile);
+                                setState(() {
+                                  urlimage = urlobtenida.toString();
+                                });
+                              await enviarJson();
+                              }
+
+                            terminarRegistro();
+
+                        }else{
+                         
+                          if(!isNumeric(controllerPrecio.text)){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('El precio solo debe contener digitos')));
+                          }
+
+                          if(!isNumeric(controllerPersonas.text)){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Ingresa bien la cantidad de personas')));
+                          }
+                          if(vueloId == 0){
+                            setState(() {
+                            seleccioneVuelo = true;
+                            });
+                          }
+                          if(habitacionId == 0){
+                            setState(() {
+                            seleccioneHabitacion = true;
+                            });
+                          }
+                          if(hotelId == 0){
+                            setState(() {
+                            seleccioneHotel = true;
+                            });
+                          }
+                          if(paisId == 0){
+                            setState(() {
+                            seleccionePais = true;
+                            });
+                          }
+                          if(imageFile == null){
+                            setState(() {
+                            seleccioneImagen = true;
+                            });
+                          }
+
                         }
 
-                        uploadImage(imageFile);
+                        //uploadImage(imageFile);
                       },
                     ),
                   ],
@@ -475,26 +780,31 @@ class MyButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 30.0),
       child: ElevatedButton(
-  onPressed: onPress,
-  style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0),
+        onPressed: onPress,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
+          child: Text(
+            "Enviar".toUpperCase(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
-    ),
-  ),
-  child: Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
-    child: Text(
-      "Enviar".toUpperCase(),
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    ),
-  ),
-),
     );
   }
+}
+
+
+bool isNumeric(String str) {
+  return RegExp(r'^[0-9]+$').hasMatch(str);
 }
