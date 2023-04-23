@@ -14,8 +14,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../Signup/signup.dart';
 
-String usuario = "";
-String password = "";
 final storage = FlutterSecureStorage();
 
 UsuarioModel sacainfoUsuario(info) {
@@ -51,6 +49,11 @@ class _LoginPageState extends State<LoginPage> {
   String _errorPassword;
   bool _showErrorMessage = false;
   bool _showErrorConexion = false;
+String usuario = "";
+String password = "";
+
+//TextEditingController _controllerUsuario = TextEditingController(text: usuario);
+//TextEditingController _controllerPassword = TextEditingController(text: password);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -110,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         child: TextField(
-          controller: _controllerUsuario,
+          //controller: _controllerUsuario,
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -134,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         child: TextField(
-          controller: _controllerPassword,
+          //controller: _controllerPassword,
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
           obscureText: true,
@@ -316,6 +319,3 @@ Widget _buttonRegistrarse() {
   
 
 
-
-TextEditingController _controllerUsuario = TextEditingController(text: usuario);
-TextEditingController _controllerPassword = TextEditingController(text: password);
