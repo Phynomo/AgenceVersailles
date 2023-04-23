@@ -223,7 +223,7 @@ final _formKey = GlobalKey<FormState>();
     return Scaffold(
         backgroundColor: kPrimaryColor,
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Color.fromRGBO(63, 63, 156, 1),
           title: Text(
             "Ingresar paquetes",
             style: TextStyle(),

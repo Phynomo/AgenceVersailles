@@ -6,33 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 
-class Paquete {
-  String paisNombre;
-  int cantidadPaquetes;
 
-  Paquete({this.paisNombre, this.cantidadPaquetes});
-
-  factory Paquete.fromJson(Map<String, dynamic> json) {
-    return Paquete(
-      paisNombre: json['pais_Nombre'],
-      cantidadPaquetes: json['cantidadPaquetes'],
-    );
-  }
-}
-
-Future<List<Paquete>> fetchPaquetes() async {
-  final response = await http.get(Uri.parse(
-      'http://phynomo-001-site1.atempurl.com/api/Paquete/PaquetesPorPais'));
-
-  if (response.statusCode == 200) {
-    var jsonResponse = jsonDecode(response.body);
-    var data = jsonResponse['data'];
-    final List<dynamic> paquetesJson = data;
-    return paquetesJson.map((json) => Paquete.fromJson(json)).toList();
-  } else {
-    throw Exception('Error al obtener los paquetes');
-  }
-}
 
 class ConocenosPage extends StatefulWidget {
   const ConocenosPage({Key key}) : super(key: key);
@@ -42,19 +16,9 @@ class ConocenosPage extends StatefulWidget {
 }
 
 class _ConocenosPageState extends State<ConocenosPage> {
-  List<Paquete> _paquetes = [];
-
   @override
   void initState() {
     super.initState();
-    _loadData();
-  }
-
-  void _loadData() async {
-    final paquetes = await fetchPaquetes();
-    setState(() {
-      _paquetes = paquetes;
-    });
   }
 
   @override
@@ -77,22 +41,12 @@ class _ConocenosPageState extends State<ConocenosPage> {
             Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                Color.fromRGBO(63, 63, 156, 1),
-                Color.fromRGBO(99, 70, 170, 1),
+                Color.fromRGBO(71, 16, 135, 1),
+                Color.fromRGBO(81, 16, 135, 1),
               ])),
               width: double.infinity,
               height: size.height * 0.5,
             ),
-             Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: FloatingActionButton(
-                        backgroundColor: Color.fromRGBO(240, 240, 240, 1),
-                        foregroundColor: Colors.purple.shade900,
-                        elevation: 0,
-                        child: Icon(Icons.arrow_back),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-             ),
             SafeArea(
               child: Container(
                 margin: EdgeInsets.only(top: 30.0),
@@ -108,7 +62,7 @@ class _ConocenosPageState extends State<ConocenosPage> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 220,
+                    height: 250,
                   ),
                   CarouselSlider(
                     
@@ -266,7 +220,24 @@ class _ConocenosPageState extends State<ConocenosPage> {
                   ),
                 ],
               ),
-            )
+            ),
+             Positioned(
+            left: 0,
+            //right: 0,
+            top: 0,
+            child: SafeArea(
+               child: Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: FloatingActionButton(
+                          backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+                          foregroundColor: Colors.purple.shade900,
+                          elevation: 0,
+                          child: Icon(Icons.arrow_back),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+               ),
+             ),
+          ),
           ],
         ),
       ),

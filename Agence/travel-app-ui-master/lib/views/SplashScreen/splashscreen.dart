@@ -75,12 +75,12 @@ class _SplashScreenState extends State<SplashScreen> {
                               fontWeight: FontWeight.bold)),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text("Iniciar sesión"),
+                        child: Text("Iniciemos"),
                       )),
                   SizedBox(width: 10),
                   OutlinedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.ROUTE_SingUp);
+                        Navigator.pushNamed(context, AppRoutes.ROUTE_Conocenos);
                       },
                       style: ElevatedButton.styleFrom(
                           side: BorderSide(
