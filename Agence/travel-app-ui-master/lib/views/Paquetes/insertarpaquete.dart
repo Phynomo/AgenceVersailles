@@ -285,6 +285,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             paisId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -336,6 +342,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             vueloId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -382,6 +394,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             hotelId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -430,6 +448,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             habitacionId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
