@@ -1689,7 +1689,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                             _contrasenaerror = null;
                           });
                           if (_contrasena != "") {
-                            var urlImagePerfile = "";
+                            var urlImagePerfile = "https://i.ibb.co/NTYrJXY/Imagen-de-Whats-App-2023-04-23-a-las-12-47-54.jpg";
 
                             Future<void> enviarJson() async {
                               var data = {

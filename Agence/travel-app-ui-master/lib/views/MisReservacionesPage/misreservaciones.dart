@@ -88,7 +88,51 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                       width: 50,
                                       height: 50,
                                       child: CircularProgressIndicator());
-
+                                if (snapshot.data.length == 0)
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Container(
+                                      margin: EdgeInsets.all(5),
+                                      width: double.infinity,
+                                      //height: 500,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black12,
+                                              blurRadius: 15,
+                                              offset: Offset(0, 5),
+                                            )
+                                          ]),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0, horizontal: 15.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.event_busy_rounded,
+                                              size: 96.0,
+                                              color: Colors.red.shade700,
+                                            ),
+                                            SizedBox(height: 32.0),
+                                            Text(
+                                              'Aún no tienes reservaciones',
+                                              style: TextStyle(
+                                                color: Colors.red.shade700,
+                                                fontSize: 24.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                 return ListView.builder(
                                     itemCount: snapshot.data.length,
                                     shrinkWrap: true,
@@ -97,10 +141,11 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                       return GestureDetector(
                                           onTap: () {
                                             Navigator.pushNamed(
-                                                context, "/viewReservacion", arguments: {
-                                              "paqueteObject":
-                                                  snapshot.data[index]
-                                            });
+                                                context, "/viewReservacion",
+                                                arguments: {
+                                                  "paqueteObject":
+                                                      snapshot.data[index]
+                                                });
                                           },
                                           child: FeaturedCard(
                                             placeModel: snapshot.data[index],
@@ -140,7 +185,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                         icon: Icon(Icons.home_rounded,
                                             size: 36,
                                             color: kAppTheme.accentColor
-                                            .withOpacity(0.35)),
+                                                .withOpacity(0.35)),
                                         onPressed: () {
                                           Navigator.pushNamed(
                                               context, "/Popular");
