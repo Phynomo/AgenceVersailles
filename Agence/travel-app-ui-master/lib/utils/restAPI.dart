@@ -189,7 +189,12 @@ class RESTAPI {
   }
 
   Future<dynamic> updatePfp(data, context) async {
-    var body = json.encode(data.toJson());
+    var toJson = {
+      'usua_Id' : data.usuaId,
+      'usua_PerfilImage' : data.usuaImgUrl
+    };
+
+    var body = json.encode(toJson);
     var url = Uri.parse(urlUpdatePfp);
 
     http.put(url,
@@ -202,19 +207,21 @@ class RESTAPI {
         ElegantNotification.success(
           // title:  Text("Exitoso"),
           description: Text(
-            "La foto ha sido actualizada con éxito'",
+            "La foto ha sido actualizada",
             style: TextStyle(color: Colors.black),
           ),
         ).show(context);
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
       } else {
         print(jsonResponse["message"].toString());
-        print(data.usuaImgUrl);
+        print(data);
         ElegantNotification.error(
           description: Text(
             "Ha ocurrido un error",
             style: TextStyle(color: Colors.black),
           ),
         ).show(context);
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
       }
     });
   }
