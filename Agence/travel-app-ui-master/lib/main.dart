@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/routes/routes.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
+import 'package:travelappui/views/ProfilePage/state/profilepageStateProvider.dart';
 import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import './constants/constants.dart';
 import './views/HomePage/homepage.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext csontext) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_)=>HomePageStateProvider())
+      ChangeNotifierProvider(create: (_)=>HomePageStateProvider()),
+      ChangeNotifierProvider(create: (_)=>ProfilePageStateProvider())
     ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

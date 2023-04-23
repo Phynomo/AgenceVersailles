@@ -44,6 +44,7 @@ dependencies:
   url_launcher: ^6.1.10
   file_picker: ^5.2.10
   googleapis_auth: ^1.4.0
+  get: ^4.6.5
  
 dev_dependencies:
   flutter_test:

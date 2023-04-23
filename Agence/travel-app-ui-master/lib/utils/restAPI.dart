@@ -22,6 +22,8 @@ String urlDeleteBooking =
     "http://phynomo-001-site1.atempurl.com/api/Reservacion/Eliminar";
 String urlByContinent =
     "http://phynomo-001-site1.atempurl.com/api/Paquete/ListadoPorContinente?contNombre=";
+String urlUpdatePfp =
+    "http://phynomo-001-site1.atempurl.com/api/Usuario/EditarFoto";
 // String urlFind = "http://phynomo-001-site1.atempurl.com/api/Paquete/Find?id=";
 
 class RESTAPI {
@@ -185,17 +187,37 @@ class RESTAPI {
       throw Exception('Failed to load listado');
     }
   }
-  // Future<List<PlaceModel>> findPlace() async {
-  //   final respuesta = await http.post(Uri.parse(urlFind + '2'));
-  //   if (respuesta.statusCode == 200) {
-  //     final json = respuesta.body;
-  //     final jsonMap = jsonDecode(json);
-  //     return dummyPlaces(jsonMap["data"]);
-  //   } else {
-  //     print("Error en la respuesta");
-  //     throw Exception('Failed to load listado');
-  //   }
-  // }
+
+  Future<dynamic> updatePfp(data, context) async {
+    var body = json.encode(data.toJson());
+    var url = Uri.parse(urlUpdatePfp);
+
+    http.put(url,
+        body: body,
+        headers: {'Content-Type': 'application/json'}).then((response) {
+      var jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        // resultado
+        print(jsonResponse["message"].toString());
+        ElegantNotification.success(
+          // title:  Text("Exitoso"),
+          description: Text(
+            "La foto ha sido actualizada con éxito'",
+            style: TextStyle(color: Colors.black),
+          ),
+        ).show(context);
+      } else {
+        print(jsonResponse["message"].toString());
+        print(data.usuaImgUrl);
+        ElegantNotification.error(
+          description: Text(
+            "Ha ocurrido un error",
+            style: TextStyle(color: Colors.black),
+          ),
+        ).show(context);
+      }
+    });
+  }
 }
 
 // var data = {'usua_NombreUsuario': usuario, 'usua_Correo': usuario, 'usua_Contrasena': password}; //datos xd

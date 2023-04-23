@@ -2,9 +2,16 @@
 // import 'package:flutter/src/widgets/framework.dart';
 // import 'package:flutter/src/widgets/placeholder.dart';
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:travelappui/constants/colors.dart';
+import 'package:travelappui/services/photos_service.dart';
 import 'package:travelappui/views/Login/login.dart';
+import 'package:travelappui/views/ProfilePage/state/profilepageStateProvider.dart';
 import '../HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/models/usuarioModel.dart';
 import 'dart:convert';
@@ -38,8 +45,14 @@ class _PerfilPageState extends State<PerfilPage> {
     }
   }
 
+  File imageFile;
+  var newImageUrl;
+
   @override
   Widget build(BuildContext context) {
+    ProfilePageStateProvider profilepagestate =
+        Provider.of<ProfilePageStateProvider>(context);
+
     return FutureBuilder(
         future: infoPersona(),
         builder: (context, snapshot) {
@@ -48,7 +61,38 @@ class _PerfilPageState extends State<PerfilPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            return Scaffold(
+            WidgetsBinding.instance?.addPostFrameCallback((_) {
+              if (imageFile != null)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(days: 365),
+                    dismissDirection: DismissDirection.none,
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(''),
+                        GestureDetector(
+                          onTap: () {
+                            newImageUrl = uploadImage(imageFile);
+                            usuarioModel.usuaImgUrl = newImageUrl.toString();
+                            profilepagestate.updatePfp(usuarioModel, context);
+                          },
+                          child: Text(
+                            'Guardar cambios',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+            });
+
+            return WillPopScope(
+              onWillPop: () async {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                return true;
+              }, 
+              child: Scaffold(
                 appBar: AppBar(
                     leading: IconButton(
                       onPressed: () {
@@ -75,16 +119,43 @@ class _PerfilPageState extends State<PerfilPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          height: MediaQuery.of(context).size.width * 0.3,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image(
-                                image: NetworkImage(usuarioModel.usuaImgUrl),
-                                fit: BoxFit.cover,
+                        Stack(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: MediaQuery.of(context).size.width * 0.3,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image(
+                                  image: imageFile == null
+                                      ? NetworkImage(usuarioModel.usuaImgUrl)
+                                      : FileImage(imageFile),
+                                  fit: BoxFit.cover,
                                 ),
-                          ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  getImage(source: ImageSource.gallery);
+                                },
+                                child: Container(
+                                  width: 35,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: kAccentColor),
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: kPrimaryColor,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                         SizedBox(
                           height: 10,
@@ -185,13 +256,29 @@ class _PerfilPageState extends State<PerfilPage> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15)),
                             ),
-                          )
+                          ),
                       ],
                     ),
                   ),
-                ));
+                )),
+            );
+            
           }
         });
+  }
+  //     void showSnackBar(BuildContext context) {
+  // ScaffoldMessenger.of(context).showSnackBar(
+  //   const SnackBar(content: Text('Guardar cambios')),
+  // );
+  // }
+
+  void getImage({ImageSource source}) async {
+    final file = await ImagePicker().pickImage(source: source);
+    if (file?.path != null) {
+      setState(() {
+        imageFile = File(file.path);
+      });
+    }
   }
 }
 
