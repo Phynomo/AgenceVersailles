@@ -107,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         child: TextField(
+          controller: _controllerUsuario,
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
@@ -130,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         child: TextField(
+          controller: _controllerPassword,
           style: TextStyle(color: Colors.black),
           keyboardType: TextInputType.text,
           obscureText: true,
@@ -285,3 +287,8 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 }
+
+
+
+TextEditingController _controllerUsuario = TextEditingController(text: usuario);
+TextEditingController _controllerPassword = TextEditingController(text: password);

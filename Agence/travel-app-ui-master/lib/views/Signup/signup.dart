@@ -2116,7 +2116,7 @@ class _SignUpIMGPerfilState extends State<SignUpIMGPerfil> {
 }
 
 
-Future<void> vaciarDatos() {
+void vaciarDatos() {
                         _nombre = "";
                         _email = "";
                         _apellido = "";

@@ -95,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
-                          "Registrarse",
+                          "Conócenos",
                           style: TextStyle(
                             color: Colors.purple.shade900,
                           ),

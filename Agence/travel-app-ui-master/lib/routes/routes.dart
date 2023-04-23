@@ -16,6 +16,7 @@ import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/MisReservacionesPage/misreservaciones.dart';
 import 'package:travelappui/views/Signup/signup.dart';
 import 'package:travelappui/views/Paquetes/insertarpaquete.dart';
+import 'package:travelappui/views/conocenos/conocenos.dart';
 
 class AppRoutes {
 
@@ -39,6 +40,7 @@ class AppRoutes {
   static const String ROUTE_HomeAmerica = "/América";
   static const String ROUTE_HomeAsia = "/Asia";
   static const String ROUTE_Economico = "/Más económico";
+  static const String ROUTE_Conocenos = "/conocenos";
   static const String prueba = "/prueba";
   
   static Route<dynamic> generateRoutes(RouteSettings settings) {
@@ -106,6 +108,10 @@ class AppRoutes {
       case ROUTE_Economico:
           return MaterialPageRoute(
             settings: settings, builder: (_) => HomePageEconomico());
+      break;
+      case ROUTE_Conocenos:
+          return MaterialPageRoute(
+            settings: settings, builder: (_) => ConocenosPage());
       break;
       case prueba:
           return MaterialPageRoute(
