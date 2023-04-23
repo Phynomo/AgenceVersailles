@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/components/appbar.dart';
 import 'package:travelappui/components/featuredcard.dart';
@@ -9,7 +9,7 @@ import 'package:travelappui/theme.dart';
 import 'package:travelappui/views/HomePage/components/featurelist.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   @override

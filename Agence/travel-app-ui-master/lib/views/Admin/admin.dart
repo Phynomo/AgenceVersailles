@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-import 'package:travelappui/constants/colors.dart';
+// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+// import 'package:travelappui/constants/colors.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

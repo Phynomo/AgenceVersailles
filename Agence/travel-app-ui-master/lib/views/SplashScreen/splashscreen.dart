@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/routes/routes.dart';
 import 'package:travelappui/theme.dart';
+import 'package:travelappui/views/Login/login.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
+}
+
+Future<void> infoPersona() async {
+  storage.write(key: 'usuario', value: null);
 }
 
 class _SplashScreenState extends State<SplashScreen> {

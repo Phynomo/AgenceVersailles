@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:travelappui/models/placesModel.dart';
 import 'package:travelappui/models/usuarioModel.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
@@ -28,6 +29,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
   final double _bottomBarHeight = 90;
   HomepageSrollListner _model;
   UsuarioModel usuarioModel;
+  int amountItems;
 
   @override
   void initState() {
@@ -42,6 +44,9 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
     if (usuarioJson != null) {
       Map<String, dynamic> usuarioData = jsonDecode(usuarioJson);
       usuarioModel = UsuarioModel.fromJson(usuarioData);
+      List<PlaceModel> places =
+          await HomePageStateProvider().getPaquetesXPersona(usuarioModel.persId);
+      amountItems = places.length;
     }
   }
 
@@ -52,66 +57,33 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
     Size size = MediaQuery.of(context).size;
 
     return FutureBuilder<void>(
-        future: infoPersona(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            return Scaffold(
-              backgroundColor: kPrimaryColor,
-              appBar: HomeAppBarReservacion,
-              body: Stack(
-                children: [
-                  SingleChildScrollView(
-                    controller: _mainScrollController,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(2),
-                          child: StreamBuilder(
-                              stream: homepagestate
-                                  .getPaquetesXPersona(usuarioModel.persId)
-                                  .asStream(),
-                              builder: (context, snapshot) {
-                                if (!snapshot.hasData)
-                                  return Container(
-                                      alignment: Alignment.center,
-                                      width: 50,
-                                      height: 50,
-                                      child: CircularProgressIndicator());
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting)
-                                  return Container(
-                                      alignment: Alignment.center,
-                                      width: 50,
-                                      height: 50,
-                                      child: CircularProgressIndicator());
-
-                                return ListView.builder(
-                                    itemCount: snapshot.data.length,
-                                    shrinkWrap: true,
-                                    primary: false,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                          onTap: () {
-                                            Navigator.pushNamed(
-                                                context, "/viewReservacion", arguments: {
-                                              "paqueteObject":
-                                                  snapshot.data[index]
-                                            });
-                                          },
-                                          child: FeaturedCard(
-                                            placeModel: snapshot.data[index],
-                                          ));
-                                    });
-                              }),
-                        ),
-                      ],
-                    ),
+      future: infoPersona(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          return Scaffold(
+            backgroundColor: kPrimaryColor,
+            appBar: HomeAppBarReservacion,
+            body: Stack(
+              children: [
+                SingleChildScrollView(
+                  controller: _mainScrollController,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(2),
+                        height: amountItems != null && amountItems < 3
+                            ? double.parse(size.height.toString())
+                            : null,
+                        child: _buildListView(homepagestate),
+                      ),
+                    ],
                   ),
-                  AnimatedBuilder(
+                ),
+                AnimatedBuilder(
                       animation: _model,
                       builder: (context, child) {
                         return Positioned(
@@ -140,7 +112,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                                         icon: Icon(Icons.home_rounded,
                                             size: 36,
                                             color: kAppTheme.accentColor
-                                            .withOpacity(0.35)),
+                                                .withOpacity(0.35)),
                                         onPressed: () {
                                           Navigator.pushNamed(
                                               context, "/Popular");
@@ -175,10 +147,51 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                               ),
                             ));
                       })
-                ],
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildListView(HomePageStateProvider homepagestate) {
+    return StreamBuilder(
+      stream: homepagestate.getPaquetesXPersona(usuarioModel.persId).asStream(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData)
+          return Container(
+              alignment: Alignment.center,
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator());
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return Container(
+              alignment: Alignment.center,
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator());
+
+        // amountItems = snapshot.data.length;
+        // print(amountItems);
+
+        return ListView.builder(
+          itemCount: amountItems,
+          shrinkWrap: true,
+          primary: false,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/viewReservacion",
+                    arguments: {"paqueteObject": snapshot.data[index]});
+              },
+              child: FeaturedCard(
+                placeModel: snapshot.data[index],
               ),
             );
-          }
-        });
+          },
+        );
+      },
+    );
   }
 }

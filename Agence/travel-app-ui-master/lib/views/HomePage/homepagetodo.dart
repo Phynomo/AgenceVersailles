@@ -29,7 +29,6 @@ class _HomePageAllState extends State<HomePageAll> {
   
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _model = HomepageSrollListner.initialise(_mainScrollController);
   }

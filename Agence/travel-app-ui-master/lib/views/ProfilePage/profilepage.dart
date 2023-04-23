@@ -12,6 +12,7 @@ import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/services/photos_service.dart';
 import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/ProfilePage/state/profilepageStateProvider.dart';
+import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import '../HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/models/usuarioModel.dart';
 import 'dart:convert';
@@ -42,11 +43,23 @@ class _PerfilPageState extends State<PerfilPage> {
     if (usuarioJson != null) {
       Map<String, dynamic> usuarioData = jsonDecode(usuarioJson);
       usuarioModel = UsuarioModel.fromJson(usuarioData);
+    } else {
+      // Navigate to the splash screen if the user's information is not available.
+      Navigator.pushNamed(context, "/splash");
+
+      // Pop the current route off the navigation stack to prevent the user from going to the last page.
+      Navigator.pop(context);
     }
   }
 
   File imageFile;
   var newImageUrl;
+
+  // @override
+  // void dispose() {
+  //   ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +92,10 @@ class _PerfilPageState extends State<PerfilPage> {
                               await profilepagestate.updatePfp(
                                   usuarioModel, context);
                               imageFile = null;
-                              String usuarioJson = jsonEncode(usuarioModel.toJson());
-                              await storage.write(key: 'usuario', value: usuarioJson);
+                              String usuarioJson =
+                                  jsonEncode(usuarioModel.toJson());
+                              await storage.write(
+                                  key: 'usuario', value: usuarioJson);
                             }
                           },
                           child: Text(
@@ -96,6 +111,8 @@ class _PerfilPageState extends State<PerfilPage> {
             return WillPopScope(
               onWillPop: () async {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                imageFile = null;
+                print("jijija");
                 return true;
               },
               child: Scaffold(
@@ -103,6 +120,9 @@ class _PerfilPageState extends State<PerfilPage> {
                       leading: IconButton(
                         onPressed: () {
                           Navigator.pop(context);
+                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                          imageFile = null;
+                          print("jijija");
                         },
                         icon: Icon(Icons.arrow_back),
                         color: Colors.purple.shade900,
@@ -237,8 +257,15 @@ class _PerfilPageState extends State<PerfilPage> {
                             textColor: Colors.red,
                             icon: Icons.logout,
                             endIcon: false,
-                            onPress: () {
-                              Navigator.pushNamed(context, "/splash");
+                            onPress: () async {
+                              // Navigator.pushNamed(context, "/splash");
+                              await storage.delete(key: 'usuario');
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SplashScreen()),
+                                  ModalRoute.withName('/'));
                             },
                           ),
                           SizedBox(

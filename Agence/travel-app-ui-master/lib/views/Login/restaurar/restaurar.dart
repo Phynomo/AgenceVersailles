@@ -7,8 +7,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 // import 'package:travelappui/views/HomePage/homepage.dart';
 import 'package:travelappui/views/Login/login.dart';
-import 'package:travelappui/views/Login/restaurar/restaurar.dart';
-import 'package:travelappui/views/SplashScreen/splashscreen.dart';
+// import 'package:travelappui/views/Login/restaurar/restaurar.dart';
+// import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import 'dart:math';
 
 String correo = "";
