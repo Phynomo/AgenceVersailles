@@ -176,7 +176,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
             child: Container(
               margin: EdgeInsets.all(5),
               width: double.infinity,
-              //height: 500,
+              height: 200,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(25),
@@ -191,8 +191,8 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.25),
                     Icon(
                       Icons.event_busy_rounded,
                       size: 96.0,
@@ -203,7 +203,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                       'Aún no tienes reservaciones',
                       style: TextStyle(
                         color: Colors.red.shade700,
-                        fontSize: 24.0,
+                        fontSize: 22.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

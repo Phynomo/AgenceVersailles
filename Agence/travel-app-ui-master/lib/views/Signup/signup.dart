@@ -1642,7 +1642,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
                 ),
                 SizedBox(height: 16.0),
                 Text(
-                  'Ahora ingresa tu numero contraseña, recuerda no olvidarla',
+                  'Ahora ingresa tu contraseña, recuerda no olvidarla',
                   style: TextStyle(fontSize: 16.0),
                 ),
                 if (_showErrorMessage)
