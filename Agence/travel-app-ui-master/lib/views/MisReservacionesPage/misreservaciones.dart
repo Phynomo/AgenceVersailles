@@ -44,8 +44,8 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
     if (usuarioJson != null) {
       Map<String, dynamic> usuarioData = jsonDecode(usuarioJson);
       usuarioModel = UsuarioModel.fromJson(usuarioData);
-      List<PlaceModel> places =
-          await HomePageStateProvider().getPaquetesXPersona(usuarioModel.persId);
+      List<PlaceModel> places = await HomePageStateProvider()
+          .getPaquetesXPersona(usuarioModel.persId);
       amountItems = places.length;
     }
   }
@@ -84,69 +84,68 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                   ),
                 ),
                 AnimatedBuilder(
-                      animation: _model,
-                      builder: (context, child) {
-                        return Positioned(
-                            bottom: _model.bottom,
-                            right: 22,
-                            left: 22,
-                            child: Container(
-                              padding: EdgeInsets.only(left: 12, right: 12),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        blurRadius: 15,
-                                        color: Colors.black.withOpacity(0.4))
-                                  ],
-                                  borderRadius: BorderRadius.circular(45)),
-                              height: 75,
-                              alignment: Alignment.center,
-                              child: Material(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                        icon: Icon(Icons.home_rounded,
-                                            size: 36,
-                                            color: kAppTheme.accentColor
-                                                .withOpacity(0.35)),
-                                        onPressed: () {
-                                          Navigator.pushNamed(
-                                              context, "/Popular");
-                                        }),
-                                    IconButton(
-                                        icon: Icon(Icons.calendar_today_rounded,
-                                            size: 36,
-                                            color: kAppTheme.accentColor),
-                                        onPressed: () {
-                                          Navigator.pushNamed(
-                                              context, "/reservaciones");
-                                        }),
-                                    IconButton(
-                                        icon: Icon(Icons.search,
-                                            size: 36,
-                                            color: kAppTheme.accentColor
-                                                .withOpacity(0.35)),
-                                        onPressed: () {
-                                          Navigator.pushNamed(context, "/Todo");
-                                        }),
-                                    IconButton(
-                                        icon: Icon(Icons.person,
-                                            size: 36,
-                                            color: kAppTheme.accentColor
-                                                .withOpacity(0.35)),
-                                        onPressed: () {
-                                          Navigator.pushNamed(
-                                              context, "/perfil");
-                                        })
-                                  ],
-                                ),
+                    animation: _model,
+                    builder: (context, child) {
+                      return Positioned(
+                          bottom: _model.bottom,
+                          right: 22,
+                          left: 22,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 12, right: 12),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 15,
+                                      color: Colors.black.withOpacity(0.4))
+                                ],
+                                borderRadius: BorderRadius.circular(45)),
+                            height: 75,
+                            alignment: Alignment.center,
+                            child: Material(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                      icon: Icon(Icons.home_rounded,
+                                          size: 36,
+                                          color: kAppTheme.accentColor
+                                              .withOpacity(0.35)),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, "/Popular");
+                                      }),
+                                  IconButton(
+                                      icon: Icon(Icons.calendar_today_rounded,
+                                          size: 36,
+                                          color: kAppTheme.accentColor),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, "/reservaciones");
+                                      }),
+                                  IconButton(
+                                      icon: Icon(Icons.search,
+                                          size: 36,
+                                          color: kAppTheme.accentColor
+                                              .withOpacity(0.35)),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, "/Todo");
+                                      }),
+                                  IconButton(
+                                      icon: Icon(Icons.person,
+                                          size: 36,
+                                          color: kAppTheme.accentColor
+                                              .withOpacity(0.35)),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, "/perfil");
+                                      })
+                                ],
                               ),
-                            ));
-                      })
+                            ),
+                          ));
+                    })
               ],
             ),
           );
@@ -171,7 +170,48 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
               width: 50,
               height: 50,
               child: CircularProgressIndicator());
-
+        if (snapshot.data.length == 0)
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              margin: EdgeInsets.all(5),
+              width: double.infinity,
+              //height: 500,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 15,
+                      offset: Offset(0, 5),
+                    )
+                  ]),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.event_busy_rounded,
+                      size: 96.0,
+                      color: Colors.red.shade700,
+                    ),
+                    SizedBox(height: 32.0),
+                    Text(
+                      'Aún no tienes reservaciones',
+                      style: TextStyle(
+                        color: Colors.red.shade700,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
         // amountItems = snapshot.data.length;
         // print(amountItems);
 

@@ -99,7 +99,8 @@ final _formKey = GlobalKey<FormState>();
     });
     if (_paises.length > 0) {
         setState(() {
-          paisId = _paises[0].paisId;
+          paisId = 0;
+          //paisId = _paises[0].paisId;
         });
       } else {
         setState(() {
@@ -284,6 +285,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             paisId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -335,6 +342,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             vueloId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -381,6 +394,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             hotelId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -429,6 +448,12 @@ final _formKey = GlobalKey<FormState>();
                           setState(() {
                             habitacionId = val;
                           });
+                          setState(() {
+                            seleccioneHabitacion = false;
+                            seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
+                            });
                         },
                         icon: Icon(
                           Icons.arrow_drop_down_circle,
@@ -575,6 +600,8 @@ final _formKey = GlobalKey<FormState>();
                         setState(() {
                             seleccioneHabitacion = false;
                             seleccioneVuelo = false;
+                            seleccionePais = false;
+                            seleccioneHotel = false;
                             });
                         if (_formKey.currentState.validate() && vueloId != 0 && habitacionId != 0 && imageFile != null && isNumeric(controllerPrecio.text) && isNumeric(controllerPersonas.text)) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -666,12 +693,12 @@ final _formKey = GlobalKey<FormState>();
 
                         }else{
                          
-                          if(!isNumeric(controllerPrecio.text)){
+                          if(!isNumeric(controllerPrecio.text) && !controllerPrecio.text.isEmpty){
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('El precio solo debe contener digitos')));
                           }
 
-                          if(!isNumeric(controllerPersonas.text)){
+                          if(!isNumeric(controllerPersonas.text) && !controllerPersonas.text.isEmpty){
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Ingresa bien la cantidad de personas')));
                           }
