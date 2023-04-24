@@ -77,7 +77,7 @@ class _SignupscreenState extends State<Signupscreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SplashScreen()),
+              MaterialPageRoute(builder: (context) => LoginPage()),
             );
           },
         ),

@@ -1,3 +1,4 @@
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,8 @@ import 'package:travelappui/views/HomePage/components/featurelist.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
 import 'package:http/http.dart' as http;
+
+import '../Login/login.dart';
 
 class HomePageContinent extends StatefulWidget {
   final String continenteNombre;
@@ -104,8 +107,7 @@ class _HomePageContinentState extends State<HomePageContinent> {
                             boxShadow: [
                               BoxShadow(
                                   blurRadius: 15,
-                                  color: Colors.black.withOpacity(0.4)
-                              )
+                                  color: Colors.black.withOpacity(0.4))
                             ],
                             borderRadius: BorderRadius.circular(45)),
                         height: 75,
@@ -124,8 +126,26 @@ class _HomePageContinentState extends State<HomePageContinent> {
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, "/reservaciones");
+                                  onPressed: () async {
+                                    String usuarioJson =
+                                        await storage.read(key: 'usuario');
+                                    if (usuarioJson == null) {
+                                      ElegantNotification.info(
+                                        // title:  Text("Exitoso"),
+                                        description: Text(
+                                          "Antes debes iniciar sesión",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        toastDuration:
+                                            const Duration(milliseconds: 5000),
+                                        animationDuration:
+                                            const Duration(milliseconds: 700),
+                                      ).show(context);
+                                      Navigator.pushNamed(context, "/login");
+                                    } else {
+                                      Navigator.pushNamed(
+                                          context, "/reservaciones");
+                                    }
                                   }),
                               IconButton(
                                   icon: Icon(Icons.search,
@@ -140,8 +160,25 @@ class _HomePageContinentState extends State<HomePageContinent> {
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    String usuarioJson =
+                                        await storage.read(key: 'usuario');
+                                    if (usuarioJson == null) {
+                                      ElegantNotification.info(
+                                        // title:  Text("Exitoso"),
+                                        description: Text(
+                                          "Antes debes iniciar sesión",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        toastDuration:
+                                            const Duration(milliseconds: 5000),
+                                        animationDuration:
+                                            const Duration(milliseconds: 700),
+                                      ).show(context);
+                                      Navigator.pushNamed(context, "/login");
+                                    } else {
                                     Navigator.pushNamed(context, "/perfil");
+                                    }
                                   })
                             ],
                           ),

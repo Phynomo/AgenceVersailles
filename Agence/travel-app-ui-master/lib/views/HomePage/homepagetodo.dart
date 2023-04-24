@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:travelappui/constants/colors.dart';
 import 'package:travelappui/theme.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
+import 'package:travelappui/views/Login/login.dart';
 
 import '../../models/placesModel.dart';
 
@@ -128,32 +130,69 @@ class _HomePageAllState extends State<HomePageAll> {
                             children: [
                               IconButton(
                                   icon: Icon(Icons.home_rounded,
-                                      size: 36,
-                                      color: kAppTheme.accentColor
-                                          .withOpacity(0.35)),
+                                      size: 36, color: kAppTheme.accentColor
+                                      .withOpacity(0.35)),
                                   onPressed: () {
-                                    Navigator.pushNamed(context, "/Popular");
+                                    Navigator.pushNamed(
+                                          context, "/Popular");
                                   }),
                               IconButton(
                                   icon: Icon(Icons.calendar_today_rounded,
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, "/reservaciones");
+                                  onPressed: () async {
+                                    String usuarioJson =
+                                        await storage.read(key: 'usuario');
+                                    if (usuarioJson == null) {
+                                      ElegantNotification.info(
+                                        // title:  Text("Exitoso"),
+                                        description: Text(
+                                          "Antes debes iniciar sesión",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        toastDuration:
+                                            const Duration(milliseconds: 5000),
+                                        animationDuration:
+                                            const Duration(milliseconds: 700),
+                                      ).show(context);
+                                      Navigator.pushNamed(context, "/login");
+                                    } else {
+                                      Navigator.pushNamed(
+                                          context, "/reservaciones");
+                                    }
                                   }),
                               IconButton(
                                   icon: Icon(Icons.search,
-                                      size: 36, color: kAppTheme.accentColor),
-                                  onPressed: () {}),
+                                      size: 36,
+                                      color: kAppTheme.accentColor),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/Todo");
+                                  }),
                               IconButton(
                                   icon: Icon(Icons.person,
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    String usuarioJson =
+                                        await storage.read(key: 'usuario');
+                                    if (usuarioJson == null) {
+                                      ElegantNotification.info(
+                                        // title:  Text("Exitoso"),
+                                        description: Text(
+                                          "Antes debes iniciar sesión",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        toastDuration:
+                                            const Duration(milliseconds: 5000),
+                                        animationDuration:
+                                            const Duration(milliseconds: 700),
+                                      ).show(context);
+                                      Navigator.pushNamed(context, "/login");
+                                    } else {
                                     Navigator.pushNamed(context, "/perfil");
+                                    }
                                   })
                             ],
                           ),
