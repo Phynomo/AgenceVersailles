@@ -76,7 +76,7 @@ class _MisReservacionesPageState extends State<MisReservacionesPage> {
                       Container(
                         margin: EdgeInsets.all(2),
                         height: amountItems != null && amountItems < 3
-                            ? double.parse(size.height.toString())
+                            ? double.parse(size.height.toString())-5
                             : null,
                         child: _buildListView(homepagestate),
                       ),
