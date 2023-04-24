@@ -51,16 +51,23 @@ class _ConocenosPageState extends State<ConocenosPage> {
               child: Container(
                 margin: EdgeInsets.only(top: 30.0),
                 width: double.infinity,
-                child: Image(
-                  height: 150.0,
-                  image: AssetImage('assets/image/LogoBlanco.png'),
-                  fit: BoxFit.contain,
+                child: Column(
+                  children: [
+                    Image(
+                      height: 150.0,
+                      image: AssetImage('assets/image/LogoBlanco.png'),
+                      fit: BoxFit.contain,
+                    ),
+                    Text("Agence Versailles", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18.0 ),),
+                  ],
                 ),
               ),
             ),
             SingleChildScrollView(
               child: Column(
                 children: [
+                  
+                  
                   SizedBox(
                     height: 250,
                   ),

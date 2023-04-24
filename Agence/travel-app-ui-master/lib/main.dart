@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travelappui/routes/routes.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
+import 'package:travelappui/views/Login/login.dart';
 import 'package:travelappui/views/ProfilePage/state/profilepageStateProvider.dart';
 // import 'package:travelappui/views/SplashScreen/splashscreen.dart';
 import './constants/constants.dart';
@@ -14,6 +15,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext csontext) {
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (_)=>HomePageStateProvider()),
       ChangeNotifierProvider(create: (_)=>ProfilePageStateProvider())
     ],
+
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: kHomePageTitle,

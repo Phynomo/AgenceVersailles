@@ -1,3 +1,4 @@
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:travelappui/theme.dart';
 import 'package:travelappui/views/HomePage/components/featurelist.dart';
 import 'package:travelappui/views/HomePage/state/homepageScrollListner.dart';
 import 'package:travelappui/views/HomePage/state/homepageStateProvider.dart';
+import 'package:travelappui/views/Login/login.dart';
 // import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -60,13 +62,14 @@ class _HomePageState extends State<HomePage> {
                                 width: 50,
                                 height: 50,
                                 child: CircularProgressIndicator());
-                          if (snapshot.connectionState == ConnectionState.waiting)
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting)
                             return Container(
                                 alignment: Alignment.center,
                                 width: 50,
                                 height: 50,
                                 child: CircularProgressIndicator());
-                                
+
                           return ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
@@ -74,7 +77,10 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context, "/view", arguments: {"paqueteObject": snapshot.data[index]});
+                                      Navigator.pushNamed(
+                                          context, "/view", arguments: {
+                                        "paqueteObject": snapshot.data[index]
+                                      });
                                     },
                                     child: FeaturedCard(
                                       placeModel: snapshot.data[index],
@@ -113,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                                 width: 50,
                                 height: 50,
                                 child: CircularProgressIndicator());
-                          if (snapshot.connectionState == ConnectionState.waiting)
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting)
                             return Container(
                                 alignment: Alignment.center,
                                 width: 50,
@@ -132,7 +139,10 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                     onTap: () {
-                                      Navigator.pushNamed(context, "/view", arguments: {"paqueteObject": snapshot.data[index]});
+                                      Navigator.pushNamed(
+                                          context, "/view", arguments: {
+                                        "paqueteObject": snapshot.data[index]
+                                      });
                                     },
                                     child: TravelCard(snapshot.data[index]));
                               });
@@ -174,8 +184,26 @@ class _HomePageState extends State<HomePage> {
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, "/reservaciones");
+                                  onPressed: () async {
+                                    String usuarioJson =
+                                        await storage.read(key: 'usuario');
+                                    if (usuarioJson == null) {
+                                      ElegantNotification.info(
+                                        // title:  Text("Exitoso"),
+                                        description: Text(
+                                          "Antes debes iniciar sesión",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        toastDuration:
+                                            const Duration(milliseconds: 5000),
+                                        animationDuration:
+                                            const Duration(milliseconds: 700),
+                                      ).show(context);
+                                      Navigator.pushNamed(context, "/login");
+                                    } else {
+                                      Navigator.pushNamed(
+                                          context, "/reservaciones");
+                                    }
                                   }),
                               IconButton(
                                   icon: Icon(Icons.search,
@@ -190,8 +218,25 @@ class _HomePageState extends State<HomePage> {
                                       size: 36,
                                       color: kAppTheme.accentColor
                                           .withOpacity(0.35)),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    String usuarioJson =
+                                        await storage.read(key: 'usuario');
+                                    if (usuarioJson == null) {
+                                      ElegantNotification.info(
+                                        // title:  Text("Exitoso"),
+                                        description: Text(
+                                          "Antes debes iniciar sesión",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        toastDuration:
+                                            const Duration(milliseconds: 5000),
+                                        animationDuration:
+                                            const Duration(milliseconds: 700),
+                                      ).show(context);
+                                      Navigator.pushNamed(context, "/login");
+                                    } else {
                                     Navigator.pushNamed(context, "/perfil");
+                                    }
                                   })
                             ],
                           ),

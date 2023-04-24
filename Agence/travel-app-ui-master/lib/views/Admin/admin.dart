@@ -21,7 +21,7 @@ class Paquete {
 
 Future<List<Paquete>> fetchPaquetes() async {
   final response = await http.get(Uri.parse(
-      'http://phynomo-001-site1.atempurl.com/api/Paquete/PaquetesPorPais'));
+      'http://www.agenciaversalles.somee.com/api/Paquete/PaquetesPorPais'));
 
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
@@ -181,7 +181,7 @@ class _AdminPageState extends State<AdminPage> {
                           foregroundColor: Colors.purple.shade900,
                           elevation: 0,
                           child: Icon(Icons.arrow_back),
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.pushNamed(context, "/Popular"),
                         ),
                ),
              ),

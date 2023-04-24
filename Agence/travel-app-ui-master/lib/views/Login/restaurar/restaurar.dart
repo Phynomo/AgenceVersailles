@@ -176,7 +176,7 @@ class _RecuperarState extends State<Recuperar> {
             Future<void> verificarCorreo() async {
               try {
                 var url = Uri.parse(
-                    'http://phynomo-001-site1.atempurl.com/api/Usuario/ExisteCorreo?correo=' +
+                    'http://www.agenciaversalles.somee.com/api/Usuario/ExisteCorreo?correo=' +
                         correo.toString()); //Url
                 final response = await http
                     .get(url, headers: {'Content-Type': 'application/json'});
@@ -498,7 +498,7 @@ class _RecuperarContrasenaState extends State<RecuperarContrasena> {
                             Future<void> enviarJson() async {
                               var jsonBody = jsonEncode(data);
                               final url = Uri.parse(
-                                  'http://phynomo-001-site1.atempurl.com/api/Usuario/Recuperar');
+                                  'http://www.agenciaversalles.somee.com/api/Usuario/Recuperar');
                               final response = await http.put(
                                 url,
                                 body: jsonBody,

@@ -159,7 +159,7 @@ String password = "";
   Future<void> iniciarsesionlogin(String usuario, String password) async {
     try {
       var url =
-          'http://phynomo-001-site1.atempurl.com/api/Usuario/Login?usuario=$usuario&contrasena=$password';
+          'http://www.agenciaversalles.somee.com/api/Usuario/Login?usuario=$usuario&contrasena=$password';
       final response = await http.get(Uri.parse(url));
 
       var jsonResponse = jsonDecode(response.body);
@@ -170,7 +170,7 @@ String password = "";
           var usuarioModel = sacainfoUsuario(data);
           String usuarioJson = jsonEncode(usuarioModel.toJson());
           await storage.write(key: 'usuario', value: usuarioJson);
-
+          loginController.sink.add(false);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
@@ -179,23 +179,26 @@ String password = "";
           setState(() {
             _showErrorMessage = true;
           });
+          loginController.sink.add(false);
         }
       } else {
         setState(() {
           _showErrorConexion = true;
         });
+        loginController.sink.add(false);
       }
     } catch (e) {
       print(e.toString());
       setState(() {
         _showErrorConexion = true;
       });
+      loginController.sink.add(false);
     }
   }
-
+  final loginController = StreamController<bool>();
+ 
   Widget _buttonLogin() {
-    final loginController = StreamController<bool>();
-
+    
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Center(
@@ -217,6 +220,7 @@ String password = "";
                   // set the loginController's stream value to false to display the "Iniciar sesión" button again
                   loginController.sink.add(false);
                 } else {
+                  loginController.sink.add(false);
                   if (usuario.isEmpty) {
                     setState(() {
                       _errorUsuario = 'Complete el campo';

@@ -239,7 +239,7 @@ class _DroplistState extends State<Droplist> {
 
 Future<List<Hoteles>> fetchHoteles(String id) async {
   final response = await http.get(Uri.parse(
-      'http://phynomo-001-site1.atempurl.com/api/Hotel/ListadoPorPais?id=$id'));
+      'http://www.agenciaversalles.somee.com/api/Hotel/ListadoPorPais?id=$id'));
 
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
@@ -255,7 +255,7 @@ Future<List<Hoteles>> fetchHoteles(String id) async {
 
 Future<List<Habitaciones>> fetchHabitaciones(String id) async {
   final response = await http.get(Uri.parse(
-      'http://phynomo-001-site1.atempurl.com/api/Habitacion/ListadoXHotel?hotel=$id'));
+      'http://www.agenciaversalles.somee.com/api/Habitacion/ListadoXHotel?hotel=$id'));
 
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
@@ -271,7 +271,7 @@ Future<List<Habitaciones>> fetchHabitaciones(String id) async {
 
 Future<List<Paises>> fetchPaises() async {
   final response = await http
-      .get(Uri.parse('http://phynomo-001-site1.atempurl.com/api/Pais/Listado'));
+      .get(Uri.parse('http://www.agenciaversalles.somee.com/api/Pais/Listado'));
 
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
@@ -287,7 +287,7 @@ Future<List<Paises>> fetchPaises() async {
 
 Future<List<Vuelos>> fetchVuelos(String id) async {
   final response = await http.get(Uri.parse(
-      'http://phynomo-001-site1.atempurl.com/api/Vuelo/ListadoPorPais?id_Pais=$id'));
+      'http://www.agenciaversalles.somee.com/api/Vuelo/ListadoPorPais?id_Pais=$id'));
 
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);

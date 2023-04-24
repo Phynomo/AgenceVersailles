@@ -18,16 +18,16 @@
 --DROP TABLE [gral].[tbPaises];
 
 
---CREATE DATABASE dbAgenceVersailles
+CREATE DATABASE dbAgenceVersailles
 GO
---use dbAgenceVersailles
+use dbAgenceVersailles
 GO
 --Creacion de Esquemas
---CREATE SCHEMA gral
+CREATE SCHEMA gral
 GO
---CREATE SCHEMA acce
+CREATE SCHEMA acce
 GO
---CREATE SCHEMA [agen]
+CREATE SCHEMA [agen]
 
 GO 
 --Creacion de la tabla de usuarios

@@ -9,22 +9,22 @@ import 'package:intl/intl.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 
 
-String urlAll = "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado";
+String urlAll = "http://www.agenciaversalles.somee.com/api/Paquete/Listado";
 String urlFeatured =
-    "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado5Caros";
+    "http://www.agenciaversalles.somee.com/api/Paquete/Listado5Caros";
 String urlRecommended =
-    "http://phynomo-001-site1.atempurl.com/api/Paquete/Listado10Baratos";
+    "http://www.agenciaversalles.somee.com/api/Paquete/Listado10Baratos";
 String urlUserPlaces =
-    "http://phynomo-001-site1.atempurl.com/api/Paquete/ListadoPorPersona?id=";
+    "http://www.agenciaversalles.somee.com/api/Paquete/ListadoPorPersona?id=";
 String urlInsertBooking =
-    "http://phynomo-001-site1.atempurl.com/api/Reservacion/Insertar";
+    "http://www.agenciaversalles.somee.com/api/Reservacion/Insertar";
 String urlDeleteBooking =
-    "http://phynomo-001-site1.atempurl.com/api/Reservacion/Eliminar";
+    "http://www.agenciaversalles.somee.com/api/Reservacion/Eliminar";
 String urlByContinent =
-    "http://phynomo-001-site1.atempurl.com/api/Paquete/ListadoPorContinente?contNombre=";
+    "http://www.agenciaversalles.somee.com/api/Paquete/ListadoPorContinente?contNombre=";
 String urlUpdatePfp =
-    "http://phynomo-001-site1.atempurl.com/api/Usuario/EditarFoto";
-// String urlFind = "http://phynomo-001-site1.atempurl.com/api/Paquete/Find?id=";
+    "http://www.agenciaversalles.somee.com/api/Usuario/EditarFoto";
+// String urlFind = "http://www.agenciaversalles.somee.com/api/Paquete/Find?id=";
 
 class RESTAPI {
   List<PlaceModel> dummyPlaces(List<dynamic> info) {
@@ -231,7 +231,7 @@ class RESTAPI {
 
 //           var body = json.encode(data); //Json encriptado
 
-//           var url = Uri.parse('http://phynomo-001-site1.atempurl.com/api/Usuario/Login'); //Url
+//           var url = Uri.parse('http://www.agenciaversalles.somee.com/api/Usuario/Login'); //Url
 
 //           http.put(url, body: body, headers: {'Content-Type': 'application/json'}).then((response) { //Brujeria
 //           if (response.statusCode == 200) { // resultado

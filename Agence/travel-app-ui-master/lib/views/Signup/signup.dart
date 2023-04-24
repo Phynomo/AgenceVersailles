@@ -426,7 +426,7 @@ class _SignUpIdentidadState extends State<SignUpIdentidad> {
 
                           Future<void> disponibleDNI() async {
                             String apiUrl =
-                                "http://phynomo-001-site1.atempurl.com/api/Persona/Existe?identidad=" +
+                                "http://www.agenciaversalles.somee.com/api/Persona/Existe?identidad=" +
                                     _identidad; // URL de la API
 
                             try {
@@ -1264,7 +1264,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
                           });
                           Future<void> verificarUsuario() async {
                             String apiUrl =
-                                "http://phynomo-001-site1.atempurl.com/api/Usuario/Existe?usuario=" +
+                                "http://www.agenciaversalles.somee.com/api/Usuario/Existe?usuario=" +
                                     _usuario; // URL de la API
 
                             try {
@@ -1306,7 +1306,7 @@ class _SignUpUsuarioState extends State<SignUpUsuario> {
 
                           Future<void> verificarCorreo() async {
                             var url = Uri.parse(
-                                'http://phynomo-001-site1.atempurl.com/api/Usuario/ExisteCorreo?correo=' +
+                                'http://www.agenciaversalles.somee.com/api/Usuario/ExisteCorreo?correo=' +
                                     _email.toString()); // URL de la API
 
                             try {
@@ -1711,7 +1711,7 @@ class _SignUpContrasenaState extends State<SignUpContrasena> {
 
                               var jsonBody = jsonEncode(data);
                               final url = Uri.parse(
-                                  'http://phynomo-001-site1.atempurl.com/api/Usuario/Registrarse');
+                                  'http://www.agenciaversalles.somee.com/api/Usuario/Registrarse');
                               final response = await http.post(
                                 url,
                                 body: jsonBody,

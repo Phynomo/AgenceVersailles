@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.ROUTE_Login);
+                        Navigator.pushNamed(context, AppRoutes.ROUTE_Home);
                       },
                       style: ElevatedButton.styleFrom(
                           primary: appTheme.accentColor,

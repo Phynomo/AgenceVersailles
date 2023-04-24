@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travelappui/components/rating,.dart';
@@ -232,16 +233,33 @@ class _ViewDetailsState extends State<ViewDetails> {
                                           fontSize: 18,
                                           fontFamily: 'PlayFair',
                                           fontWeight: FontWeight.bold)),
-                                  onPressed: () {
-                                    ReservacionModel reservacion =
-                                        ReservacionModel(
-                                            persId:
-                                                int.parse(usuarioModel.persId),
-                                            paquId: paqueteObject.paquId,
-                                            reseId: 0);
-                                    homepagestate.insertReservacion(
-                                        reservacion, context);
-                                    reservacion = null;
+                                  onPressed: () async {
+                                    String usuarioJson =
+                                        await storage.read(key: 'usuario');
+                                    if (usuarioJson == null) {
+                                      ElegantNotification.info(
+                                        // title:  Text("Exitoso"),
+                                        description: Text(
+                                          "Antes debes iniciar sesión",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        toastDuration:
+                                            const Duration(milliseconds: 5000),
+                                        animationDuration:
+                                            const Duration(milliseconds: 700),
+                                      ).show(context);
+                                      Navigator.pushNamed(context, "/login");
+                                    } else {
+                                      ReservacionModel reservacion =
+                                          ReservacionModel(
+                                              persId: int.parse(
+                                                  usuarioModel.persId),
+                                              paquId: paqueteObject.paquId,
+                                              reseId: 0);
+                                      homepagestate.insertReservacion(
+                                          reservacion, context);
+                                      reservacion = null;
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
